@@ -194,20 +194,24 @@ body {
 }
 
 .thumbtext {
+	display: block;
 	width: 100%;
 	position: absolute;
-	top: 0px;
+	bottom: 0px;
 	left: 0px; 
-	display: none;
 	cursor: pointer;
 	background-color: white;
 	text-align: left;
 	min-height: 24px;
-	transition: .5s ease;
+	opacity: 0;
+	transition: opacity 0.3s ease-out;
 }
+
+
 .thumbs:hover .thumbtext {
-	display: block;
-  }
+	opacity: 1;
+	transition: opacity 0.3s ease-out;
+}
 
 
 #navigation-layer .category {
