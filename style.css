@@ -19,22 +19,20 @@ p {
 	padding-top: 0;
 	padding-bottom: 0;
 	margin-top: 0;
-	margin-bottom: 18px;
+	margin-bottom: 12px;
 }
 
 b { 
 	font-family: Arial, Helvetica, sans-serif;
 	font-weight: normal;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 a {
-	color: #000;
+	color: black;
 	text-decoration: none;
 	font-weight: normal;
-	border-bottom: 1px solid #000;
 }
-
 
 #navigation-layer .category {
 	font-size: 22px;
@@ -57,18 +55,15 @@ a {
 }
 
 .index p.thumbnail {
-	text-align: center;
+	text-align: top;
 }
-
 .single p.post-title, .multiple p.post-title {
 	margin-bottom: 0;
 }
-
 .image {
 	width: 100%;
 	height: inherit;
 }
-
 .image img {
 	display: block;
 	margin-left: auto;
@@ -76,22 +71,18 @@ a {
 	border: none;
 	opacity: inherit;
 	filter: inherit;
-	top: auto;
+	top: 100px;
 }
 .image .caption {
 	margin-left: auto;
 	margin-right: auto;
 }
-
-
 .image-column .caption {
-	margin-bottom: 15px;
+	margin-top: 15px;
 }
 .post .image {
-	margin-bottom: 15px;
+	margin-top: 15px;
 }
-
-
 
 #footer {
 	font-weight: normal;
@@ -99,10 +90,8 @@ a {
 	font-size: 13px;
 	line-height: 15px;
 }
+
 /* End Typography & Colors */
-
-
-
 
 /* Begin Structure */
 
@@ -115,20 +104,17 @@ body {
 	margin-left: 40px;
 	margin-right: 0;
 }
-
 #page {
-	width: 694px;
+	width: 720px;
 	text-align: center;
 	margin: auto;
 }
-
 #header {
 	width: 100%;
 	height: 100px;
 	font-size: 55px;
 	line-height: 42px;
 }
-
 #header .column {
 	width: 100%;
 	margin-top: 0px;
@@ -136,21 +122,18 @@ body {
 	font-weight: normal;
 }
 
-
 .fs {
 	font-size: 13px;
 	line-height: 17px;
 	word-spacing: -1px;
 	letter-spacing: 0px;
 }
-
 .nav div.companyname {
 	line-height: 28px;
 	position: absolute;
-	right: 36px;
+	right: 32px;
     top: 32px;
 }
-
 .hf {
 	width: 100%;
 	margin-top: 50px;
@@ -160,35 +143,24 @@ body {
 	margin-bottom: 36px;
 }
 
-.margin36 {
-	margin: 0px 36px 0px 36px;
-}
-
-.margin72 {
-	margin: 0px 72px 0px 72px;
-}
-
-
 #newscontent {
 	width: 100%;
-	min-width: 952px;
+	min-width: 920px;
 	text-align: center;
 	display: block;
-	margin-top: 122px;
+	margin-top: 22px;
 	margin-left: 36px;
 	margin-right: 36px;
 	clear: both;
-	line-height: 0px;
-	min-width: 1024px;
 }
 
 .thumbs {
 	display: inline-block;
 	float: none;
-	margin-right: 8px;
-	margin-bottom: 8px;
+	margin-right: 3px;
+	margin-top: 11px;
 	overflow: hidden;
-	position: relative; /* 추가 */
+	position: relative;
 }
 
 .thumb {
@@ -199,22 +171,20 @@ body {
 	display: block;
 	width: 100%;
 	position: absolute;
-	bottom: 0px;
-	left: 0px; 
+	bottom: 6px;
+	left: 0px;
 	cursor: pointer;
 	background-color: white;
 	text-align: left;
-	min-height: 24px;
+	min-height: 26px;
 	opacity: 0;
 	transition: opacity 0.3s ease-out;
 }
 
-
 .thumbs:hover .thumbtext {
-	opacity: 1;
+	opacity: 0.9;
 	transition: opacity 0.3s ease-out;
 }
-
 
 #navigation-layer .category {
 	position: fixed;
@@ -231,11 +201,11 @@ body {
 	font-size: 30px;
 }	
 #navigation-layer .position-7 {
-	top: 37px;
+	top: 40px;
 	right: 40px;
 	width: 100%;
 	height: 245px;
-	font-size: 90px;
+	font-size: 92px;
 	line-height: 42px;
 }
 #navigation-layer .position-7 .inner {
