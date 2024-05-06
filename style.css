@@ -7,12 +7,18 @@ html {
 
 body {
 	background: #fff;
-	font-family: consolas, monospace;
+	font-family: "Gowun Dodum", sans-serif; /* 메인 폰트설정하기 */
 	font-weight: normal;
 	font-size: 18px;
 	line-height: 22px;
 	color: #000;
 	background-image: none;
+}
+
+.gowun-dodum-regular {
+	font-family: "Gowun Dodum", sans-serif;
+	font-weight: 400;
+	font-style: normal;
 }
 
 p { 
