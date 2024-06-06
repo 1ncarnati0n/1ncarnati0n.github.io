@@ -7,7 +7,7 @@ html {
 
 body {
 	background: #fff;
-	font-family: "Gowun Dodum", sans-serif; /* 메인 폰트설정하기 */
+	font-family: Gowun Dodum, sans-serif; /* 메인 폰트설정하기 */
 	font-weight: normal;
 	font-size: 18px;
 	line-height: 22px;
@@ -16,11 +16,18 @@ body {
 }
 
 .gowun-dodum-regular {
-	font-family: "Gowun Dodum", sans-serif;
+	font-family: "Noto Sans KR", sans-serif;
 	font-weight: 400;
 	font-style: normal;
 }
 
+.noto-serif-kr-regular {
+	font-family: "Noto Sans KR", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+  }
+
+  
 p { 
 	padding-top: 0;
 	padding-bottom: 0;
@@ -29,7 +36,7 @@ p {
 }
 
 b { 
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: Noto Sans KR, sans-serif;
 	font-weight: normal;
 	font-size: 12px;
 }
