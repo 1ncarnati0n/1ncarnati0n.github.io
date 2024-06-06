@@ -9,8 +9,8 @@ body {
 	background: #fff;
 	font-family: Gowun Dodum, sans-serif; /* 메인 폰트설정하기 */
 	font-weight: normal;
-	font-size: 18px;
-	line-height: 22px;
+	font-size: 16px;
+	line-height: 2px;
 	color: #000;
 	background-image: none;
 }
@@ -29,10 +29,8 @@ body {
 
   
 p { 
-	padding-top: 0;
-	padding-bottom: 0;
-	margin-top: 0;
-	margin-bottom: 12px;
+	font-weight: bold;
+	font-size: 36px;
 }
 
 b { 
@@ -71,7 +69,8 @@ a {
 	text-align: top;
 }
 .single p.post-title, .multiple p.post-title {
-	margin-bottom: 0;
+	margin-left: 100;
+	margin-right: 100;
 }
 .image {
 	width: 100%;
@@ -110,12 +109,13 @@ a {
 
 body {
 	padding: 0;
-	width: 96%;
-	height: 100%;
+	align-items: center;
+	width: 60%;
+	height: 90%;
 	text-align: center;
 	margin: auto;
-	margin-left: 40px;
-	margin-right: 0;
+	margin-left: 50;
+	margin-right: 50;
 }
 #page {
 	width: 720px;
@@ -161,9 +161,9 @@ body {
 	min-width: 920px;
 	text-align: center;
 	display: block;
-	margin-top: 22px;
-	margin-left: 36px;
-	margin-right: 36px;
+	margin-top: 20px;
+	margin-left: 20px;
+	margin-right: 20px;
 	clear: both;
 }
 
