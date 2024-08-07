@@ -1,226 +1,245 @@
-/* Begin Typography & Colors */
+/* 전체 페이지 스크롤 동작 설정 */
 html {
-	scroll-behavior: smooth;
-	scroll-padding-top: 20px; /* 원하는 값을 설정하세요 */
-	transition: scroll-padding-top 0.6s ease-out; /* 여기서 scroll 시간을 조절할 수 있습니다 */
+    scroll-behavior: smooth; /* 부드러운 스크롤 효과 적용 */
+    scroll-padding-top: 10px; /* 스크롤 시 상단에 여백 추가 */
+    transition: scroll-padding-top 0.6s ease-out; /* 스크롤 패딩 변경 시 애니메이션 효과 */
 }
 
+/* 기본 body 스타일 설정 */
 body {
-	background: #fff;
-	font-family: Gowun Dodum, sans-serif; /* 메인 폰트설정하기 */
-	font-weight: normal;
-	font-size: 16px;
-	line-height: 2px;
-	color: #000;
-	background-image: none;
+    background: #fff; /* 배경색 흰색 */
+    font-family:  "Gowun Batang"; /* 기본 글꼴 설정 */
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 2px; /* 줄 간격 설정 (매우 좁음, 확인 필요) */
+    color: #000; /* 텍스트 색상 검정 */
+    background-image: none;
+    padding: 200px;
+    width:  70%; /* 본문 너비를 화면의 70%로 설정 */
+    height: 100%;
+    text-align: center;
+    margin: auto;
 }
 
+/* 글꼴 클래스 정의 */
 .gowun-dodum-regular {
-	font-family: "Noto Sans KR", sans-serif;
-	font-weight: 400;
-	font-style: normal;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
-.noto-serif-kr-regular {
-	font-family: "Noto Sans KR", sans-serif;
-	font-weight: 400;
-	font-style: normal;
+.noto-sans-kr {
+  font-family: "Noto Sans KR", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+}
+
+.gowun-batang-regular {
+    font-family: "Gowun Batang", serif;
+    font-weight: 400;
+    font-style: normal;
   }
-
   
+
+/* 단락 스타일 */
 p { 
-	margin-left: 20;
-	margin-right: 20;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
+/* 굵은 텍스트 스타일 */
 b { 
-	font-family: Noto Sans KR, sans-serif;
-	font-weight: normal;
-	font-size: 12px;
+    font-family: Noto Sans KR, sans-serif;
 }
 
+/* 링크 스타일 */
 a {
-	color: black;
-	text-decoration: none;
-	font-weight: normal;
+    color: black;
+    text-decoration: none;
 }
 
+/* 네비게이션 레이어 스타일 */
 #navigation-layer .category {
-	font-size: 22px;
-	font-weight: normal;
-	letter-spacing: 0em;
-	white-space: nowrap;
+    font-size: 22px;
+    letter-spacing: 0em;
+    white-space: nowrap;
+    position: fixed;
 }
+
 #navigation-layer .category-not-current .inner {
-	border-bottom: 0px solid #000;
+    border-bottom: 0px solid #000;
 }
+
 #navigation-layer .category-current .inner {
-	background-color: #000;
+    background-color: #000;
 }
+
 #navigation-layer .category a {
-	text-decoration: none;
-	border-bottom: none;
+    text-decoration: none;
+    border-bottom: none;
 }
+
 #navigation-layer .category-current a {
-	color: #fff;
+    color: #fff;
 }
 
-.index p.thumbnail {
-	text-align: top;
+#navigation-layer .category .inner {
+    float: left;
+    padding-bottom: 4px;
+    padding-top: 4px;
 }
-.single p.post-title, .multiple p.post-title {
-	margin-left: 100;
-	margin-right: 100;
+
+/* 네비게이션 위치 설정 */
+#navigation-layer .position-3 {
+    top: 50px;
+    left: 30px;
+    font-weight: bold;
+    font-size: 24px;
+}	
+
+#navigation-layer .position-7 {
+    top: 60px;
+    right: 40px;
+    width: 100%;
+    height: 245px;
+    line-height: 42px;
+    font-size: 72px;
+    font-weight: bold;
 }
+
+#navigation-layer .position-7 .inner {
+    float: right;
+}
+
+/* 이미지 관련 스타일 */
 .image {
-	width: 100%;
-	height: inherit;
+    width: 100%;
+    height: inherit;
 }
+
 .image img {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	border: none;
-	opacity: inherit;
-	filter: inherit;
-	top: 100px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    opacity: inherit;
+    filter: inherit;
+    top: 100px;
 }
+
 .image .caption {
-	margin-left: auto;
-	margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
+
 .image-column .caption {
-	margin-top: 15px;
+    margin-top: 15px;
 }
+
 .post .image {
-	margin-top: 15px;
+    margin-top: 15px;
 }
 
+/* 푸터 스타일 */
 #footer {
-	font-weight: normal;
-	color: #999;
-	font-size: 13px;
-	line-height: 15px;
+    font-weight: normal;
+    color: #999;
+    font-size: 13px;
+    line-height: 15px;
 }
 
-/* End Typography & Colors */
-
-/* Begin Structure */
-
-body {
-	padding: 0;
-	align-items: center;
-	width: 60%;
-	height: 90%;
-	text-align: center;
-	margin: auto;
-	margin-left: 50;
-	margin-right: 50;
-}
+/* 페이지 구조 */
 #page {
-	width: 720px;
-	text-align: center;
-	margin: auto;
-}
-#header {
-	width: 100%;
-	height: 100px;
-	font-size: 55px;
-	line-height: 42px;
-}
-#header .column {
-	width: 100%;
-	margin-top: 0px;
-	font-size: 22px;
-	font-weight: normal;
+    width: 720px;
+    text-align: center;
+    margin: auto;
 }
 
-.fs {
-	font-size: 13px;
-	line-height: 17px;
-	word-spacing: -1px;
-	letter-spacing: 0px;
+/* 헤더 스타일 */
+#header {
+    width: 100%;
+    height: 100px;
+    font-size: 55px;
+    line-height: 42px;
 }
+
+#header .column {
+    width: 100%;
+    margin-top: 0px;
+    font-size: 22px;
+    font-weight: normal;
+}
+
+/* 폰트 크기 클래스 */
+.fs {
+    font-family: "Noto Sans KR";
+    font-size: 12px;
+    font-style: italic;
+    font-weight: bold;
+    line-height: 16px;
+    word-spacing: -1px;
+    letter-spacing: 0px;
+}
+
+/* 회사 이름 위치 설정 */
 .nav div.companyname {
-	line-height: 28px;
-	position: absolute;
-	right: 32px;
+    line-height: 28px;
+    position: absolute;
+    right: 32px;
     top: 32px;
 }
+
+/* 위로 가기 링크 스타일 */
 .hf {
-	width: 100%;
-	margin-top: 50px;
-	text-align: center;
-	font-family: Arial, Helvetica, sans-serif;
-	line-height: 22px;
-	margin-bottom: 36px;
+    width: 100%;
+    margin-top: 50px;
+    text-align: center;
+    font-weight: bold;
+    line-height: 24px;
+    margin-bottom: 36px;
 }
 
+/* newscontent 영역 스타일 */
 #newscontent {
-	width: 100%;
-	min-width: 920px;
-	text-align: center;
-	display: block;
-	margin-top: 20px;
-	margin-left: 20px;
-	margin-right: 20px;
-	clear: both;
+    display: flexbox;
+    top: 100px;
+
 }
 
+/* 썸네일 스타일 */
 .thumbs {
-	display: inline-block;
-	float: none;
-	margin-right: 3px;
-	margin-top: 11px;
-	overflow: hidden;
-	position: relative;
+    display: inline-block;
+    float: none;
+    margin-left: 7px;
+    margin-right: 7px;
+    margin-top: 15px;
+    overflow: hidden;
+    position: relative;
 }
 
 .thumb {
-	display: inline-block
+    display: inline
 }
 
+/* 썸네일 텍스트 오버레이 효과 */
 .thumbtext {
-	display: block;
-	width: 100%;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	cursor: pointer;
-	background-color: white;
-	text-align: left;
-	min-height: 26px;
-	opacity: 0;
-	transition: opacity 0.3s ease-out;
+    display: block;
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    cursor: default;
+    background-color: white;
+    text-align: center;
+    min-height: 24px;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
 }
 
 .thumbs:hover .thumbtext {
-	opacity: 0.9;
-	transition: opacity 0.3s ease-out;
-}
-
-#navigation-layer .category {
-	position: fixed;
-	width: 230px;
-}
-#navigation-layer .category .inner {
-	float: left;
-	padding-bottom: 4px;
-	padding-top: 4px;
-}
-#navigation-layer .position-3 {
-	top: 37px;
-	left: 40px;
-	font-size: 30px;
-}	
-#navigation-layer .position-7 {
-	top: 40px;
-	right: 40px;
-	width: 100%;
-	height: 245px;
-	font-size: 92px;
-	line-height: 42px;
-}
-#navigation-layer .position-7 .inner {
-	float: right;
+    color: black;
+    /* color: #006553; */
+    opacity: 0.9;
+    transition: opacity 0.3s ease-out;
 }
