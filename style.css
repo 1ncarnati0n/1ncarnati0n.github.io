@@ -9,7 +9,6 @@ html {
 body {
     background: whitesmoke; /* 배경색 흰색 */
     font-family:  "Gowun Batang"; /* 기본 글꼴 설정 */
-    font-weight: bold;
     font-size: 16px;
     line-height: 2px; /* 줄 간격 설정 */
     background-image: none;
@@ -50,15 +49,22 @@ p {
 
 /* 굵은 텍스트 스타일 */
 b { 
-    line-height: 5;
+    line-height: 4;
     font-weight: bold;
     font-style: italic;
+    font-size: 12px;
+    color: #999;
 }
 
 /* 링크 스타일 */
 a {
     color: black;
     text-decoration: none;
+}
+
+a:hover {
+    color: #006553;
+    transition: 0.9ms ;
 }
 
 /* 네비게이션 레이어 스타일 */
@@ -83,13 +89,11 @@ a {
 }
 
 #navigation-layer .category-current a {
-    color: #fff;
+    color: #181818;
 }
 
 #navigation-layer .category .inner {
     float: left;
-    padding-bottom: 4px;
-    padding-top: 4px;
 }
 
 /* 네비게이션 위치 설정 */
@@ -174,10 +178,10 @@ a {
 /* 폰트 크기 클래스 */
 .fs {
     font-family: "Noto Sans KR";
-    font-size: 12px;
+    font-size: 10px;
     font-style: italic;
     font-weight: bold;
-    line-height: 22px;
+    line-height: 20px;
     word-spacing: -1px;
     letter-spacing: 0px;
 }
@@ -231,7 +235,7 @@ a {
     cursor: default;
     background-color: whitesmoke;
     text-align: center;
-    min-height: 24px;
+    min-height: 22px;
     opacity: 0;
     transition: opacity 0.3s ease-out;
 }
