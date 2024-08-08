@@ -7,13 +7,13 @@ html {
 
 /* 기본 body 스타일 설정 */
 body {
-    background: #fff; /* 배경색 흰색 */
+    background: whitesmoke; /* 배경색 흰색 */
     font-family:  "Gowun Batang"; /* 기본 글꼴 설정 */
-    font-weight: normal;
+    font-weight: bold;
     font-size: 16px;
-    line-height: 2px; /* 줄 간격 설정 (매우 좁음, 확인 필요) */
+    line-height: 2px; /* 줄 간격 설정 */
     background-image: none;
-    padding: 200px;
+    padding: 100px;
     width:  70%; /* 본문 너비를 화면의 70%로 설정 */
     height: 100%;
     text-align: center;
@@ -50,7 +50,9 @@ p {
 
 /* 굵은 텍스트 스타일 */
 b { 
-    font-family: Noto Sans KR, sans-serif;
+    line-height: 5;
+    font-weight: bold;
+    font-style: italic;
 }
 
 /* 링크 스타일 */
@@ -108,7 +110,6 @@ a {
 
 #navigation-layer .position-7 .inner {
     float: right;
-    color: aqua;
 }
 
 /* 이미지 관련 스타일 */
@@ -176,7 +177,7 @@ a {
     font-size: 12px;
     font-style: italic;
     font-weight: bold;
-    line-height: 16px;
+    line-height: 22px;
     word-spacing: -1px;
     letter-spacing: 0px;
 }
@@ -192,7 +193,7 @@ a {
 /* 위로 가기 링크 스타일 */
 .hf {
     width: 100%;
-    margin-top: 200px;
+    margin-top: 100px;
     text-align: center;
     font-weight: bold;
     line-height: 24px;
@@ -203,7 +204,6 @@ a {
 #newscontent {
     display: flexbox;
     top: 100px;
-
 }
 
 /* 썸네일 스타일 */
@@ -229,7 +229,7 @@ a {
     bottom: 0px;
     left: 0px;
     cursor: default;
-    background-color: white;
+    background-color: whitesmoke;
     text-align: center;
     min-height: 24px;
     opacity: 0;
@@ -239,6 +239,6 @@ a {
 .thumbs:hover .thumbtext {
     color: black;
     /* color: #006553; */
-    opacity: 0.9;
+    opacity: 100%;
     transition: opacity 0.3s ease-out;
 }
