@@ -31,30 +31,44 @@
     {
       "id": "ff04",
       "image": "thumbs/ff04.jpg",
+      "images": ["thumbs/ff04.jpg", "thumbs/ff03.jpg"],
       "title": "부산 개인채플",
       "width": 300,
-      "category": "professional"
+      "category": "professional",
+      "completed": "2023",
+      "location": "부산, 대한민국"
     },
     {
       "id": "ff03",
       "image": "thumbs/ff03.jpg",
+      "images": ["thumbs/ff03.jpg", "thumbs/ff04.jpg"],
       "title": "부산 개인채플",
       "width": 500,
-      "category": "professional"
+      "category": "professional",
+      "completed": "2023",
+      "location": "부산, 대한민국"
     },
     {
       "id": "ff01",
       "image": "thumbs/ff01.jpg",
+      "images": ["thumbs/ff01.jpg", "thumbs/ff02.jpg"],
       "title": "Kakao VIP Space",
       "width": 600,
-      "category": "professional"
+      "category": "professional",
+      "completed": "2022",
+      "location": "서울, 대한민국",
+      "description": "카카오 VIP 전용 공간으로 설계된 프로젝트입니다."
     },
     {
       "id": "ff02",
       "image": "thumbs/ff02.jpg",
+      "images": ["thumbs/ff02.jpg", "thumbs/ff01.jpg"],
       "title": "Kakao VIP Space",
       "width": 300,
-      "category": "professional"
+      "category": "professional",
+      "completed": "2022",
+      "location": "서울, 대한민국",
+      "description": "카카오 VIP 전용 공간으로 설계된 프로젝트입니다."
     },
     {
       "id": "f05",
@@ -66,16 +80,24 @@
     {
       "id": "f08",
       "image": "thumbs/f08.jpg",
+      "images": ["thumbs/f08.jpg", "thumbs/f09.jpg"],
       "title": "제주국제대학 제안",
       "width": 400,
-      "category": "professional"
+      "category": "professional",
+      "completed": "2021",
+      "location": "제주, 대한민국",
+      "description": "제주국제대학 캠퍼스 설계 제안 프로젝트입니다."
     },
     {
       "id": "f09",
       "image": "thumbs/f09.jpg",
+      "images": ["thumbs/f09.jpg", "thumbs/f08.jpg"],
       "title": "제주국제대학 제안",
       "width": 620,
-      "category": "professional"
+      "category": "professional",
+      "completed": "2021",
+      "location": "제주, 대한민국",
+      "description": "제주국제대학 캠퍼스 설계 제안 프로젝트입니다."
     },
     {
       "id": "f03",
@@ -108,9 +130,13 @@
     {
       "id": "e01",
       "image": "thumbs/e01.jpg",
+      "images": ["thumbs/e01.jpg", "thumbs/z11.jpg", "thumbs/z12.jpg"],
       "title": "문정동 보성그룹HQ 한양타워",
       "width": 800,
-      "category": "professional"
+      "category": "professional",
+      "completed": "2020",
+      "location": "서울 문정동, 대한민국",
+      "description": "보성그룹 본사 건물로 설계된 고층 오피스 타워 프로젝트입니다."
     },
     {
       "id": "d02",
@@ -143,9 +169,13 @@
     {
       "id": "b01",
       "image": "thumbs/b01.jpg",
+      "images": ["thumbs/b01.jpg", "thumbs/z2.jpg", "thumbs/z6.jpg"],
       "title": "호반건설HQ \"façade\"",
       "width": 600,
-      "category": "professional"
+      "category": "professional",
+      "completed": "2019",
+      "location": "서울, 대한민국",
+      "description": "호반건설 본사 건물의 파사드 디자인 프로젝트입니다."
     },
     {
       "id": "a01",

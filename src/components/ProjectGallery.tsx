@@ -21,7 +21,7 @@ export default function ProjectGallery({ projects }: ProjectGalleryProps) {
   const ProjectThumb = ({ project }: { project: Project }) => {
     const content = (
       <div
-        className="inline-block mx-[7px] mt-[15px] relative overflow-hidden group"
+        className="inline-block mx-[7px] mt-[15px] relative overflow-hidden group cursor-pointer"
         style={{ width: `${project.width}px` }}
         onMouseEnter={() => setHoveredId(project.id)}
         onMouseLeave={() => setHoveredId(null)}
@@ -50,6 +50,7 @@ export default function ProjectGallery({ projects }: ProjectGalleryProps) {
       </div>
     );
 
+    // 외부 링크가 있으면 외부 링크 사용, 없으면 상세 페이지로 이동
     if (project.link) {
       return (
         <Link
@@ -63,7 +64,12 @@ export default function ProjectGallery({ projects }: ProjectGalleryProps) {
       );
     }
 
-    return content;
+    // 상세 페이지로 이동
+    return (
+      <Link href={`/projects/${project.id}`} className="block">
+        {content}
+      </Link>
+    );
   };
 
   return (

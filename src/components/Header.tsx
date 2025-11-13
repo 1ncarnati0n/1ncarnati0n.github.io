@@ -11,7 +11,7 @@ export default function Header({ navigation }: HeaderProps) {
       <div className="relative w-full h-full">
         {/* Left Navigation */}
         <div className="absolute top-[50px] left-[30px] font-bold text-2xl">
-          <div className="space-y-0">
+          <div className="space-y-0">ㅜ
             <p>
               <Link
                 href={navigation.links[0].url}
