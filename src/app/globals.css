@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 10px;
+  }
+
+  body {
+    @apply bg-[whitesmoke] font-serif text-base;
+    font-family: "Gowun Batang", serif;
+  }
+}
+
+@layer utilities {
+  .font-gowun {
+    font-family: "Gowun Batang", serif;
+  }
+  
+  .font-noto {
+    font-family: "Noto Sans KR", sans-serif;
+  }
+}
+

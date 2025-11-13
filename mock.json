@@ -1,0 +1,176 @@
+{
+  "projects": [
+    {
+      "id": "g04",
+      "image": "thumbs/g04.jpg",
+      "title": "양재동 근린생활시설",
+      "width": 500,
+      "category": "professional"
+    },
+    {
+      "id": "g03",
+      "image": "thumbs/g03.jpg",
+      "title": "역삼동 근린생활시설",
+      "width": 300,
+      "category": "professional"
+    },
+    {
+      "id": "g02",
+      "image": "thumbs/g02.jpg",
+      "title": "대치동 근린생활시설",
+      "width": 500,
+      "category": "professional"
+    },
+    {
+      "id": "g01",
+      "image": "thumbs/g01.jpg",
+      "title": "장봉도 휴게시설 제안",
+      "width": 700,
+      "category": "professional"
+    },
+    {
+      "id": "ff04",
+      "image": "thumbs/ff04.jpg",
+      "title": "부산 개인채플",
+      "width": 300,
+      "category": "professional"
+    },
+    {
+      "id": "ff03",
+      "image": "thumbs/ff03.jpg",
+      "title": "부산 개인채플",
+      "width": 500,
+      "category": "professional"
+    },
+    {
+      "id": "ff01",
+      "image": "thumbs/ff01.jpg",
+      "title": "Kakao VIP Space",
+      "width": 600,
+      "category": "professional"
+    },
+    {
+      "id": "ff02",
+      "image": "thumbs/ff02.jpg",
+      "title": "Kakao VIP Space",
+      "width": 300,
+      "category": "professional"
+    },
+    {
+      "id": "f05",
+      "image": "thumbs/f05.jpg",
+      "title": "",
+      "width": 700,
+      "category": "professional"
+    },
+    {
+      "id": "f08",
+      "image": "thumbs/f08.jpg",
+      "title": "제주국제대학 제안",
+      "width": 400,
+      "category": "professional"
+    },
+    {
+      "id": "f09",
+      "image": "thumbs/f09.jpg",
+      "title": "제주국제대학 제안",
+      "width": 620,
+      "category": "professional"
+    },
+    {
+      "id": "f03",
+      "image": "thumbs/f03.jpg",
+      "title": "을지로호텔입면 제안",
+      "width": 240,
+      "category": "professional"
+    },
+    {
+      "id": "f02",
+      "image": "thumbs/f02.jpg",
+      "title": "골프클럽하우스 제안",
+      "width": 360,
+      "category": "professional"
+    },
+    {
+      "id": "f01",
+      "image": "thumbs/f01.jpg",
+      "title": "파주 단독주택",
+      "width": 300,
+      "category": "professional"
+    },
+    {
+      "id": "f04",
+      "image": "thumbs/f04.jpg",
+      "title": "요양병원 프로젝트",
+      "width": 300,
+      "category": "professional"
+    },
+    {
+      "id": "e01",
+      "image": "thumbs/e01.jpg",
+      "title": "문정동 보성그룹HQ 한양타워",
+      "width": 800,
+      "category": "professional"
+    },
+    {
+      "id": "d02",
+      "image": "thumbs/d02.jpg",
+      "title": "강원도 단독주택",
+      "width": 320,
+      "category": "professional"
+    },
+    {
+      "id": "f00",
+      "image": "thumbs/f00.jpg",
+      "title": "일진그룹사옥 리노베이션 제안",
+      "width": 280,
+      "category": "professional"
+    },
+    {
+      "id": "d01",
+      "image": "thumbs/d01.jpg",
+      "title": "이태원 전시시설",
+      "width": 220,
+      "category": "professional"
+    },
+    {
+      "id": "c01",
+      "image": "thumbs/c01.jpg",
+      "title": "우면동 Flower + Kindergarten",
+      "width": 500,
+      "category": "professional"
+    },
+    {
+      "id": "b01",
+      "image": "thumbs/b01.jpg",
+      "title": "호반건설HQ \"façade\"",
+      "width": 600,
+      "category": "professional"
+    },
+    {
+      "id": "a01",
+      "image": "thumbs/a01.jpg",
+      "title": "카프카의 성: Graduation Work",
+      "width": 500,
+      "category": "academic",
+      "link": "https://1ncarnati0n.github.io"
+    }
+  ],
+  "navigation": {
+    "title": "1ncarnati0n",
+    "links": [
+      {
+        "label": "about",
+        "url": "https://github.com/1ncarnati0n"
+      },
+      {
+        "label": "blog",
+        "url": "https://1ncarnati0n.pages.dev"
+      }
+    ]
+  },
+  "footer": {
+    "text": "copyrightⓒ 2024 All rights reserved by 1ncarnati0n"
+  }
+}
+
