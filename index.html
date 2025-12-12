@@ -3,216 +3,261 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>1ncarnati0n</title>
-  
-  <link rel="stylesheet" href="style.css" type="text/css" media="screen">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="1ncarnati0n - Architecture Portfolio showcasing professional and academic works">
+  <meta name="theme-color" content="#006553">
 
+  <title>1ncarnati0n | Architecture Portfolio</title>
+
+  <link rel="stylesheet" href="style.css" type="text/css">
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-  
-
-  <!-- 스크립트 -->
-  <script>
-
-    /* top으로 자연스럽게 스크롤 */
-    document.querySelector('.hf a').addEventListener('click', function(e) {
-      e.preventDefault();
-
-      document.querySelector('#top').scrollIntoView({
-          behavior: 'smooth'
-      });
-    });
-
-  </script>
-
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 </head>
 
+<body id="top">
 
+  <!-- Header Navigation -->
+  <header id="header">
+    <nav id="navigation-layer" aria-label="Main navigation">
 
-<body>
-  
-  <!-- 썸네일 프로젝트 리스트 -->
-  
-  <div id="newscontent">
+      <!-- Left Navigation Links -->
+      <div class="category position-3">
+        <div class="inner">
+          <p><a href="https://github.com/1ncarnati0n" target="_blank" rel="noopener">about</a></p>
+          <p><a href="https://1ncarnati0n.pages.dev" target="_blank" rel="noopener">blog</a></p>
+        </div>
+      </div>
 
-    <div class="thumbs" style="width: 500px;">
-      <div class="thumb"><img src="thumbs/g04.jpg" width="100%" height="100%" alt="Project"></div>
-      <div class="thumbtext"><span class="ht fs">양재동 근린생활시설</span></div>
+      <!-- Right Logo/Brand -->
+      <div class="category position-7">
+        <div class="inner">
+          <a href="https://1ncarnati0n.github.io" aria-label="Home">1ncarnati0n</a>
+        </div>
+      </div>
+
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main id="newscontent" role="main">
+
+    <!-- Project Grid -->
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/g04.jpg" alt="양재동 근린생활시설 프로젝트" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">양재동 근린생활시설</span></figcaption>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/g03.jpg" alt="역삼동 근린생활시설 프로젝트" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">역삼동 근린생활시설</span></figcaption>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/g02.jpg" alt="대치동 근린생활시설 프로젝트" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">대치동 근린생활시설</span></figcaption>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/g01.jpg" alt="장봉도 휴게시설 제안" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">장봉도 휴게시설 제안</span></figcaption>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/ff04.jpg" alt="부산 개인채플 프로젝트" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">부산 개인채플</span></figcaption>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/ff03.jpg" alt="부산 개인채플 프로젝트" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">부산 개인채플</span></figcaption>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/ff01.jpg" alt="Kakao VIP Space 프로젝트" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">Kakao VIP Space</span></figcaption>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/ff02.jpg" alt="Kakao VIP Space 프로젝트" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">Kakao VIP Space</span></figcaption>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/f05.jpg" alt="건축 프로젝트" loading="lazy">
+      </figure>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/f08.jpg" alt="제주국제대학 제안" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">제주국제대학 제안</span></figcaption>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/f09.jpg" alt="제주국제대학 제안" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">제주국제대학 제안</span></figcaption>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/f03.jpg" alt="을지로호텔입면 제안" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">을지로호텔입면 제안</span></figcaption>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/f02.jpg" alt="골프클럽하우스 제안" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">골프클럽하우스 제안</span></figcaption>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/f01.jpg" alt="파주 단독주택 프로젝트" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">파주 단독주택</span></figcaption>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/f04.jpg" alt="요양병원 프로젝트" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">요양병원 프로젝트</span></figcaption>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/e01.jpg" alt="문정동 보성그룹HQ 한양타워" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">문정동 보성그룹HQ 한양타워</span></figcaption>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/d02.jpg" alt="강원도 단독주택 프로젝트" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">강원도 단독주택</span></figcaption>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/f00.jpg" alt="일진그룹사옥 리노베이션 제안" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">일진그룹사옥 리노베이션 제안</span></figcaption>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/d01.jpg" alt="이태원 전시시설 프로젝트" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">이태원 전시시설</span></figcaption>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/c01.jpg" alt="우면동 Flower + Kindergarten 프로젝트" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">우면동 Flower + Kindergarten</span></figcaption>
+    </article>
+
+    <article class="thumbs">
+      <figure class="thumb">
+        <img src="thumbs/b01.jpg" alt="호반건설HQ 파사드 프로젝트" loading="lazy">
+      </figure>
+      <figcaption class="thumbtext"><span class="fs">호반건설HQ "façade"</span></figcaption>
+    </article>
+
+    <!-- Section Divider -->
+    <p><b>Professional Works</b></p>
+
+    <!-- Academic Work -->
+    <a href="https://1ncarnati0n.github.io" class="thumbs">
+      <article>
+        <figure class="thumb">
+          <img src="thumbs/a01.jpg" alt="카프카의 성 - 졸업작품" loading="lazy">
+        </figure>
+        <figcaption class="thumbtext"><span class="fs">카프카의 성: Graduation Work</span></figcaption>
+      </article>
+    </a>
+
+    <p><b>Academic Works</b></p>
+
+    <!-- Back to Top -->
+    <div class="hf">
+      <a href="#top">Back to Top</a>
     </div>
 
-    <br>
+  </main>
 
-    <div class="thumbs" style="width: 300px;">
-      <div class="thumb"><img src="thumbs/g03.jpg" width="100%" height="100%" alt="Project"></div>
-      <div class="thumbtext"><span class="ht fs">역삼동 근린생활시설</span></div>
-    </div>
+  <!-- Footer -->
+  <footer id="footer">
+    <p>&copy; 2024 All rights reserved by 1ncarnati0n</p>
+  </footer>
 
-    <div class="thumbs" style="width: 500px;">
-      <div class="thumb"><img src="thumbs/g02.jpg" width="100%" height="100%" alt="Project"></div>
-      <div class="thumbtext"><span class="ht fs">대치동 근린생활시설</span></div>
-    </div>
+  <!-- Smooth Scroll Script -->
+  <script>
+    // Smooth scroll for back to top
+    document.addEventListener('DOMContentLoaded', function() {
+      const backToTop = document.querySelector('.hf a');
+      if (backToTop) {
+        backToTop.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.getElementById('top').scrollIntoView({
+            behavior: 'smooth'
+          });
+        });
+      }
 
-    <br>
+      // Add intersection observer for fade-in animation
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+      };
 
-    <div class="thumbs" style="width: 700px;">
-      <div class="thumb"><img src="thumbs/g01.jpg" width="100%" height="100%" alt="Project"></div>
-      <div class="thumbtext"><span class="ht fs">장봉도 휴게시설 제안</span></div>
-    </div>
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
 
-    <br>
+      // Observe all thumbnail cards
+      document.querySelectorAll('.thumbs').forEach(thumb => {
+        thumb.style.opacity = '0';
+        thumb.style.transform = 'translateY(30px)';
+        thumb.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(thumb);
+      });
+    });
+  </script>
 
-    <div class="thumbs" style="width: 300px;">
-      <div class="thumb"><img src="thumbs/ff04.jpg" width="100%" height="100%" alt="Project"></div>
-      <div class="thumbtext"><span class="ht fs">부산 개인채플</span></div>
-    </div>
-
-    <div class="thumbs" style="width: 500px;">
-      <div class="thumb"><img src="thumbs/ff03.jpg" width="100%" height="100%" alt="Project"></div>
-      <div class="thumbtext"><span class="ht fs">부산 개인채플</span></div>
-    </div>
-
-    <br>
-
-    <div class="thumbs" style="width: 600px;">
-      <div class="thumb"><img src="thumbs/ff01.jpg" width="100%" height="100%" alt="Project"></div>
-      <div class="thumbtext"><span class="ht fs">Kakao VIP Space</span></div>
-    </div>
-
-    <div class="thumbs" style="width: 300px;">
-      <div class="thumb"><img src="thumbs/ff02.jpg" width="100%" height="100%" alt="Project"></div>
-      <div class="thumbtext"><span class="ht fs">Kakao VIP Space</span></div>
-    </div>
-
-    <br>
-
-    <div class="thumbs" style="width: 700px;">
-      <div class="thumb"><img src="thumbs/f05.jpg" width="100%" height="100%" alt="Project"></div>
-    </div>
-
-    <br>
-
-    <div class="thumbs" style="width: 400px;">
-      <div class="thumb"><img src="thumbs/f08.jpg" width="100%" height="100%" alt="Project"></div>
-      <div class="thumbtext"><span class="ht fs">제주국제대학 제안</span></div>
-    </div>
-    
-    <div class="thumbs" style="width: 620px;">
-      <div class="thumb"><img src="thumbs/f09.jpg" width="100%" height="100%" alt="Project"></div>
-      <div class="thumbtext"><span class="ht fs">제주국제대학 제안</span></div>
-    </div>
-
-    <br>
-
-    <div class="thumbs" style="width: 240px;">
-      <div class="thumb"><img src="thumbs/f03.jpg" width="100%" height="100%" alt="Project"></div>
-      <div class="thumbtext"><span class="ht fs">을지로호텔입면 제안</span></div>
-    </div>
-    
-    <div class="thumbs" style="width: 360px;">
-      <div class="thumb"><img src="thumbs/f02.jpg" width="100%" height="100%" alt="Project"></div>
-      <div class="thumbtext"><span class="ht fs">골프클럽하우스 제안</span></div>
-    </div>
-
-    <br>
-
-    <div class="thumbs" style="width: 300px;">
-      <div class="thumb"><img src="thumbs/f01.jpg" width="100%" height="100%" alt="Project"></div>
-      <div class="thumbtext"><span class="ht fs">파주 단독주택</span></div>
-    </div>
-
-    <div class="thumbs" style="width: 300px;">
-      <div class="thumb"><img src="thumbs/f04.jpg" width="100%" height="100%" alt="Project"></div>
-      <div class="thumbtext"><span class="ht fs">요양병원 프로젝트</span></div>
-    </div>
-
-    <br>
-
-    <div class="thumbs" style="width: 800px;">
-      <div class="thumb"><img src="thumbs/e01.jpg" width="100%" height="100%" alt="Project"></div>
-      <div class="thumbtext"><span class="ht fs">문정동 보성그룹HQ 한양타워</span></div>
-    </div>
-
-    <br>
-
-    <div class="thumbs" style="width: 320px;">
-      <div class="thumb"><img src="thumbs/d02.jpg" width="100%" height="100%" alt="Project"></div>
-      <div class="thumbtext"><span class="ht fs">강원도 단독주택</span></div>
-    </div>
-
-    <div class="thumbs" style="width: 280px;">
-      <div class="thumb"><img src="thumbs/f00.jpg" width="100%" height="100%" alt="Project"></div>
-      <div class="thumbtext"><span class="ht fs">일진그룹사옥 리노베이션 제안</span></div>
-    </div>
-
-    <div class="thumbs" style="width: 220px;">
-      <div class="thumb"><img src="thumbs/d01.jpg" width="100%" height="100%" alt="Project"></div>
-      <div class="thumbtext"><span class="ht fs">이태원 전시시설</span></div>
-    </div>
-
-    <br>
-
-    <div class="thumbs" style="width: 500px;">
-      <div class="thumb"> <img src="thumbs/c01.jpg" width="100%" height="100%" alt="Project"> </div>
-      <div class="thumbtext"><span class="ht fs">우면동 Flower + Kindergarten </span> </div>
-    </div>
-
-    <br>
-
-    <div class="thumbs" style="width: 600px;">
-      <div class="thumb"> <img src="thumbs/b01.jpg" width="100%" height="100%" alt="Project"> </div>
-      <div class="thumbtext"><span class="ht fs">호반건설HQ "façade" </span> </div>
-    </div>
-
-    <br>
-
-    <p><b>Professonal Wroks</b></p>
-
-    <br>
-
-    
-    <a href="https://1ncarnati0n.github.io"><div class="thumbs" style="width: 500px;">
-      <div class="thumb"> <img src="thumbs/a01.jpg" width="100%" alt="Castle of Kafka" > </div>
-      <div class="thumbtext"> <span class="fs">카프카의 성: Graduation Work  </span> </div>
-    </div></a>
-
-    <br>
-    <p><b>Academic Wroks</b></p>
-    <br>
-
-    <div class="hf"><a href="#top">Back to Top</a></div> 
-  
-
-  </div>
-
-
-  <div id="header">
-	  <div id="navigation-layer">
-
-				<div class="category category-not-current position-7 id-7">
-				  <div class="inner"><a href="https://1ncarnati0n.github.io">
-            1ncarnati0n </a></div>
-				</div>
-		
-				<div class="category category-not-current position-3 id-3">
-				  <div class="inner">
-				    <p><a href="https://github.com/1ncarnati0n">
-              about </a></p>
-            <p><a href="https://1ncarnati0n.pages.dev">
-              blog </a></p>
-				  </div>
-				</div>
-
-	  </div>
-  </div>
-
-
-  <div id="footer">
-    <p>copyrightⓒ 2024 All rights reserved by 1ncarnati0n</p>
-  </div>
-  
 </body>
-
-
 
 </html>
