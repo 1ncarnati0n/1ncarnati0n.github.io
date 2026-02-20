@@ -1,0 +1,22 @@
+{{ define "main" }}
+
+<section class="page-header">
+  <h1 class="page-title">{{ .Title }}</h1>
+  {{ with .Description }}
+  <p class="page-description">{{ . }}</p>
+  {{ end }}
+</section>
+
+<div class="content-list">
+  {{ range .Pages }}
+  <article class="content-item fade-in">
+    <a href="{{ .RelPermalink }}">
+      <h2>{{ .Title }}</h2>
+      {{ with .Date }}<time>{{ .Format "2006.01.02" }}</time>{{ end }}
+      <p>{{ .Summary | truncate 150 }}</p>
+    </a>
+  </article>
+  {{ end }}
+</div>
+
+{{ end }}

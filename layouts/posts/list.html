@@ -1,0 +1,40 @@
+{{ define "main" }}
+
+<section class="page-header">
+  <h1 class="page-title">Blog</h1>
+  <p class="page-description">Thoughts on Architecture & Design</p>
+</section>
+
+<div class="post-list post-list--full">
+  {{ range (where .Site.RegularPages "Section" "posts").ByDate.Reverse }}
+  <article class="post-item fade-in">
+    <a href="{{ .RelPermalink }}" class="post-item-link">
+      <div class="post-item-content">
+        <time class="post-item-date" datetime="{{ .Date.Format "2006-01-02" }}">
+          {{ .Date.Format "2006.01.02" }}
+        </time>
+        <h2 class="post-item-title">{{ .Title }}</h2>
+        <p class="post-item-summary">{{ .Summary | plainify | truncate 200 }}</p>
+        <div class="post-item-tags">
+          {{ range .Params.tags }}
+          <span class="tag">#{{ . }}</span>
+          {{ end }}
+        </div>
+      </div>
+      {{ with .Params.thumbnail }}
+      <figure class="post-item-image">
+        <img src="{{ . | relURL }}" alt="{{ $.Title }}" loading="lazy">
+      </figure>
+      {{ end }}
+    </a>
+  </article>
+  {{ end }}
+</div>
+
+{{ if not (where .Site.RegularPages "Section" "posts") }}
+<div class="empty-state">
+  <p>아직 작성된 글이 없습니다.</p>
+</div>
+{{ end }}
+
+{{ end }}
