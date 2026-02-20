@@ -1,0 +1,20 @@
+<header class="site-header">
+  <nav class="nav" aria-label="Main navigation">
+
+    {{/* Left: Navigation Links */}}
+    <div class="nav-links">
+      {{ range .Site.Menus.main }}
+      <a href="{{ .URL }}" class="nav-link {{ if $.IsMenuCurrent "main" . }}active{{ end }}"
+        {{ if strings.HasPrefix .URL "http" }}target="_blank" rel="noopener"{{ end }}>
+        {{ .Name }}
+      </a>
+      {{ end }}
+    </div>
+
+    {{/* Right: Brand/Logo */}}
+    <a href="{{ .Site.BaseURL }}" class="nav-brand" aria-label="Home">
+      {{ .Site.Title }}
+    </a>
+
+  </nav>
+</header>

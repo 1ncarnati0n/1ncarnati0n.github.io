@@ -1,0 +1,55 @@
+{{ define "main" }}
+
+<article class="project-detail">
+
+  {{/* Hero Image */}}
+  {{ with .Params.thumbnail }}
+  <div class="project-hero">
+    <img src="{{ . | relURL }}" alt="{{ $.Title }}" loading="lazy">
+  </div>
+  {{ end }}
+
+  {{/* Project Info */}}
+  <header class="project-info">
+    <h1 class="project-title">{{ .Title }}</h1>
+
+    <div class="project-meta">
+      {{ with .Params.category }}
+      <span class="project-meta-item">{{ . }}</span>
+      {{ end }}
+      {{ with .Params.year }}
+      <span class="project-meta-item">{{ . }}</span>
+      {{ end }}
+      {{ with .Params.location }}
+      <span class="project-meta-item">{{ . }}</span>
+      {{ end }}
+      {{ with .Params.role }}
+      <span class="project-meta-item">{{ . }}</span>
+      {{ end }}
+    </div>
+  </header>
+
+  {{/* Content */}}
+  <div class="project-content prose">
+    {{ .Content }}
+  </div>
+
+  {{/* Navigation */}}
+  <nav class="project-nav">
+    {{ with .PrevInSection }}
+    <a href="{{ .RelPermalink }}" class="project-nav-link project-nav-prev">
+      <span class="project-nav-label">&larr; Previous</span>
+      <span class="project-nav-title">{{ .Title }}</span>
+    </a>
+    {{ end }}
+    {{ with .NextInSection }}
+    <a href="{{ .RelPermalink }}" class="project-nav-link project-nav-next">
+      <span class="project-nav-label">Next &rarr;</span>
+      <span class="project-nav-title">{{ .Title }}</span>
+    </a>
+    {{ end }}
+  </nav>
+
+</article>
+
+{{ end }}
