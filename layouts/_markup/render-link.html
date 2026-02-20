@@ -1,6 +1,0 @@
-{{/* Enhanced link rendering - supports relative links from Obsidian */}}
-<a href="{{ .Destination | safeURL }}"
-  {{ with .Title }} title="{{ . }}"{{ end }}
-  {{ if strings.HasPrefix .Destination "http" }} target="_blank" rel="noopener"{{ end }}>
-  {{- .Text | safeHTML -}}
-</a>

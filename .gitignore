@@ -1,7 +1,7 @@
-# Hugo
-/public/
-/resources/_gen/
-/.hugo_build.lock
+# Astro
+dist/
+node_modules/
+.astro/
 
 # OS
 .DS_Store
@@ -18,4 +18,9 @@ Thumbs.db
 .obsidian/workspace-mobile.json
 .obsidian/plugins/
 .obsidian/themes/
+.obsidian/hotkeys.json
 .trash/
+
+# Env
+.env
+.env.*

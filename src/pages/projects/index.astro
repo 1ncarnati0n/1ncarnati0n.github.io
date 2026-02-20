@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import ProjectFilter from "../../components/ProjectFilter";
+import { getCollection } from "astro:content";
+import { sortProjects, getProjectCategories, cleanSlug } from "../../lib/content-utils";
+
+const allProjects = await getCollection("projects");
+const projects = sortProjects(allProjects);
+const categories = getProjectCategories(allProjects);
+---
+
+<BaseLayout title="Projects" description="건축 프로젝트 포트폴리오">
+  <div class="projects-page container">
+    <h1 class="page-title">Projects</h1>
+    <p class="page-desc">건축 설계 및 시각화 프로젝트</p>
+
+    <ProjectFilter categories={categories} client:load />
+
+    <div class="project-grid" id="project-grid">
+      {
+        projects.map((project) => (
+          <div data-category={project.data.category}>
+            <ProjectCard
+              title={project.data.title}
+              slug={cleanSlug(project.id)}
+              thumbnail={project.data.thumbnail}
+              category={project.data.category}
+              description={project.data.description}
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .projects-page {
+    padding-top: var(--spacing-xl);
+    padding-bottom: var(--spacing-2xl);
+  }
+  .page-title {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-xs);
+  }
+  .page-desc {
+    color: var(--gray);
+    margin-bottom: var(--spacing-xl);
+  }
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+  }
+  @media (max-width: 1024px) {
+    .project-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 600px) {
+    .project-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

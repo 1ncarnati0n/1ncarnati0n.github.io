@@ -1,0 +1,98 @@
+/* ========================================
+   Obsidian Callout Styles
+   Based on Quartz callout rendering
+   ======================================== */
+
+.callout {
+  margin: var(--spacing-md) 0;
+  border-radius: var(--radius-md);
+  border: 1px solid color-mix(in srgb, var(--gray) 20%, transparent);
+  overflow: hidden;
+}
+
+.callout .callout-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-header);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.callout .callout-title-inner {
+  flex: 1;
+}
+
+.callout .callout-title-inner p {
+  margin: 0;
+  display: inline;
+}
+
+.callout .callout-content {
+  padding: 0 var(--spacing-md) var(--spacing-md);
+  font-size: 0.95rem;
+}
+
+.callout .callout-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Collapse behavior */
+.callout.is-collapsible .callout-title {
+  cursor: pointer;
+}
+
+.callout.is-collapsed .callout-content {
+  display: none;
+}
+
+.callout .fold-callout-icon::after {
+  content: "▾";
+  font-size: 0.8em;
+  transition: transform var(--transition);
+}
+
+.callout.is-collapsed .fold-callout-icon::after {
+  content: "▸";
+}
+
+/* Callout icon placeholder — uses CSS to differentiate types */
+.callout .callout-icon::before {
+  font-size: 1.1em;
+}
+
+/* -- Type-specific colors -- */
+.callout.note      { background: #e8f0fe20; border-left: 4px solid #4a86c8; }
+.callout.abstract  { background: #e0f2f120; border-left: 4px solid #00897b; }
+.callout.info      { background: #e3f2fd20; border-left: 4px solid #1976d2; }
+.callout.todo      { background: #e3f2fd20; border-left: 4px solid #1976d2; }
+.callout.tip       { background: #e8f5e920; border-left: 4px solid #2e7d32; }
+.callout.success   { background: #e8f5e920; border-left: 4px solid #388e3c; }
+.callout.question  { background: #fff8e120; border-left: 4px solid #f9a825; }
+.callout.warning   { background: #fff3e020; border-left: 4px solid #ef6c00; }
+.callout.failure   { background: #fbe9e720; border-left: 4px solid #c62828; }
+.callout.danger    { background: #fbe9e720; border-left: 4px solid #b71c1c; }
+.callout.bug       { background: #fce4ec20; border-left: 4px solid #ad1457; }
+.callout.example   { background: #ede7f620; border-left: 4px solid #6a1b9a; }
+.callout.quote     { background: color-mix(in srgb, var(--gray) 8%, transparent); border-left: 4px solid var(--gray); }
+
+/* -- Callout icons (unicode) -- */
+.callout.note .callout-icon::before      { content: "📝"; }
+.callout.abstract .callout-icon::before  { content: "📋"; }
+.callout.info .callout-icon::before      { content: "ℹ️"; }
+.callout.todo .callout-icon::before      { content: "☑️"; }
+.callout.tip .callout-icon::before       { content: "💡"; }
+.callout.success .callout-icon::before   { content: "✅"; }
+.callout.question .callout-icon::before  { content: "❓"; }
+.callout.warning .callout-icon::before   { content: "⚠️"; }
+.callout.failure .callout-icon::before   { content: "❌"; }
+.callout.danger .callout-icon::before    { content: "🔥"; }
+.callout.bug .callout-icon::before       { content: "🐛"; }
+.callout.example .callout-icon::before   { content: "📖"; }
+.callout.quote .callout-icon::before     { content: "💬"; }
+
+/* Dark mode adjustments */
+[data-theme="dark"] .callout {
+  border-color: color-mix(in srgb, var(--gray) 30%, transparent);
+}

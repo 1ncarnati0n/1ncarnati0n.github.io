@@ -1,0 +1,86 @@
+/* ========================================
+   Code Block Styles — rehype-pretty-code
+   Dual theme: github-light / github-dark
+   ======================================== */
+
+/* Code block container */
+figure[data-rehype-pretty-code-figure] {
+  margin: var(--spacing-md) 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--gray) 20%, transparent);
+}
+
+figure[data-rehype-pretty-code-figure] pre {
+  padding: var(--spacing-md);
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  tab-size: 2;
+}
+
+figure[data-rehype-pretty-code-figure] code {
+  display: grid;
+  font-family: var(--font-code);
+}
+
+/* Title bar (if present) */
+figure[data-rehype-pretty-code-figure] figcaption {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-code);
+  font-size: 0.8rem;
+  color: var(--gray);
+  border-bottom: 1px solid color-mix(in srgb, var(--gray) 20%, transparent);
+}
+
+/* Line numbers */
+code[data-line-numbers] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 1.5rem;
+  margin-right: var(--spacing-md);
+  text-align: right;
+  color: var(--gray);
+  font-size: 0.8em;
+}
+
+code[data-line-numbers] {
+  counter-reset: line;
+}
+
+/* Highlighted lines */
+[data-line][data-highlighted-line] {
+  background: color-mix(in srgb, var(--highlight) 30%, transparent);
+  border-left: 3px solid var(--tertiary);
+  padding-left: calc(var(--spacing-md) - 3px);
+}
+
+/* Dual theme support */
+[data-theme="light"] pre[data-theme="dark"],
+[data-theme="light"] code[data-theme="dark"],
+html:not([data-theme="dark"]) pre[data-theme="dark"],
+html:not([data-theme="dark"]) code[data-theme="dark"] {
+  display: none;
+}
+
+[data-theme="dark"] pre[data-theme="light"],
+[data-theme="dark"] code[data-theme="light"] {
+  display: none;
+}
+
+/* Default: show light theme */
+pre[data-theme="light"],
+code[data-theme="light"] {
+  display: block;
+}
+
+pre[data-theme="dark"],
+code[data-theme="dark"] {
+  display: none;
+}
+
+[data-theme="dark"] pre[data-theme="dark"],
+[data-theme="dark"] code[data-theme="dark"] {
+  display: block;
+}

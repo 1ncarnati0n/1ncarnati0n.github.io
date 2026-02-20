@@ -1,0 +1,124 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostItem from "../../components/PostItem.astro";
+import { getCollection } from "astro:content";
+import { sortPostsByDate, getPostCategory, cleanSlug } from "../../lib/content-utils";
+
+const allPosts = await getCollection("posts", ({ data }) => !data.draft);
+const posts = sortPostsByDate(allPosts);
+
+// Group posts by category
+const grouped = new Map<string, typeof posts>();
+for (const post of posts) {
+  const cat = getPostCategory(post.id);
+  if (!grouped.has(cat)) grouped.set(cat, []);
+  grouped.get(cat)!.push(post);
+}
+const categories = [...grouped.keys()].sort();
+---
+
+<BaseLayout title="Blog" description="블로그 글 목록">
+  <div class="posts-page container">
+    <h1 class="page-title">Blog</h1>
+    <p class="page-desc">기술 노트와 블로그 글 모음</p>
+
+    <!-- Category filter (static) -->
+    <nav class="category-nav">
+      <a href="#all" class="cat-link active" data-cat="all">전체</a>
+      {
+        categories.map((cat) => (
+          <a href={`#${cat}`} class="cat-link" data-cat={cat}>
+            {cat}
+            <span class="cat-count">{grouped.get(cat)!.length}</span>
+          </a>
+        ))
+      }
+    </nav>
+
+    <!-- All posts -->
+    <div class="post-list" id="post-list">
+      {
+        posts.map((post) => (
+          <div data-category={getPostCategory(post.id)}>
+            <PostItem
+              title={post.data.title}
+              slug={cleanSlug(post.id)}
+              date={post.data.date}
+              description={post.data.description}
+              tags={post.data.tags}
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // Client-side category filtering
+  const links = document.querySelectorAll<HTMLAnchorElement>(".cat-link");
+  const items = document.querySelectorAll<HTMLDivElement>("#post-list > div");
+
+  links.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const cat = link.dataset.cat;
+      links.forEach((l) => l.classList.remove("active"));
+      link.classList.add("active");
+
+      items.forEach((item) => {
+        if (cat === "all" || item.dataset.category === cat) {
+          item.style.display = "";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .posts-page {
+    padding-top: var(--spacing-xl);
+    padding-bottom: var(--spacing-2xl);
+    max-width: 800px;
+  }
+  .page-title {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-xs);
+  }
+  .page-desc {
+    color: var(--gray);
+    margin-bottom: var(--spacing-xl);
+  }
+  .category-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid color-mix(in srgb, var(--gray) 20%, transparent);
+  }
+  .cat-link {
+    font-family: var(--font-header);
+    font-size: 0.85rem;
+    padding: 4px 12px;
+    border-radius: var(--radius-sm);
+    color: var(--gray);
+    text-decoration: none;
+    text-transform: capitalize;
+    transition:
+      background var(--transition),
+      color var(--transition);
+  }
+  .cat-link:hover,
+  .cat-link.active {
+    background: color-mix(in srgb, var(--tertiary) 20%, transparent);
+    color: var(--text);
+    opacity: 1;
+  }
+  .cat-count {
+    font-size: 0.7rem;
+    opacity: 0.6;
+  }
+</style>

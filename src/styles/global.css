@@ -1,0 +1,237 @@
+/* ========================================
+   Design System — TechBlog 테마 기반
+   quartz.config.ts:22-53 컬러 변환
+   ======================================== */
+
+/* -- CSS Reset -- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* -- Custom Properties: Light Mode (default) -- */
+:root {
+  --bg: #f1eee6;
+  --bg-secondary: #ffffff;
+  --gray: #aaaaaa;
+  --text: #222222;
+  --text-heading: #111111;
+  --accent: #000000;
+  --tertiary: #e5b8a9;
+  --highlight: #cbcadb;
+  --text-highlight: #eacfc1;
+
+  --font-header: "Noto Sans KR", sans-serif;
+  --font-body: "Noto Serif KR", serif;
+  --font-code: "JetBrains Mono", monospace;
+
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 5rem;
+
+  --max-width: 1200px;
+  --content-width: 720px;
+  --sidebar-width: 240px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  --transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* -- Dark Mode -- */
+[data-theme="dark"] {
+  --bg: #292929;
+  --bg-secondary: #000000;
+  --gray: #646464;
+  --text: #d4d4d4;
+  --text-heading: #ffffff;
+  --accent: #ffffff;
+  --text-highlight: #e5b8a96a;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* -- Base Styles -- */
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background-color: var(--bg);
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-header);
+  color: var(--text-heading);
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity var(--transition);
+}
+
+a:hover {
+  opacity: 0.7;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+code {
+  font-family: var(--font-code);
+  font-size: 0.9em;
+}
+
+/* Inline code */
+:not(pre) > code {
+  background: var(--bg-secondary);
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--gray);
+}
+
+/* -- Layout Utilities -- */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* -- Header -- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid color-mix(in srgb, var(--gray) 30%, transparent);
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.site-logo {
+  font-family: var(--font-header);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  letter-spacing: -0.02em;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.site-nav a {
+  font-family: var(--font-header);
+  font-size: 0.9rem;
+  color: var(--text);
+  font-weight: 500;
+  position: relative;
+}
+
+.site-nav a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--tertiary);
+  transition: width var(--transition);
+}
+
+.site-nav a:hover::after,
+.site-nav a.active::after {
+  width: 100%;
+}
+
+/* -- Footer -- */
+.site-footer {
+  margin-top: var(--spacing-3xl);
+  padding: var(--spacing-xl) 0;
+  border-top: 1px solid color-mix(in srgb, var(--gray) 30%, transparent);
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--gray);
+}
+
+.site-footer a {
+  color: var(--text);
+}
+
+/* -- Selections -- */
+::selection {
+  background: var(--text-highlight);
+  color: var(--text-heading);
+}
+
+/* -- Scrollbar (webkit) -- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray);
+  border-radius: 3px;
+}
+
+/* -- Print -- */
+@media print {
+  .site-header,
+  .site-footer,
+  .toc-sidebar {
+    display: none;
+  }
+  body {
+    background: white;
+    color: black;
+  }
+}
