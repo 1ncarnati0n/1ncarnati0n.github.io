@@ -1,5 +1,5 @@
-# Astro 빌드 및 GitHub Pages 배포 워크플로우
-name: Deploy Astro site to Pages
+# Next.js 빌드 및 GitHub Pages 배포 워크플로우
+name: Deploy Next.js site to Pages
 
 on:
   push:
@@ -40,7 +40,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./out
 
   deploy:
     environment:

@@ -1,7 +1,7 @@
-# Astro
-dist/
+# Next.js
+.next/
+out/
 node_modules/
-.astro/
 
 # OS
 .DS_Store
@@ -24,3 +24,7 @@ Thumbs.db
 # Env
 .env
 .env.*
+
+# Legacy Astro
+dist/
+.astro/

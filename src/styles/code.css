@@ -1,45 +1,140 @@
 /* ========================================
    Code Block Styles — rehype-pretty-code
-   Dual theme: github-light / github-dark
+   VS Code style + Shiki v3 CSS variables
    ======================================== */
 
-/* Code block container */
+/* ── A) Shiki CSS Variable Theme Switching ── */
+
+code[data-theme*=" "],
+code[data-theme*=" "] span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
+
+[data-theme="dark"] code[data-theme*=" "],
+[data-theme="dark"] code[data-theme*=" "] span {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
+}
+
+/* ── B) VS Code Style Container ── */
+
 figure[data-rehype-pretty-code-figure] {
-  margin: 0;
+  margin: 1.5rem 0;
+  position: relative;
+  border-radius: var(--radius-md);
+  border: 1px solid color-mix(in srgb, var(--gray) 40%, transparent);
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
 }
 
 figure[data-rehype-pretty-code-figure] pre {
-  padding: 0 0.5rem;
+  margin: 0;
+  padding: 2.4rem 1rem 1rem;
   overflow-x: auto;
-  font-size: 0.85rem;
-  line-height: 1.6;
+  font-size: 0.84rem;
+  line-height: 1.65;
   tab-size: 2;
-  border-radius: 9px;
-  border: 1px solid var(--gray);
-  background: rgba(209, 209, 209, 0.09);
+  border: none;
+  border-radius: 0;
+  background: #fafafa;
+}
+
+[data-theme="dark"] figure[data-rehype-pretty-code-figure] pre {
+  background: #1e1e1e;
 }
 
 figure[data-rehype-pretty-code-figure] code {
   display: grid;
   font-family: var(--font-code);
-  padding: 0.5rem 0;
+  padding: 0;
 }
 
-/* Title badge (if present) */
-figure[data-rehype-pretty-code-figure] figcaption {
-  width: fit-content;
-  padding: 0.15rem 0.5rem;
+/* ── C) Language Label (::before pseudo-element) ── */
+
+figure[data-rehype-pretty-code-figure] pre::before {
+  content: attr(data-language);
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.15rem 0.6rem;
   font-family: var(--font-code);
-  font-size: 0.8rem;
-  color: var(--gray);
-  background: rgba(209, 209, 209, 0.09);
-  border: 1px solid var(--gray);
-  border-radius: 9px 9px 0 0;
-  border-bottom: none;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--gray);
+  border-radius: 0 0 var(--radius-sm) 0;
+  z-index: 1;
 }
 
-/* Line numbers */
+/* Language-specific colors */
+pre[data-language="python"]::before { background: #3776ab; }
+pre[data-language="csharp"]::before { background: #68217a; }
+pre[data-language="rust"]::before   { background: #dea584; color: #1a1a1a; }
+pre[data-language="jsx"]::before    { background: #61dafb; color: #1a1a1a; }
+pre[data-language="tsx"]::before    { background: #61dafb; color: #1a1a1a; }
+pre[data-language="bash"]::before   { background: #4eaa25; }
+pre[data-language="json"]::before   { background: #f5a623; color: #1a1a1a; }
+pre[data-language="yaml"]::before   { background: #cb171e; }
+pre[data-language="html"]::before   { background: #e34c26; }
+pre[data-language="css"]::before    { background: #1572b6; }
+pre[data-language="js"]::before,
+pre[data-language="javascript"]::before { background: #f7df1e; color: #1a1a1a; }
+pre[data-language="ts"]::before,
+pre[data-language="typescript"]::before { background: #3178c6; }
+
+/* ── D) Copy Button ── */
+
+figure[data-rehype-pretty-code-figure] .copy-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 1.55rem;
+  padding: 0;
+  border: none;
+  border-radius: 0 0 0 var(--radius-sm);
+  background: color-mix(in srgb, var(--gray) 20%, transparent);
+  color: var(--gray);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s, background 0.2s;
+  z-index: 2;
+}
+
+figure[data-rehype-pretty-code-figure]:hover .copy-btn {
+  opacity: 1;
+}
+
+figure[data-rehype-pretty-code-figure] .copy-btn:hover {
+  background: color-mix(in srgb, var(--gray) 35%, transparent);
+}
+
+figure[data-rehype-pretty-code-figure] .copy-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+figure[data-rehype-pretty-code-figure] .copy-btn.copied {
+  color: #4eaa25;
+}
+
+/* ── E) Line Numbers ── */
+
+code[data-line-numbers] {
+  counter-reset: line;
+}
+
 code[data-line-numbers] > [data-line]::before {
   counter-increment: line;
   content: counter(line);
@@ -47,46 +142,59 @@ code[data-line-numbers] > [data-line]::before {
   width: 1rem;
   margin-right: var(--spacing-md);
   text-align: right;
-  color: rgba(115, 138, 148, 0.6);
+  color: rgba(115, 138, 148, 0.4);
   font-size: 0.8em;
 }
 
-code[data-line-numbers] {
-  counter-reset: line;
-}
+/* ── F) Highlighted Lines ── */
 
-/* Highlighted lines */
 [data-line][data-highlighted-line] {
-  background: var(--highlight);
+  background: color-mix(in srgb, var(--highlight) 40%, transparent);
   border-left: 3px solid var(--accent);
   padding-left: calc(var(--spacing-md) - 3px);
 }
 
-/* Dual theme support */
-[data-theme="light"] pre[data-theme="dark"],
-[data-theme="light"] code[data-theme="dark"],
-html:not([data-theme="dark"]) pre[data-theme="dark"],
-html:not([data-theme="dark"]) code[data-theme="dark"] {
-  display: none;
+[data-theme="dark"] [data-line][data-highlighted-line] {
+  background: rgba(255, 255, 255, 0.06);
 }
 
-[data-theme="dark"] pre[data-theme="light"],
-[data-theme="dark"] code[data-theme="light"] {
-  display: none;
+/* ── G) Figcaption (title bar style) ── */
+
+figure[data-rehype-pretty-code-figure] figcaption {
+  padding: 0.4rem 1rem;
+  font-family: var(--font-code);
+  font-size: 0.78rem;
+  color: var(--text);
+  background: color-mix(in srgb, var(--gray) 12%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--gray) 30%, transparent);
 }
 
-/* Default: show light theme */
-pre[data-theme="light"],
-code[data-theme="light"] {
-  display: block;
+/* When figcaption exists, adjust pre top padding */
+figure[data-rehype-pretty-code-figure] figcaption + pre {
+  padding-top: 2.4rem;
 }
 
-pre[data-theme="dark"],
-code[data-theme="dark"] {
-  display: none;
+/* ── H) Inline Code ── */
+
+:not(pre) > code {
+  font-family: var(--font-code);
+  font-size: 0.85em;
+  padding: 0.15em 0.35em;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--gray) 15%, transparent);
 }
 
-[data-theme="dark"] pre[data-theme="dark"],
-[data-theme="dark"] code[data-theme="dark"] {
-  display: block;
+/* ── I) Scrollbar Styling ── */
+
+figure[data-rehype-pretty-code-figure] pre::-webkit-scrollbar {
+  height: 6px;
+}
+
+figure[data-rehype-pretty-code-figure] pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+figure[data-rehype-pretty-code-figure] pre::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--gray) 40%, transparent);
+  border-radius: 3px;
 }

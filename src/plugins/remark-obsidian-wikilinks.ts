@@ -61,7 +61,8 @@ export const remarkObsidianWikilinks: Plugin<[], Root> = () => {
           }
 
           // Regular wikilink: [[page]] or [[page|alias]] or [[page#heading]]
-          const url = `/posts/${fp}${anchor}`;
+          // Add trailing slash for Next.js trailingSlash: true compatibility
+          const url = anchor ? `/posts/${fp}/${anchor}` : `/posts/${fp}/`;
 
           return {
             type: "link",
