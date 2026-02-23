@@ -1,0 +1,18 @@
+export default function NotFound() {
+  return (
+    <>
+      <div className="not-found container">
+        <h1>404</h1>
+        <p>페이지를 찾을 수 없습니다.</p>
+        <a href="/">&larr; 홈으로 돌아가기</a>
+      </div>
+
+      <style>{`
+        .not-found { text-align: center; padding: var(--spacing-3xl) 0; }
+        .not-found h1 { font-size: 6rem; color: var(--tertiary); margin-bottom: var(--spacing-md); }
+        .not-found p { color: var(--gray); margin-bottom: var(--spacing-lg); font-size: 1.1rem; }
+        .not-found a { font-family: var(--font-header); color: var(--text); }
+      `}</style>
+    </>
+  );
+}

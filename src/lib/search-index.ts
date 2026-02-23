@@ -1,11 +1,11 @@
 /**
  * Build-time search index generation.
- * Called from a static endpoint to produce /search-index.json
+ * Called from scripts/generate-search-index.mjs and SearchOverlay
  */
-import type { CollectionEntry } from "astro:content";
+import type { Post, Project } from "./types";
 import { getPostCategory, deriveTitle, cleanSlug } from "./content-utils";
 
-interface SearchItem {
+export interface SearchItem {
   title: string;
   slug: string;
   description: string;
@@ -14,8 +14,8 @@ interface SearchItem {
 }
 
 export function buildSearchIndex(
-  posts: CollectionEntry<"posts">[],
-  projects: CollectionEntry<"projects">[],
+  posts: Post[],
+  projects: Project[],
 ): SearchItem[] {
   const items: SearchItem[] = [];
 

@@ -1,7 +1,7 @@
 import readingTime from "reading-time";
-import type { CollectionEntry } from "astro:content";
+import type { Post, Project } from "./types";
 
-/** Remove .md extension from Astro 5 collection IDs */
+/** Remove .md extension from collection IDs */
 export function cleanSlug(id: string): string {
   return id.replace(/\.md$/, "");
 }
@@ -14,9 +14,7 @@ export function getReadingTime(content: string): string {
 }
 
 /** Sort posts by date (newest first), fallback to title */
-export function sortPostsByDate(
-  posts: CollectionEntry<"posts">[],
-): CollectionEntry<"posts">[] {
+export function sortPostsByDate(posts: Post[]): Post[] {
   return posts.sort((a, b) => {
     const dateA = a.data.date?.getTime() ?? 0;
     const dateB = b.data.date?.getTime() ?? 0;
@@ -25,9 +23,7 @@ export function sortPostsByDate(
 }
 
 /** Sort projects by weight (higher first), then by date */
-export function sortProjects(
-  projects: CollectionEntry<"projects">[],
-): CollectionEntry<"projects">[] {
+export function sortProjects(projects: Project[]): Project[] {
   return projects.sort((a, b) => {
     const weightDiff = (b.data.weight ?? 0) - (a.data.weight ?? 0);
     if (weightDiff !== 0) return weightDiff;
@@ -45,7 +41,7 @@ export function getPostCategory(slug: string): string {
 }
 
 /** Get unique tags from a collection of posts */
-export function getAllTags(posts: CollectionEntry<"posts">[]): string[] {
+export function getAllTags(posts: Post[]): string[] {
   const tags = new Set<string>();
   posts.forEach((post) => {
     post.data.tags?.forEach((tag) => tags.add(tag));
@@ -54,9 +50,7 @@ export function getAllTags(posts: CollectionEntry<"posts">[]): string[] {
 }
 
 /** Get unique project categories */
-export function getProjectCategories(
-  projects: CollectionEntry<"projects">[],
-): string[] {
+export function getProjectCategories(projects: Project[]): string[] {
   const cats = new Set<string>();
   projects.forEach((p) => {
     if (p.data.category) cats.add(p.data.category);
@@ -65,13 +59,24 @@ export function getProjectCategories(
 }
 
 /** Format date for display */
-export function formatDate(date: Date | undefined): string {
+export function formatDate(date: Date | undefined | null): string {
   if (!date) return "";
   return date.toLocaleDateString("ko-KR", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
+}
+
+/** Group posts by category into a Map */
+export function groupPostsByCategory(posts: Post[]): Map<string, Post[]> {
+  const grouped = new Map<string, Post[]>();
+  for (const post of posts) {
+    const cat = getPostCategory(post.id);
+    if (!grouped.has(cat)) grouped.set(cat, []);
+    grouped.get(cat)!.push(post);
+  }
+  return grouped;
 }
 
 /** Derive title from filename if frontmatter title is missing */

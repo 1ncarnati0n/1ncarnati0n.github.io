@@ -38,7 +38,9 @@
 
   --max-width: 1200px;
   --content-width: 720px;
-  --sidebar-width: 240px;
+  --sidebar-width: 260px;
+  --toc-width: 220px;
+  --header-height: 60px;
 
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -153,7 +155,7 @@ code {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 60px;
+  height: var(--header-height);
 }
 
 .site-logo {
@@ -197,6 +199,110 @@ code {
 .site-nav a:hover::after,
 .site-nav a.active::after {
   width: 100%;
+}
+
+/* -- Header Actions -- */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.header-actions a {
+  color: var(--text);
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+}
+
+.header-actions a:hover {
+  color: var(--text-heading);
+  text-decoration: none;
+  opacity: 0.8;
+}
+
+/* -- Hamburger Toggle -- */
+.sidebar-toggle {
+  display: none;
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  color: var(--text);
+  line-height: 0;
+}
+
+@media (max-width: 1024px) {
+  .sidebar-toggle {
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* -- Search Button with Kbd -- */
+.search-btn .kbd-badge {
+  font-family: var(--font-header);
+  font-size: 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--gray) 30%, transparent);
+  border-radius: 3px;
+  padding: 1px 5px;
+  margin-left: 6px;
+  color: var(--gray);
+  line-height: 1.3;
+}
+
+@media (max-width: 640px) {
+  .search-btn .kbd-badge {
+    display: none;
+  }
+}
+
+/* -- Buttons -- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: 10px 24px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-header);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    color var(--transition),
+    border-color var(--transition),
+    transform 0.15s ease;
+}
+
+.btn:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  color: var(--bg);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--gray) 40%, transparent);
+}
+
+.btn-secondary:hover {
+  border-color: var(--text);
+  color: var(--text-heading);
 }
 
 /* -- Footer -- */

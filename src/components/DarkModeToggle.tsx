@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 export default function DarkModeToggle() {
@@ -31,7 +33,7 @@ export default function DarkModeToggle() {
         alignItems: "center",
       }}
     >
-      {theme === "light" ? "🌙" : "☀️"}
+      {theme === "light" ? "\u{1F319}" : "\u{2600}\u{FE0F}"}
     </button>
   );
 }

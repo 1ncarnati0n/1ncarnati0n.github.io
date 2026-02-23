@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, useRef, useCallback } from "react";
 
 interface SearchItem {
@@ -93,7 +95,7 @@ export default function SearchOverlay() {
           <ul style={listStyle}>
             {results.map((item) => (
               <li key={item.slug}>
-                <a href={item.slug.startsWith("project") ? `/projects/${item.slug}/` : `/posts/${item.slug}/`} style={resultStyle}>
+                <a href={item.slug.startsWith("project") ? `/${item.slug}/` : `/posts/${item.slug}/`} style={resultStyle}>
                   <span style={{ fontSize: "0.75rem", color: "var(--gray)", fontFamily: "var(--font-header)" }}>
                     {item.category}
                   </span>
