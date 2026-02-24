@@ -11,8 +11,7 @@ export default function TagList({ tags }: Props) {
         {tags.map((tag) => (
           <li key={tag}>
             <a href={`/tags/${encodeURIComponent(tag)}/`} className="tag-link">
-              <span aria-hidden="true">#</span>
-              {tag}
+              #{tag}
             </a>
           </li>
         ))}
@@ -22,39 +21,24 @@ export default function TagList({ tags }: Props) {
         .tag-list {
           display: flex;
           flex-wrap: wrap;
-          gap: 0.44rem;
+          gap: 0.5rem;
           list-style: none;
           margin: 0;
           padding: 0;
         }
 
         .tag-link {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.22rem;
-          min-height: 28px;
-          font-size: 0.74rem;
+          color: var(--gray);
           font-family: var(--font-header);
-          font-weight: 500;
-          color: color-mix(in srgb, var(--text) 78%, transparent);
-          border: 1px solid color-mix(in srgb, var(--line) 88%, transparent);
-          background: color-mix(in srgb, var(--surface-raised) 93%, transparent);
-          padding: 0.28rem 0.62rem;
-          border-radius: 999px;
-          transition: border-color var(--transition), background var(--transition), color var(--transition);
+          font-size: 0.78rem;
+          font-weight: 400;
+          text-decoration: none;
           text-transform: lowercase;
-        }
-
-        .tag-link span {
-          color: color-mix(in srgb, var(--tertiary) 70%, transparent);
-          font-family: var(--font-code);
-          font-size: 0.69rem;
+          transition: color var(--transition);
         }
 
         .tag-link:hover {
-          color: var(--text-heading);
-          border-color: color-mix(in srgb, var(--tertiary) 42%, transparent);
-          background: color-mix(in srgb, var(--tertiary) 15%, transparent);
+          color: var(--tertiary);
         }
       `}</style>
     </>

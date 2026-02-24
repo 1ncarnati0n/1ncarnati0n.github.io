@@ -5,24 +5,24 @@
 .prose {
   max-width: var(--content-width);
   font-size: 1rem;
-  line-height: 1.6rem;
+  line-height: 1.75;
 }
 
 .prose h1 {
   font-size: 1.75rem;
-  margin-top: 2.25rem;
+  margin-top: 2.5rem;
   margin-bottom: var(--spacing-md);
 }
 
 .prose h2 {
   font-size: 1.4rem;
-  margin-top: 1.9rem;
+  margin-top: 2.2rem;
   margin-bottom: var(--spacing-md);
 }
 
 .prose h3 {
   font-size: 1.12rem;
-  margin-top: 1.62rem;
+  margin-top: 1.8rem;
   margin-bottom: 1rem;
 }
 
@@ -53,8 +53,8 @@
 .prose blockquote {
   margin: var(--spacing-md) 0;
   padding: var(--spacing-sm) var(--spacing-lg);
-  border-left: 3px solid var(--accent);
-  color: color-mix(in srgb, var(--text) 80%, transparent);
+  border-left: 2px solid var(--line);
+  color: color-mix(in srgb, var(--text) 75%, transparent);
 }
 
 .prose table {
@@ -75,30 +75,29 @@
 .prose th {
   font-family: var(--font-header);
   font-weight: 600;
-  border-bottom: 1px solid color-mix(in srgb, var(--gray) 30%, transparent);
+  border-bottom: 1px solid var(--line);
 }
 
 .prose hr {
   border: none;
   height: 1px;
-  background: color-mix(in srgb, var(--gray) 30%, transparent);
+  background: var(--line);
   margin: var(--spacing-xl) 0;
 }
 
 .prose img {
   margin: var(--spacing-md) 0;
-  box-shadow: var(--shadow-sm);
 }
 
 .prose a {
   color: var(--accent);
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 30%, transparent);
   text-underline-offset: 3px;
   transition: text-decoration-color var(--transition);
 }
 
 .prose a:hover {
-  text-decoration: underline;
   text-decoration-color: var(--accent);
 }
 

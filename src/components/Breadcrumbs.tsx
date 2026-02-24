@@ -59,25 +59,21 @@ export default function Breadcrumbs({ items }: Props) {
 
         .breadcrumbs-item + .breadcrumbs-item::before {
           content: "/";
-          color: color-mix(in srgb, var(--gray) 60%, transparent);
+          color: color-mix(in srgb, var(--gray) 50%, transparent);
           font-family: var(--font-code);
           font-size: 0.64rem;
         }
 
         .breadcrumbs a {
-          color: color-mix(in srgb, var(--text) 76%, transparent);
-          padding: 0.16rem 0.46rem;
-          border-radius: 999px;
-          border: 1px solid color-mix(in srgb, var(--line) 88%, transparent);
-          background: color-mix(in srgb, var(--surface-raised) 93%, transparent);
+          color: var(--gray);
           text-decoration: none;
-          transition: border-color var(--transition), background var(--transition), color var(--transition);
+          transition: color var(--transition);
         }
 
         .breadcrumbs a:hover {
           color: var(--text-heading);
-          border-color: color-mix(in srgb, var(--accent) 42%, transparent);
-          background: color-mix(in srgb, var(--accent) 12%, transparent);
+          text-decoration: underline;
+          text-underline-offset: 0.2em;
         }
 
         .current {
@@ -89,10 +85,6 @@ export default function Breadcrumbs({ items }: Props) {
         @media (max-width: 760px) {
           .breadcrumbs {
             margin-bottom: var(--spacing-sm);
-          }
-
-          .breadcrumbs a {
-            padding: 0.14rem 0.4rem;
           }
         }
       `}</style>

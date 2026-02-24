@@ -98,7 +98,7 @@ export default function SearchOverlay() {
       <div className="search-overlay-wrap" role="dialog" aria-modal="true" aria-label="검색">
         <section className="search-overlay-modal" onClick={(event) => event.stopPropagation()}>
           <header className="search-overlay-head">
-            <p>Search Archive</p>
+            <p>Search</p>
             <button type="button" onClick={closeOverlay} aria-label="검색 닫기">
               ESC
             </button>
@@ -151,9 +151,7 @@ export default function SearchOverlay() {
           position: fixed;
           inset: 0;
           z-index: 140;
-          background: rgba(8, 13, 18, 0.45);
-          backdrop-filter: blur(4px);
-          -webkit-backdrop-filter: blur(4px);
+          background: rgba(0, 0, 0, 0.3);
         }
 
         .search-overlay-wrap {
@@ -168,9 +166,9 @@ export default function SearchOverlay() {
 
         .search-overlay-modal {
           width: min(680px, 100%);
-          border: 1px solid color-mix(in srgb, var(--line) 90%, transparent);
+          border: 1px solid var(--line);
           border-radius: var(--radius-lg);
-          background: color-mix(in srgb, var(--surface) 97%, transparent);
+          background: var(--bg);
           box-shadow: var(--shadow-md);
           overflow: hidden;
         }
@@ -181,22 +179,21 @@ export default function SearchOverlay() {
           justify-content: space-between;
           gap: var(--spacing-sm);
           padding: 0.72rem 0.86rem;
-          border-bottom: 1px solid color-mix(in srgb, var(--line) 90%, transparent);
-          background: color-mix(in srgb, var(--surface-raised) 95%, transparent);
+          border-bottom: 1px solid var(--line);
         }
 
         .search-overlay-head p {
           color: var(--gray);
           font-family: var(--font-code);
-          font-size: 0.68rem;
-          letter-spacing: 0.11em;
+          font-size: 0.72rem;
+          letter-spacing: 0.08em;
           text-transform: uppercase;
         }
 
         .search-overlay-head button {
-          border: 1px solid color-mix(in srgb, var(--line) 88%, transparent);
+          border: 1px solid var(--line);
           border-radius: var(--radius-sm);
-          background: color-mix(in srgb, var(--surface) 94%, transparent);
+          background: transparent;
           color: var(--gray);
           font-family: var(--font-code);
           font-size: 0.65rem;
@@ -210,7 +207,7 @@ export default function SearchOverlay() {
           align-items: center;
           gap: var(--spacing-sm);
           padding: 0.82rem 0.9rem;
-          border-bottom: 1px solid color-mix(in srgb, var(--line) 90%, transparent);
+          border-bottom: 1px solid var(--line);
           color: var(--gray);
         }
 
@@ -240,27 +237,27 @@ export default function SearchOverlay() {
         .search-result-list {
           list-style: none;
           display: grid;
-          gap: 4px;
-          padding: 0.25rem;
+          gap: 0;
+          padding: 0;
         }
 
         .search-result-item {
           display: grid;
           gap: 0.25rem;
-          border: 1px solid color-mix(in srgb, var(--line) 88%, transparent);
-          border-radius: var(--radius-sm);
-          background: color-mix(in srgb, var(--surface-raised) 95%, transparent);
           padding: 0.62rem 0.72rem;
+          border-bottom: 1px solid var(--line);
           color: var(--text);
           text-decoration: none;
-          transition: border-color var(--transition), background var(--transition), transform 0.14s ease;
+          transition: background var(--transition);
+        }
+
+        .search-result-item:last-child {
+          border-bottom: none;
         }
 
         .search-result-item:hover {
           color: var(--text);
-          border-color: color-mix(in srgb, var(--accent) 42%, transparent);
-          background: color-mix(in srgb, var(--accent) 10%, var(--surface-raised));
-          transform: translateY(-1px);
+          background: var(--surface);
         }
 
         .search-result-top {
@@ -273,12 +270,8 @@ export default function SearchOverlay() {
           color: var(--gray);
           font-family: var(--font-code);
           font-size: 0.64rem;
-          letter-spacing: 0.09em;
+          letter-spacing: 0.06em;
           text-transform: uppercase;
-          border: 1px solid color-mix(in srgb, var(--line) 88%, transparent);
-          border-radius: 999px;
-          padding: 0.16rem 0.45rem;
-          background: color-mix(in srgb, var(--surface) 92%, transparent);
           flex-shrink: 0;
         }
 
@@ -291,7 +284,7 @@ export default function SearchOverlay() {
         }
 
         .search-result-item p {
-          color: color-mix(in srgb, var(--text) 74%, transparent);
+          color: color-mix(in srgb, var(--text) 60%, transparent);
           font-size: 0.8rem;
           line-height: 1.5;
         }

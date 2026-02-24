@@ -4,11 +4,10 @@ export default function Footer() {
   return (
     <footer className="site-footer">
       <div className="container">
-        <div className="site-footer-grid">
-          <div>
-            <p className="footer-title">1ncarnati0n Studio</p>
-            <p className="footer-note">Architecture portfolio and technical archive focused on practical execution.</p>
-          </div>
+        <div className="site-footer-inner">
+          <p className="footer-left">
+            1ncarnati0n &middot; Seoul &middot; {year}
+          </p>
 
           <nav className="footer-links" aria-label="푸터 링크">
             <a href="/projects/">Projects</a>
@@ -18,11 +17,6 @@ export default function Footer() {
               GitHub
             </a>
           </nav>
-
-          <div className="footer-meta">
-            <p>Seoul / Remote</p>
-            <p>&copy; {year} 1ncarnati0n</p>
-          </div>
         </div>
       </div>
     </footer>

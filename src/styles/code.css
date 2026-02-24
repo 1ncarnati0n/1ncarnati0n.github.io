@@ -3,7 +3,7 @@
    VS Code style + Shiki v3 CSS variables
    ======================================== */
 
-/* ── A) Shiki CSS Variable Theme Switching ── */
+/* -- A) Shiki CSS Variable Theme Switching -- */
 
 code[data-theme*=" "],
 code[data-theme*=" "] span {
@@ -17,14 +17,13 @@ code[data-theme*=" "] span {
   background-color: var(--shiki-dark-bg);
 }
 
-/* ── B) VS Code Style Container ── */
+/* -- B) Code Block Container -- */
 
 figure[data-rehype-pretty-code-figure] {
   margin: 1.5rem 0;
   position: relative;
   border-radius: var(--radius-md);
-  border: 1px solid color-mix(in srgb, var(--gray) 40%, transparent);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--line);
   overflow: hidden;
 }
 
@@ -50,7 +49,7 @@ figure[data-rehype-pretty-code-figure] code {
   padding: 0;
 }
 
-/* ── C) Language Label (::before pseudo-element) ── */
+/* -- C) Language Label -- */
 
 figure[data-rehype-pretty-code-figure] pre::before {
   content: attr(data-language);
@@ -59,33 +58,33 @@ figure[data-rehype-pretty-code-figure] pre::before {
   left: 0;
   padding: 0.15rem 0.6rem;
   font-family: var(--font-code);
-  font-size: 0.7rem;
-  font-weight: 600;
+  font-size: 0.65rem;
+  font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #fff;
-  background: var(--gray);
+  color: var(--gray);
+  background: var(--surface);
   border-radius: 0 0 var(--radius-sm) 0;
   z-index: 1;
 }
 
 /* Language-specific colors */
-pre[data-language="python"]::before { background: #3776ab; }
-pre[data-language="csharp"]::before { background: #68217a; }
+pre[data-language="python"]::before { background: #3776ab; color: #fff; }
+pre[data-language="csharp"]::before { background: #68217a; color: #fff; }
 pre[data-language="rust"]::before   { background: #dea584; color: #1a1a1a; }
 pre[data-language="jsx"]::before    { background: #61dafb; color: #1a1a1a; }
 pre[data-language="tsx"]::before    { background: #61dafb; color: #1a1a1a; }
-pre[data-language="bash"]::before   { background: #4eaa25; }
+pre[data-language="bash"]::before   { background: #4eaa25; color: #fff; }
 pre[data-language="json"]::before   { background: #f5a623; color: #1a1a1a; }
-pre[data-language="yaml"]::before   { background: #cb171e; }
-pre[data-language="html"]::before   { background: #e34c26; }
-pre[data-language="css"]::before    { background: #1572b6; }
+pre[data-language="yaml"]::before   { background: #cb171e; color: #fff; }
+pre[data-language="html"]::before   { background: #e34c26; color: #fff; }
+pre[data-language="css"]::before    { background: #1572b6; color: #fff; }
 pre[data-language="js"]::before,
 pre[data-language="javascript"]::before { background: #f7df1e; color: #1a1a1a; }
 pre[data-language="ts"]::before,
-pre[data-language="typescript"]::before { background: #3178c6; }
+pre[data-language="typescript"]::before { background: #3178c6; color: #fff; }
 
-/* ── D) Copy Button ── */
+/* -- D) Copy Button -- */
 
 figure[data-rehype-pretty-code-figure] .copy-btn {
   position: absolute;
@@ -99,11 +98,11 @@ figure[data-rehype-pretty-code-figure] .copy-btn {
   padding: 0;
   border: none;
   border-radius: 0 0 0 var(--radius-sm);
-  background: color-mix(in srgb, var(--gray) 20%, transparent);
+  background: transparent;
   color: var(--gray);
   cursor: pointer;
   opacity: 0;
-  transition: opacity 0.2s, background 0.2s;
+  transition: opacity 0.2s;
   z-index: 2;
 }
 
@@ -112,7 +111,7 @@ figure[data-rehype-pretty-code-figure]:hover .copy-btn {
 }
 
 figure[data-rehype-pretty-code-figure] .copy-btn:hover {
-  background: color-mix(in srgb, var(--gray) 35%, transparent);
+  color: var(--text-heading);
 }
 
 figure[data-rehype-pretty-code-figure] .copy-btn svg {
@@ -129,7 +128,7 @@ figure[data-rehype-pretty-code-figure] .copy-btn.copied {
   color: #4eaa25;
 }
 
-/* ── E) Line Numbers ── */
+/* -- E) Line Numbers -- */
 
 code[data-line-numbers] {
   counter-reset: line;
@@ -146,45 +145,44 @@ code[data-line-numbers] > [data-line]::before {
   font-size: 0.8em;
 }
 
-/* ── F) Highlighted Lines ── */
+/* -- F) Highlighted Lines -- */
 
 [data-line][data-highlighted-line] {
   background: color-mix(in srgb, var(--highlight) 40%, transparent);
-  border-left: 3px solid var(--accent);
-  padding-left: calc(var(--spacing-md) - 3px);
+  border-left: 2px solid var(--tertiary);
+  padding-left: calc(var(--spacing-md) - 2px);
 }
 
 [data-theme="dark"] [data-line][data-highlighted-line] {
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* ── G) Figcaption (title bar style) ── */
+/* -- G) Figcaption -- */
 
 figure[data-rehype-pretty-code-figure] figcaption {
   padding: 0.4rem 1rem;
   font-family: var(--font-code);
   font-size: 0.78rem;
   color: var(--text);
-  background: color-mix(in srgb, var(--gray) 12%, transparent);
-  border-bottom: 1px solid color-mix(in srgb, var(--gray) 30%, transparent);
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
 }
 
-/* When figcaption exists, adjust pre top padding */
 figure[data-rehype-pretty-code-figure] figcaption + pre {
   padding-top: 2.4rem;
 }
 
-/* ── H) Inline Code ── */
+/* -- H) Inline Code -- */
 
 :not(pre) > code {
   font-family: var(--font-code);
   font-size: 0.85em;
   padding: 0.15em 0.35em;
   border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--gray) 15%, transparent);
+  background: var(--surface);
 }
 
-/* ── I) Scrollbar Styling ── */
+/* -- I) Scrollbar Styling -- */
 
 figure[data-rehype-pretty-code-figure] pre::-webkit-scrollbar {
   height: 6px;
@@ -195,6 +193,6 @@ figure[data-rehype-pretty-code-figure] pre::-webkit-scrollbar-track {
 }
 
 figure[data-rehype-pretty-code-figure] pre::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--gray) 40%, transparent);
+  background: color-mix(in srgb, var(--gray) 30%, transparent);
   border-radius: 3px;
 }

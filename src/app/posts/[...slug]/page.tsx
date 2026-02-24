@@ -71,27 +71,19 @@ export default async function PostPage({
         />
 
         <header className="post-header">
-          <p className="post-kicker">{category}</p>
           <h1>{displayTitle}</h1>
 
-          <div className="post-meta">
+          <p className="post-meta-line">
             {post.data.date && (
-              <div>
-                <span>Date</span>
-                <time dateTime={post.data.date.toISOString()}>
-                  {formatDate(post.data.date)}
-                </time>
-              </div>
+              <time dateTime={post.data.date.toISOString()}>
+                {formatDate(post.data.date)}
+              </time>
             )}
-            <div>
-              <span>Reading</span>
-              <strong>{readTime}</strong>
-            </div>
-            <div>
-              <span>Category</span>
-              <strong>{category}</strong>
-            </div>
-          </div>
+            <span>&middot;</span>
+            <span>{readTime}</span>
+            <span>&middot;</span>
+            <span>{category}</span>
+          </p>
 
           <TagList tags={post.data.tags ?? []} />
         </header>
@@ -112,68 +104,37 @@ export default async function PostPage({
         }
 
         .post-header {
-          border: 1px solid color-mix(in srgb, var(--line) 90%, transparent);
-          background: color-mix(in srgb, var(--surface) 96%, transparent);
-          border-radius: var(--radius-lg);
-          box-shadow: var(--shadow-sm);
-          padding: clamp(1rem, 2.4vw, 1.8rem);
           display: grid;
           gap: var(--spacing-sm);
-        }
-
-        .post-kicker {
-          color: var(--gray);
-          font-family: var(--font-code);
-          font-size: 0.68rem;
-          letter-spacing: 0.11em;
-          text-transform: uppercase;
+          padding-bottom: var(--spacing-md);
+          border-bottom: 1px solid var(--line);
         }
 
         .post-header h1 {
-          font-size: clamp(1.55rem, 3.1vw, 2.4rem);
+          font-size: clamp(1.55rem, 3.1vw, 2.2rem);
           line-height: 1.24;
           letter-spacing: -0.02em;
         }
 
-        .post-meta {
+        .post-meta-line {
           display: flex;
+          align-items: center;
           flex-wrap: wrap;
-          gap: var(--spacing-sm);
-        }
-
-        .post-meta div {
-          min-width: 112px;
-          border: 1px solid color-mix(in srgb, var(--line) 88%, transparent);
-          border-radius: var(--radius-sm);
-          background: color-mix(in srgb, var(--surface-raised) 95%, transparent);
-          padding: 0.45rem 0.56rem;
-          display: grid;
-          gap: 0.06rem;
-        }
-
-        .post-meta span {
+          gap: 0.4rem;
           color: var(--gray);
-          font-family: var(--font-code);
-          font-size: 0.62rem;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
+          font-size: 0.84rem;
         }
 
-        .post-meta time,
-        .post-meta strong {
-          color: var(--text-heading);
-          font-family: var(--font-header);
-          font-size: 0.82rem;
-          font-weight: 500;
+        .post-meta-line time {
+          color: var(--text);
+        }
+
+        .post-meta-line span {
           text-transform: capitalize;
         }
 
         .post-content-wrap {
-          border: 1px solid color-mix(in srgb, var(--line) 90%, transparent);
-          border-radius: var(--radius-lg);
-          box-shadow: var(--shadow-sm);
-          background: color-mix(in srgb, var(--surface-raised) 95%, transparent);
-          padding: clamp(1rem, 2.6vw, 1.95rem);
+          padding-top: var(--spacing-sm);
         }
       `}</style>
     </DocLayout>

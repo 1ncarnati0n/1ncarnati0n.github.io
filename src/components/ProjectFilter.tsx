@@ -30,7 +30,6 @@ export default function ProjectFilter({ options }: Props) {
   return (
     <>
       <nav className="project-filter" aria-label="프로젝트 카테고리 필터">
-        <p className="project-filter-title">Filter by category</p>
         <div className="project-filter-list">
           {options.map((option) => {
             const isActive = active === option.value;
@@ -42,7 +41,7 @@ export default function ProjectFilter({ options }: Props) {
                 data-active={isActive ? "true" : undefined}
                 aria-pressed={isActive}
               >
-                <span>{option.label}</span>
+                {option.label}
                 <em>{option.count}</em>
               </button>
             );
@@ -52,49 +51,39 @@ export default function ProjectFilter({ options }: Props) {
 
       <style>{`
         .project-filter {
-          display: grid;
-          gap: var(--spacing-sm);
-          margin-bottom: var(--spacing-lg);
-        }
-
-        .project-filter-title {
-          font-family: var(--font-code);
-          font-size: 0.68rem;
-          color: var(--gray);
-          letter-spacing: 0.11em;
-          text-transform: uppercase;
+          margin-bottom: var(--spacing-md);
         }
 
         .project-filter-list {
           display: flex;
           flex-wrap: wrap;
-          gap: 0.52rem;
+          gap: var(--spacing-md);
         }
 
         .project-filter-list button {
           display: inline-flex;
           align-items: center;
-          gap: 0.46rem;
-          border: 1px solid color-mix(in srgb, var(--line) 88%, transparent);
-          border-radius: 999px;
-          background: color-mix(in srgb, var(--surface-raised) 95%, transparent);
-          color: var(--text);
+          gap: 0.35rem;
+          border: none;
+          background: transparent;
+          color: var(--gray);
           font-family: var(--font-header);
-          font-size: 0.8rem;
-          padding: 0.34rem 0.72rem;
+          font-size: 0.84rem;
+          padding: 0;
           cursor: pointer;
-          transition: border-color var(--transition), background var(--transition), color var(--transition), transform 0.15s ease;
+          transition: color var(--transition);
         }
 
         .project-filter-list button:hover {
-          border-color: color-mix(in srgb, var(--accent) 42%, transparent);
-          transform: translateY(-1px);
+          color: var(--text-heading);
         }
 
         .project-filter-list button[data-active="true"] {
           color: var(--text-heading);
-          border-color: color-mix(in srgb, var(--tertiary) 48%, transparent);
-          background: color-mix(in srgb, var(--tertiary) 16%, transparent);
+          font-weight: 600;
+          text-decoration: underline;
+          text-decoration-color: var(--tertiary);
+          text-underline-offset: 0.3em;
         }
 
         .project-filter-list button em {
@@ -102,12 +91,6 @@ export default function ProjectFilter({ options }: Props) {
           font-family: var(--font-code);
           font-size: 0.65rem;
           color: var(--gray);
-          border-left: 1px solid color-mix(in srgb, var(--line) 84%, transparent);
-          padding-left: 0.42rem;
-        }
-
-        .project-filter-list button[data-active="true"] em {
-          color: color-mix(in srgb, var(--text) 80%, transparent);
         }
       `}</style>
     </>

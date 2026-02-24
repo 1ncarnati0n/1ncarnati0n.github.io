@@ -16,13 +16,6 @@ const navItems: NavItem[] = [
   { href: "/tags/", label: "Tags" },
 ];
 
-const subNavItems: NavItem[] = [
-  { href: "/posts/#web", label: "Web" },
-  { href: "/posts/#csharp", label: "C#" },
-  { href: "/posts/#tools", label: "Tools" },
-  { href: "/posts/#python", label: "Python" },
-];
-
 function normalize(path: string): string {
   return path.endsWith("/") ? path : `${path}/`;
 }
@@ -140,11 +133,7 @@ export default function Header() {
             </button>
 
             <a href="/" className="site-brand" aria-label="홈으로 이동">
-              <span className="site-brand-mark">01</span>
-              <span className="site-brand-meta">
-                <span className="site-brand-title">1ncarnati0n Studio</span>
-                <span className="site-brand-subtitle">Architecture + Code Archive</span>
-              </span>
+              <span className="site-brand-title">1ncarnati0n</span>
             </a>
           </div>
 
@@ -162,8 +151,6 @@ export default function Header() {
                 <circle cx="11" cy="11" r="8" />
                 <path d="m21 21-4.3-4.3" />
               </svg>
-              <span className="desktop-only">Search</span>
-              <span className="kbd-badge">&#8984;K</span>
             </button>
 
             <a
@@ -203,17 +190,6 @@ export default function Header() {
                 </a>
               ))}
             </nav>
-
-            <div className="mobile-nav-sub">
-              <p className="mobile-nav-subtitle">Focus Topics</p>
-              <div className="mobile-nav-chips">
-                {subNavItems.map((item) => (
-                  <a key={item.href} href={item.href} onClick={closeMobileMenu}>
-                    {item.label}
-                  </a>
-                ))}
-              </div>
-            </div>
           </div>
         </>
       )}
