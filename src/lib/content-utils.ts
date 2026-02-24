@@ -1,6 +1,35 @@
 import readingTime from "reading-time";
 import type { Post, Project } from "./types";
 
+type DatedEntity = { data: { date?: Date | null } };
+
+function sortByDateDesc<T extends DatedEntity>(items: T[]): T[] {
+  return [...items].sort((a, b) => {
+    const dateA = a.data.date?.getTime() ?? 0;
+    const dateB = b.data.date?.getTime() ?? 0;
+    return dateB - dateA;
+  });
+}
+
+export function groupBy<T>(
+  items: T[],
+  getKey: (item: T) => string,
+): Map<string, T[]> {
+  const grouped = new Map<string, T[]>();
+
+  for (const item of items) {
+    const key = getKey(item);
+    const bucket = grouped.get(key);
+    if (bucket) {
+      bucket.push(item);
+    } else {
+      grouped.set(key, [item]);
+    }
+  }
+
+  return grouped;
+}
+
 /** Remove .md extension from collection IDs */
 export function cleanSlug(id: string): string {
   return id.replace(/\.md$/, "");
@@ -15,16 +44,12 @@ export function getReadingTime(content: string): string {
 
 /** Sort posts by date (newest first), fallback to title */
 export function sortPostsByDate(posts: Post[]): Post[] {
-  return posts.sort((a, b) => {
-    const dateA = a.data.date?.getTime() ?? 0;
-    const dateB = b.data.date?.getTime() ?? 0;
-    return dateB - dateA;
-  });
+  return sortByDateDesc(posts);
 }
 
 /** Sort projects by weight (higher first), then by date */
 export function sortProjects(projects: Project[]): Project[] {
-  return projects.sort((a, b) => {
+  return [...projects].sort((a, b) => {
     const weightDiff = (b.data.weight ?? 0) - (a.data.weight ?? 0);
     if (weightDiff !== 0) return weightDiff;
     const dateA = a.data.date?.getTime() ?? 0;
@@ -70,13 +95,20 @@ export function formatDate(date: Date | undefined | null): string {
 
 /** Group posts by category into a Map */
 export function groupPostsByCategory(posts: Post[]): Map<string, Post[]> {
-  const grouped = new Map<string, Post[]>();
+  return groupBy(posts, (post) => getPostCategory(post.id));
+}
+
+/** Count posts per tag */
+export function countTags(posts: Post[]): Map<string, number> {
+  const counts = new Map<string, number>();
+
   for (const post of posts) {
-    const cat = getPostCategory(post.id);
-    if (!grouped.has(cat)) grouped.set(cat, []);
-    grouped.get(cat)!.push(post);
+    for (const tag of post.data.tags ?? []) {
+      counts.set(tag, (counts.get(tag) ?? 0) + 1);
+    }
   }
-  return grouped;
+
+  return counts;
 }
 
 /** Derive title from filename if frontmatter title is missing */

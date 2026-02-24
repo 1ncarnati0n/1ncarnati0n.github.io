@@ -45,9 +45,6 @@ function rehypeExtractHeadings(headings: Heading[]) {
   };
 }
 
-/** Cached unified processor (reused across all files for performance) */
-let _processor: ReturnType<typeof createProcessor> | null = null;
-
 function createProcessor(headings: Heading[]) {
   return unified()
     .use(remarkParse)

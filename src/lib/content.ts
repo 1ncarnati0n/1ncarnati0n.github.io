@@ -6,6 +6,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import type { Post, Project, PostFrontmatter, ProjectFrontmatter } from "./types";
+import { cleanSlug, sortPostsByDate, sortProjects } from "./content-utils";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 
@@ -99,13 +100,19 @@ function parseProject(filePath: string, id: string): Project {
 // ─── Cached collections ───────────────────────────────────────────
 let _postsCache: Post[] | null = null;
 let _projectsCache: Project[] | null = null;
+let _publishedPostsCache: Post[] | null = null;
+let _postBySlugCache: Map<string, Post> | null = null;
+let _projectBySlugCache: Map<string, Project> | null = null;
 
 /** Get all posts (cached) — replaces getCollection("posts") */
 export function getAllPosts(): Post[] {
   if (_postsCache) return _postsCache;
 
   const postsDir = path.join(CONTENT_DIR, "posts");
-  if (!fs.existsSync(postsDir)) return [];
+  if (!fs.existsSync(postsDir)) {
+    _postsCache = [];
+    return _postsCache;
+  }
 
   const files = findMarkdownFiles(postsDir);
   _postsCache = files.map((relPath) => {
@@ -118,7 +125,24 @@ export function getAllPosts(): Post[] {
 
 /** Get published posts (non-draft) — replaces getCollection("posts", filter) */
 export function getPublishedPosts(): Post[] {
-  return getAllPosts().filter((p) => !p.data.draft);
+  if (_publishedPostsCache) return _publishedPostsCache;
+  _publishedPostsCache = getAllPosts().filter((post) => !post.data.draft);
+  return _publishedPostsCache;
+}
+
+/** Get published posts sorted by date (newest first) */
+export function getSortedPublishedPosts(): Post[] {
+  return sortPostsByDate(getPublishedPosts());
+}
+
+/** Find a post by slug (without .md extension) */
+export function getPostBySlug(slug: string): Post | undefined {
+  if (!_postBySlugCache) {
+    _postBySlugCache = new Map(
+      getAllPosts().map((post) => [cleanSlug(post.id), post]),
+    );
+  }
+  return _postBySlugCache.get(slug);
 }
 
 /** Get all projects (cached) — replaces getCollection("projects") */
@@ -126,7 +150,10 @@ export function getAllProjects(): Project[] {
   if (_projectsCache) return _projectsCache;
 
   const projectsDir = path.join(CONTENT_DIR, "projects");
-  if (!fs.existsSync(projectsDir)) return [];
+  if (!fs.existsSync(projectsDir)) {
+    _projectsCache = [];
+    return _projectsCache;
+  }
 
   const files = findMarkdownFiles(projectsDir);
   _projectsCache = files.map((relPath) => {
@@ -135,4 +162,19 @@ export function getAllProjects(): Project[] {
   });
 
   return _projectsCache;
+}
+
+/** Get projects sorted by weight and date */
+export function getSortedProjects(): Project[] {
+  return sortProjects(getAllProjects());
+}
+
+/** Find a project by slug (without .md extension) */
+export function getProjectBySlug(slug: string): Project | undefined {
+  if (!_projectBySlugCache) {
+    _projectBySlugCache = new Map(
+      getAllProjects().map((project) => [cleanSlug(project.id), project]),
+    );
+  }
+  return _projectBySlugCache.get(slug);
 }

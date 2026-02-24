@@ -2,68 +2,114 @@
 
 import { useState } from "react";
 
-interface Props {
-  categories: string[];
+export interface ProjectFilterOption {
+  value: string;
+  label: string;
+  count: number;
 }
 
-export default function ProjectFilter({ categories }: Props) {
+interface Props {
+  options: ProjectFilterOption[];
+}
+
+export default function ProjectFilter({ options }: Props) {
   const [active, setActive] = useState("all");
 
-  const handleFilter = (cat: string) => {
-    setActive(cat);
+  const handleFilter = (value: string) => {
+    setActive(value);
     const grid = document.getElementById("project-grid");
     if (!grid) return;
 
-    const items = grid.querySelectorAll<HTMLDivElement>("[data-category]");
-    items.forEach((item) => {
-      if (cat === "all" || item.dataset.category === cat) {
-        item.style.display = "";
-      } else {
-        item.style.display = "none";
-      }
+    const cards = grid.querySelectorAll<HTMLElement>("[data-category]");
+    cards.forEach((card) => {
+      const visible = value === "all" || card.dataset.category === value;
+      card.hidden = !visible;
     });
   };
 
   return (
-    <nav className="filter-nav" style={{
-      display: "flex",
-      flexWrap: "wrap",
-      gap: "0.5rem",
-      marginBottom: "1.5rem",
-    }}>
-      <button
-        onClick={() => handleFilter("all")}
-        className={active === "all" ? "active" : ""}
-        style={btnStyle(active === "all")}
-      >
-        전체
-      </button>
-      {categories.map((cat) => (
-        <button
-          key={cat}
-          onClick={() => handleFilter(cat)}
-          className={active === cat ? "active" : ""}
-          style={btnStyle(active === cat)}
-        >
-          {cat}
-        </button>
-      ))}
-    </nav>
-  );
-}
+    <>
+      <nav className="project-filter" aria-label="프로젝트 카테고리 필터">
+        <p className="project-filter-title">Filter by category</p>
+        <div className="project-filter-list">
+          {options.map((option) => {
+            const isActive = active === option.value;
+            return (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => handleFilter(option.value)}
+                data-active={isActive ? "true" : undefined}
+                aria-pressed={isActive}
+              >
+                <span>{option.label}</span>
+                <em>{option.count}</em>
+              </button>
+            );
+          })}
+        </div>
+      </nav>
 
-function btnStyle(isActive: boolean): React.CSSProperties {
-  return {
-    fontFamily: "var(--font-header)",
-    fontSize: "0.85rem",
-    padding: "4px 14px",
-    borderRadius: "4px",
-    border: "1px solid transparent",
-    cursor: "pointer",
-    background: isActive
-      ? "color-mix(in srgb, var(--tertiary) 25%, transparent)"
-      : "transparent",
-    color: isActive ? "var(--text)" : "var(--gray)",
-    transition: "all 0.3s ease",
-  };
+      <style>{`
+        .project-filter {
+          display: grid;
+          gap: var(--spacing-sm);
+          margin-bottom: var(--spacing-lg);
+        }
+
+        .project-filter-title {
+          font-family: var(--font-code);
+          font-size: 0.68rem;
+          color: var(--gray);
+          letter-spacing: 0.11em;
+          text-transform: uppercase;
+        }
+
+        .project-filter-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.52rem;
+        }
+
+        .project-filter-list button {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.46rem;
+          border: 1px solid color-mix(in srgb, var(--line) 88%, transparent);
+          border-radius: 999px;
+          background: color-mix(in srgb, var(--surface-raised) 95%, transparent);
+          color: var(--text);
+          font-family: var(--font-header);
+          font-size: 0.8rem;
+          padding: 0.34rem 0.72rem;
+          cursor: pointer;
+          transition: border-color var(--transition), background var(--transition), color var(--transition), transform 0.15s ease;
+        }
+
+        .project-filter-list button:hover {
+          border-color: color-mix(in srgb, var(--accent) 42%, transparent);
+          transform: translateY(-1px);
+        }
+
+        .project-filter-list button[data-active="true"] {
+          color: var(--text-heading);
+          border-color: color-mix(in srgb, var(--tertiary) 48%, transparent);
+          background: color-mix(in srgb, var(--tertiary) 16%, transparent);
+        }
+
+        .project-filter-list button em {
+          font-style: normal;
+          font-family: var(--font-code);
+          font-size: 0.65rem;
+          color: var(--gray);
+          border-left: 1px solid color-mix(in srgb, var(--line) 84%, transparent);
+          padding-left: 0.42rem;
+        }
+
+        .project-filter-list button[data-active="true"] em {
+          color: color-mix(in srgb, var(--text) 80%, transparent);
+        }
+      `}</style>
+    </>
+  );
 }

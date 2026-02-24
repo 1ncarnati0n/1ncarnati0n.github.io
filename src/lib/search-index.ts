@@ -1,6 +1,6 @@
 /**
  * Build-time search index generation.
- * Called from scripts/generate-search-index.mjs and SearchOverlay
+ * Called from scripts/generate-search-index.ts and SearchOverlay
  */
 import type { Post, Project } from "./types";
 import { getPostCategory, deriveTitle, cleanSlug } from "./content-utils";

@@ -1,5 +1,10 @@
 import type { Post, Project } from "./types";
-import { getPostCategory, deriveTitle, cleanSlug, groupPostsByCategory } from "./content-utils";
+import {
+  deriveTitle,
+  cleanSlug,
+  groupBy,
+  groupPostsByCategory,
+} from "./content-utils";
 
 export interface SidebarItem {
   title: string;
@@ -30,12 +35,7 @@ export function buildBlogSidebar(posts: Post[]): SidebarSection[] {
 
 /** Build sidebar sections from projects grouped by category */
 export function buildProjectsSidebar(projects: Project[]): SidebarSection[] {
-  const grouped = new Map<string, Project[]>();
-  for (const project of projects) {
-    const cat = project.data.category ?? "other";
-    if (!grouped.has(cat)) grouped.set(cat, []);
-    grouped.get(cat)!.push(project);
-  }
+  const grouped = groupBy(projects, (project) => project.data.category ?? "other");
 
   const categories = [...grouped.keys()].sort();
   return categories.map((cat) => ({

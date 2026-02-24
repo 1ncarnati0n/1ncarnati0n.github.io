@@ -1,14 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-export default function DarkModeToggle() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+interface Props {
+  className?: string;
+}
 
-  useEffect(() => {
-    const current = document.documentElement.getAttribute("data-theme") as "light" | "dark";
-    setTheme(current || "light");
-  }, []);
+function getInitialTheme(): "light" | "dark" {
+  if (typeof document === "undefined") return "light";
+  const current = document.documentElement.getAttribute("data-theme");
+  return current === "dark" ? "dark" : "light";
+}
+
+export default function DarkModeToggle({ className }: Props) {
+  const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme);
 
   const toggle = () => {
     const next = theme === "light" ? "dark" : "light";
@@ -19,19 +24,10 @@ export default function DarkModeToggle() {
 
   return (
     <button
+      className={className}
       onClick={toggle}
       aria-label={theme === "light" ? "다크 모드로 전환" : "라이트 모드로 전환"}
       title={theme === "light" ? "다크 모드" : "라이트 모드"}
-      style={{
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-        fontSize: "1.2rem",
-        padding: "4px",
-        color: "var(--text)",
-        display: "flex",
-        alignItems: "center",
-      }}
     >
       {theme === "light" ? "\u{1F319}" : "\u{2600}\u{FE0F}"}
     </button>

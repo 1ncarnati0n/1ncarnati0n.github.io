@@ -7,33 +7,54 @@ export default function TagList({ tags }: Props) {
 
   return (
     <>
-      <div className="tag-list">
+      <ul className="tag-list" aria-label="태그 목록">
         {tags.map((tag) => (
-          <a key={tag} href={`/tags/${tag}/`} className="tag-link">
-            #{tag}
-          </a>
+          <li key={tag}>
+            <a href={`/tags/${encodeURIComponent(tag)}/`} className="tag-link">
+              <span aria-hidden="true">#</span>
+              {tag}
+            </a>
+          </li>
         ))}
-      </div>
+      </ul>
 
       <style>{`
         .tag-list {
           display: flex;
           flex-wrap: wrap;
-          gap: var(--spacing-sm);
+          gap: 0.44rem;
+          list-style: none;
+          margin: 0;
+          padding: 0;
         }
+
         .tag-link {
-          font-size: 0.8rem;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.22rem;
+          min-height: 28px;
+          font-size: 0.74rem;
           font-family: var(--font-header);
-          color: var(--gray);
-          background: color-mix(in srgb, var(--gray) 10%, transparent);
-          padding: 2px 10px;
-          border-radius: var(--radius-sm);
-          transition: background var(--transition), color var(--transition);
+          font-weight: 500;
+          color: color-mix(in srgb, var(--text) 78%, transparent);
+          border: 1px solid color-mix(in srgb, var(--line) 88%, transparent);
+          background: color-mix(in srgb, var(--surface-raised) 93%, transparent);
+          padding: 0.28rem 0.62rem;
+          border-radius: 999px;
+          transition: border-color var(--transition), background var(--transition), color var(--transition);
+          text-transform: lowercase;
         }
+
+        .tag-link span {
+          color: color-mix(in srgb, var(--tertiary) 70%, transparent);
+          font-family: var(--font-code);
+          font-size: 0.69rem;
+        }
+
         .tag-link:hover {
-          background: color-mix(in srgb, var(--tertiary) 25%, transparent);
-          color: var(--text);
-          opacity: 1;
+          color: var(--text-heading);
+          border-color: color-mix(in srgb, var(--tertiary) 42%, transparent);
+          background: color-mix(in srgb, var(--tertiary) 15%, transparent);
         }
       `}</style>
     </>
