@@ -14,9 +14,9 @@ export default function HomePage() {
 
       <section className="section container">
         <div className="section-head">
-          <h2>Recent Projects</h2>
+          <h2>Projects</h2>
           <a href="/projects/" className="section-link">
-            View all
+            View all &rarr;
           </a>
         </div>
 
@@ -28,7 +28,6 @@ export default function HomePage() {
               slug={cleanSlug(project.id)}
               thumbnail={project.data.thumbnail}
               category={project.data.category}
-              description={project.data.description}
             />
           ))}
         </div>
@@ -36,9 +35,9 @@ export default function HomePage() {
 
       <section className="section container">
         <div className="section-head">
-          <h2>Recent Posts</h2>
+          <h2>Posts</h2>
           <a href="/posts/" className="section-link">
-            View all
+            View all &rarr;
           </a>
         </div>
 
@@ -59,8 +58,8 @@ export default function HomePage() {
       <style>{`
         .home-page {
           display: grid;
-          gap: var(--spacing-xl);
-          padding-bottom: var(--spacing-2xl);
+          gap: var(--space-7);
+          padding-bottom: var(--space-8);
         }
 
         .section {
@@ -73,17 +72,23 @@ export default function HomePage() {
           align-items: baseline;
           justify-content: space-between;
           gap: var(--spacing-md);
+          border-bottom: 1px solid var(--line);
+          padding-bottom: var(--spacing-sm);
         }
 
         .section-head h2 {
-          font-size: clamp(1.3rem, 2.4vw, 1.7rem);
-          letter-spacing: -0.01em;
+          font-size: 0.78rem;
+          font-weight: 400;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
         }
 
         .section-link {
           color: var(--gray);
           font-family: var(--font-header);
-          font-size: 0.84rem;
+          font-size: 0.72rem;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
           white-space: nowrap;
         }
 
@@ -93,23 +98,18 @@ export default function HomePage() {
 
         .project-grid {
           display: grid;
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: var(--spacing-md);
-        }
-
-        @media (max-width: 1080px) {
-          .project-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-          }
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: var(--spacing-xl);
         }
 
         @media (max-width: 700px) {
           .home-page {
-            gap: var(--spacing-lg);
+            gap: var(--space-6);
           }
 
           .project-grid {
             grid-template-columns: 1fr;
+            gap: var(--spacing-lg);
           }
         }
       `}</style>

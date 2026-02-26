@@ -17,11 +17,8 @@ export default function PostsPage() {
     <div className="posts-page container">
       <header className="posts-hero">
         <h1>Posts</h1>
-        <p className="posts-desc">
-          구현 과정, 학습 노트, 운영 경험을 카테고리별로 정리한 기록입니다.
-        </p>
         <p className="posts-meta">
-          {posts.length} posts across {categories.length} categories
+          {posts.length} posts &middot; {categories.length} categories
         </p>
       </header>
 
@@ -51,9 +48,9 @@ export default function PostsPage() {
           max-width: 720px;
           margin: 0 auto;
           display: grid;
-          gap: var(--spacing-xl);
-          padding-top: var(--spacing-xl);
-          padding-bottom: var(--spacing-2xl);
+          gap: var(--space-6);
+          padding-top: var(--space-7);
+          padding-bottom: var(--space-8);
         }
 
         .posts-hero {
@@ -62,18 +59,17 @@ export default function PostsPage() {
         }
 
         .posts-hero h1 {
-          font-size: clamp(1.6rem, 3vw, 2.2rem);
-          letter-spacing: -0.02em;
-        }
-
-        .posts-desc {
-          color: color-mix(in srgb, var(--text) 70%, transparent);
-          max-width: 52ch;
+          font-size: 0.82rem;
+          font-weight: 400;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
         }
 
         .posts-meta {
           color: var(--gray);
-          font-size: 0.84rem;
+          font-family: var(--font-header);
+          font-size: 0.72rem;
+          letter-spacing: 0.04em;
         }
 
         .category-section {
@@ -86,15 +82,17 @@ export default function PostsPage() {
           align-items: baseline;
           gap: var(--spacing-sm);
           border-bottom: 1px solid var(--line);
-          padding-bottom: 0.45rem;
-          text-transform: capitalize;
-          font-size: 1.05rem;
+          padding-bottom: 0.4rem;
+          text-transform: uppercase;
+          font-size: 0.75rem;
+          font-weight: 400;
+          letter-spacing: 0.08em;
         }
 
         .category-heading span {
           color: var(--gray);
           font-family: var(--font-code);
-          font-size: 0.72rem;
+          font-size: 0.68rem;
           font-weight: 400;
         }
 

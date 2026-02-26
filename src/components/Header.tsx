@@ -90,6 +90,23 @@ export default function Header() {
     }
   }, [mobileMenuOpen, hasSidebar]);
 
+  useEffect(() => {
+    const header = document.querySelector(".site-header");
+    if (!header) return;
+
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        header.classList.add("scrolled");
+      } else {
+        header.classList.remove("scrolled");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const navWithActive = useMemo(
     () =>
       navItems.map((item) => ({

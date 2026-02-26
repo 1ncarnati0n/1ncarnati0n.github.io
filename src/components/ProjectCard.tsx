@@ -5,7 +5,6 @@ interface Props {
   slug: string;
   thumbnail?: string | null;
   category?: string | null;
-  description?: string;
 }
 
 export default function ProjectCard({
@@ -13,7 +12,6 @@ export default function ProjectCard({
   slug,
   thumbnail,
   category,
-  description,
 }: Props) {
   return (
     <>
@@ -24,40 +22,32 @@ export default function ProjectCard({
               src={thumbnail}
               alt={title}
               fill
-              sizes="(max-width: 700px) 100vw, (max-width: 1080px) 50vw, 33vw"
+              sizes="(max-width: 700px) 100vw, (max-width: 1080px) 50vw, 50vw"
             />
           ) : (
             <div className="project-placeholder" />
           )}
+          <div className="project-overlay" />
         </div>
 
         <div className="project-body">
-          {category && <span className="project-category">{category}</span>}
           <h3>{title}</h3>
-          {description && <p>{description}</p>}
+          {category && <span className="project-category">{category}</span>}
         </div>
       </a>
 
       <style>{`
         .project-card {
           display: grid;
-          grid-template-rows: auto 1fr;
-          border-radius: var(--radius-md);
-          border: 1px solid var(--line);
+          grid-template-rows: auto auto;
           overflow: hidden;
           color: var(--text);
           text-decoration: none;
-          transition: border-color var(--transition);
-        }
-
-        .project-card:hover {
-          border-color: color-mix(in srgb, var(--accent) 30%, transparent);
-          color: var(--text);
         }
 
         .project-media {
           position: relative;
-          aspect-ratio: 5 / 3.6;
+          aspect-ratio: 3 / 2;
           overflow: hidden;
           background: var(--surface);
         }
@@ -67,11 +57,22 @@ export default function ProjectCard({
           height: 100%;
           object-fit: cover;
           border-radius: 0;
-          transition: transform 0.4s ease;
         }
 
-        .project-card:hover .project-media img {
-          transform: scale(1.03);
+        .project-overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, 0);
+          transition: background 0.3s ease;
+          pointer-events: none;
+        }
+
+        .project-card:hover .project-overlay {
+          background: rgba(255, 255, 255, 0.08);
+        }
+
+        [data-theme="dark"] .project-card:hover .project-overlay {
+          background: rgba(255, 255, 255, 0.05);
         }
 
         .project-placeholder {
@@ -81,35 +82,25 @@ export default function ProjectCard({
         }
 
         .project-body {
-          padding: var(--spacing-md);
+          padding: var(--spacing-sm) 0;
           display: grid;
-          gap: 0.25rem;
-          align-content: start;
+          gap: 0.15rem;
+        }
+
+        .project-body h3 {
+          font-size: 0.94rem;
+          line-height: 1.34;
+          letter-spacing: -0.005em;
+          font-weight: 400;
+          color: var(--text-heading);
         }
 
         .project-category {
           color: var(--gray);
-          font-family: var(--font-code);
-          font-size: 0.65rem;
+          font-family: var(--font-header);
+          font-size: 0.68rem;
           letter-spacing: 0.08em;
           text-transform: uppercase;
-        }
-
-        .project-body h3 {
-          font-size: 1.01rem;
-          line-height: 1.34;
-          letter-spacing: -0.01em;
-          color: var(--text-heading);
-        }
-
-        .project-body p {
-          color: color-mix(in srgb, var(--text) 65%, transparent);
-          font-size: 0.84rem;
-          line-height: 1.6;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
         }
       `}</style>
     </>

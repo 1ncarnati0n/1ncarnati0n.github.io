@@ -12,7 +12,6 @@ export default function Footer() {
           <nav className="footer-links" aria-label="푸터 링크">
             <a href="/projects/">Projects</a>
             <a href="/posts/">Posts</a>
-            <a href="/tags/">Tags</a>
             <a href="https://github.com/1ncarnati0n" target="_blank" rel="noopener">
               GitHub
             </a>

@@ -22,7 +22,12 @@ export default function PostItem({
       <a href={`/posts/${slug}/`} className="post-item">
         <div className="post-item-meta">
           <span className="post-item-category">{category}</span>
-          {date && <time dateTime={date.toISOString()}>{formatDate(date)}</time>}
+          {date && (
+            <>
+              <span className="post-item-dot" aria-hidden="true">&middot;</span>
+              <time dateTime={date.toISOString()}>{formatDate(date)}</time>
+            </>
+          )}
         </div>
 
         <h3 className="post-item-title">{displayTitle}</h3>
@@ -33,9 +38,9 @@ export default function PostItem({
       <style>{`
         .post-item {
           display: grid;
-          gap: 0.35rem;
-          padding: 0.9rem 0;
-          border-bottom: 1px solid var(--line);
+          gap: 0.3rem;
+          padding: 0.85rem 0;
+          border-bottom: 1px dotted var(--line);
           color: var(--text);
           text-decoration: none;
           transition: color var(--transition);
@@ -57,20 +62,20 @@ export default function PostItem({
           display: flex;
           align-items: center;
           flex-wrap: wrap;
-          gap: 0.42rem;
+          gap: 0.35rem;
           color: var(--gray);
-          font-family: var(--font-code);
-          font-size: 0.67rem;
-          letter-spacing: 0.05em;
+          font-family: var(--font-header);
+          font-size: 0.68rem;
+          letter-spacing: 0.06em;
           text-transform: uppercase;
+        }
+
+        .post-item-dot {
+          font-size: 0.55rem;
         }
 
         .post-item-category {
           color: var(--gray);
-          font-family: var(--font-header);
-          font-size: 0.72rem;
-          letter-spacing: 0.02em;
-          text-transform: capitalize;
         }
 
         .post-item-title {
@@ -78,12 +83,13 @@ export default function PostItem({
           font-size: 1.01rem;
           line-height: 1.38;
           letter-spacing: -0.01em;
+          font-weight: 400;
           transition: color var(--transition);
         }
 
         .post-item-desc {
-          color: color-mix(in srgb, var(--text) 65%, transparent);
-          font-size: 0.86rem;
+          color: color-mix(in srgb, var(--text) 55%, transparent);
+          font-size: 0.84rem;
           line-height: 1.6;
           display: -webkit-box;
           -webkit-line-clamp: 2;

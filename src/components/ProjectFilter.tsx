@@ -31,45 +31,58 @@ export default function ProjectFilter({ options }: Props) {
     <>
       <nav className="project-filter" aria-label="프로젝트 카테고리 필터">
         <div className="project-filter-list">
-          {options.map((option) => {
-            const isActive = active === option.value;
-            return (
+          {options.map((option, index) => (
+            <span key={option.value} className="project-filter-item">
+              {index > 0 && <span className="filter-sep" aria-hidden="true">/</span>}
               <button
-                key={option.value}
                 type="button"
                 onClick={() => handleFilter(option.value)}
-                data-active={isActive ? "true" : undefined}
-                aria-pressed={isActive}
+                data-active={active === option.value ? "true" : undefined}
+                aria-pressed={active === option.value}
               >
                 {option.label}
-                <em>{option.count}</em>
               </button>
-            );
-          })}
+            </span>
+          ))}
         </div>
       </nav>
 
       <style>{`
         .project-filter {
-          margin-bottom: var(--spacing-md);
+          margin-bottom: var(--spacing-sm);
         }
 
         .project-filter-list {
           display: flex;
           flex-wrap: wrap;
-          gap: var(--spacing-md);
+          align-items: center;
+          gap: 0.15rem;
+        }
+
+        .project-filter-item {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.15rem;
+        }
+
+        .filter-sep {
+          color: var(--line);
+          font-size: 0.78rem;
+          margin: 0 0.35rem;
+          user-select: none;
         }
 
         .project-filter-list button {
           display: inline-flex;
           align-items: center;
-          gap: 0.35rem;
           border: none;
           background: transparent;
           color: var(--gray);
           font-family: var(--font-header);
-          font-size: 0.84rem;
-          padding: 0;
+          font-size: 0.75rem;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          padding: 0.25rem 0;
           cursor: pointer;
           transition: color var(--transition);
         }
@@ -81,16 +94,6 @@ export default function ProjectFilter({ options }: Props) {
         .project-filter-list button[data-active="true"] {
           color: var(--text-heading);
           font-weight: 600;
-          text-decoration: underline;
-          text-decoration-color: var(--tertiary);
-          text-underline-offset: 0.3em;
-        }
-
-        .project-filter-list button em {
-          font-style: normal;
-          font-family: var(--font-code);
-          font-size: 0.65rem;
-          color: var(--gray);
         }
       `}</style>
     </>

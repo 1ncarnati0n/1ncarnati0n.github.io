@@ -83,6 +83,12 @@ export function getProjectCategories(projects: Project[]): string[] {
   return [...cats].sort();
 }
 
+/** 마크다운 본문에서 첫 번째 이미지 URL 추출 */
+export function extractFirstImage(markdown: string): string | undefined {
+  const match = markdown.match(/!\[.*?\]\((.*?)\)/);
+  return match?.[1] || undefined;
+}
+
 /** Format date for display */
 export function formatDate(date: Date | undefined | null): string {
   if (!date) return "";

@@ -37,9 +37,6 @@ export default function ProjectsPage() {
     <div className="projects-page container">
       <header className="projects-hero">
         <h1>Projects</h1>
-        <p className="projects-desc">
-          설계, 시각화, 공간 기획 작업을 한 흐름으로 정리했습니다.
-        </p>
         <p className="projects-meta">
           {projects.length} projects &middot; {categoryList.length} categories
         </p>
@@ -59,7 +56,6 @@ export default function ProjectsPage() {
               slug={cleanSlug(project.id)}
               thumbnail={project.data.thumbnail}
               category={project.data.category}
-              description={project.data.description}
             />
           </div>
         ))}
@@ -71,8 +67,8 @@ export default function ProjectsPage() {
           margin: 0 auto;
           display: grid;
           gap: var(--spacing-lg);
-          padding-top: var(--spacing-xl);
-          padding-bottom: var(--spacing-2xl);
+          padding-top: var(--space-7);
+          padding-bottom: var(--space-8);
         }
 
         .projects-hero {
@@ -81,39 +77,37 @@ export default function ProjectsPage() {
         }
 
         .projects-hero h1 {
-          font-size: clamp(1.6rem, 3.4vw, 2.2rem);
-          letter-spacing: -0.02em;
-        }
-
-        .projects-desc {
-          color: color-mix(in srgb, var(--text) 70%, transparent);
-          max-width: 52ch;
+          font-size: 0.82rem;
+          font-weight: 400;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
         }
 
         .projects-meta {
           color: var(--gray);
-          font-size: 0.84rem;
+          font-family: var(--font-header);
+          font-size: 0.72rem;
+          letter-spacing: 0.04em;
         }
 
         .project-grid {
           display: grid;
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: var(--spacing-md);
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: var(--spacing-xl);
         }
 
         .project-cell[hidden] {
           display: none;
         }
 
-        @media (max-width: 1000px) {
-          .project-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-          }
-        }
-
         @media (max-width: 700px) {
+          .projects-page {
+            padding-top: var(--space-6);
+          }
+
           .project-grid {
             grid-template-columns: 1fr;
+            gap: var(--spacing-lg);
           }
         }
       `}</style>

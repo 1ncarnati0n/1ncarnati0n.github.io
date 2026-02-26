@@ -57,6 +57,19 @@ export default async function ProjectPage({
           ]}
         />
 
+        {project.data.thumbnail && (
+          <div className="project-hero-image">
+            <Image
+              src={project.data.thumbnail}
+              alt={project.data.title}
+              width={1280}
+              height={720}
+              priority
+              style={{ width: "100%", height: "auto" }}
+            />
+          </div>
+        )}
+
         <header className="project-header">
           <p className="project-kicker">{project.data.category ?? "Project"}</p>
           <h1>{project.data.title}</h1>
@@ -67,43 +80,31 @@ export default async function ProjectPage({
 
           <dl className="project-facts">
             {project.data.date && (
-              <>
+              <div className="fact-item">
                 <dt>Date</dt>
                 <dd>
                   <time dateTime={project.data.date.toISOString()}>
                     {formatDate(project.data.date)}
                   </time>
                 </dd>
-              </>
+              </div>
             )}
             {project.data.location && (
-              <>
+              <div className="fact-item">
                 <dt>Location</dt>
                 <dd>{project.data.location}</dd>
-              </>
+              </div>
             )}
             {project.data.role && (
-              <>
+              <div className="fact-item">
                 <dt>Role</dt>
                 <dd>{project.data.role}</dd>
-              </>
+              </div>
             )}
           </dl>
 
           <TagList tags={project.data.tags ?? []} />
         </header>
-
-        {project.data.thumbnail && (
-          <div className="project-image">
-            <Image
-              src={project.data.thumbnail}
-              alt={project.data.title}
-              width={960}
-              height={540}
-              style={{ width: "100%", height: "auto" }}
-            />
-          </div>
-        )}
 
         <div className="project-content-wrap">
           <div
@@ -120,6 +121,15 @@ export default async function ProjectPage({
           gap: var(--spacing-lg);
         }
 
+        .project-hero-image {
+          overflow: hidden;
+          margin: 0 calc(-1 * var(--spacing-md));
+        }
+
+        .project-hero-image img {
+          border-radius: 0;
+        }
+
         .project-header {
           display: grid;
           gap: var(--spacing-sm);
@@ -129,9 +139,9 @@ export default async function ProjectPage({
 
         .project-kicker {
           color: var(--gray);
-          font-family: var(--font-code);
-          font-size: 0.72rem;
-          letter-spacing: 0.08em;
+          font-family: var(--font-header);
+          font-size: 0.68rem;
+          letter-spacing: 0.1em;
           text-transform: uppercase;
         }
 
@@ -139,6 +149,7 @@ export default async function ProjectPage({
           font-size: clamp(1.55rem, 3vw, 2.2rem);
           letter-spacing: -0.02em;
           line-height: 1.2;
+          font-weight: 400;
         }
 
         .project-summary {
@@ -147,32 +158,28 @@ export default async function ProjectPage({
         }
 
         .project-facts {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.5rem 1.5rem;
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.75rem 2rem;
+          padding-top: var(--spacing-sm);
+        }
+
+        .fact-item {
+          display: grid;
+          gap: 0.15rem;
         }
 
         .project-facts dt {
           color: var(--gray);
-          font-family: var(--font-code);
+          font-family: var(--font-header);
           font-size: 0.65rem;
-          letter-spacing: 0.08em;
+          letter-spacing: 0.1em;
           text-transform: uppercase;
         }
 
         .project-facts dd {
           color: var(--text);
           font-size: 0.88rem;
-          margin-bottom: 0.25rem;
-        }
-
-        .project-image {
-          border-radius: var(--radius-md);
-          overflow: hidden;
-        }
-
-        .project-image img {
-          border-radius: var(--radius-md);
         }
 
         .project-content-wrap {
@@ -181,6 +188,16 @@ export default async function ProjectPage({
 
         .project-content {
           max-width: 100%;
+        }
+
+        @media (max-width: 700px) {
+          .project-hero-image {
+            margin: 0 calc(-1 * var(--spacing-sm));
+          }
+
+          .project-facts {
+            grid-template-columns: 1fr;
+          }
         }
       `}</style>
     </DocLayout>

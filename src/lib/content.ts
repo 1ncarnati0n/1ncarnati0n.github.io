@@ -6,7 +6,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import type { Post, Project, PostFrontmatter, ProjectFrontmatter } from "./types";
-import { cleanSlug, sortPostsByDate, sortProjects } from "./content-utils";
+import { cleanSlug, sortPostsByDate, sortProjects, extractFirstImage } from "./content-utils";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 
@@ -85,7 +85,7 @@ function parseProject(filePath: string, id: string): Project {
     title: data.title ?? "Untitled",
     date: parseDate(data.date),
     category: data.category ?? "Other",
-    thumbnail: data.thumbnail ?? undefined,
+    thumbnail: data.thumbnail ?? extractFirstImage(content) ?? undefined,
     location: data.location ?? undefined,
     description: data.description ?? "",
     tags: normalizeArray(data.tags),
