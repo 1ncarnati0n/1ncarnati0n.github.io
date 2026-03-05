@@ -52,7 +52,7 @@ export default function ProjectCard({
           background: var(--surface);
         }
 
-        .project-media :global(img) {
+        .project-media img {
           width: 100%;
           height: 100%;
           object-fit: cover;

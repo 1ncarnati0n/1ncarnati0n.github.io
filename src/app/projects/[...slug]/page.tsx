@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import type { Metadata } from "next";
 import DocLayout from "@/components/DocLayout";
 import Breadcrumbs from "@/components/Breadcrumbs";
@@ -59,13 +58,10 @@ export default async function ProjectPage({
 
         {project.data.thumbnail && (
           <div className="project-hero-image">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={project.data.thumbnail}
               alt={project.data.title}
-              width={1280}
-              height={720}
-              priority
-              style={{ width: "100%", height: "auto" }}
             />
           </div>
         )}
@@ -127,7 +123,10 @@ export default async function ProjectPage({
         }
 
         .project-hero-image img {
+          width: 100%;
+          height: auto;
           border-radius: 0;
+          display: block;
         }
 
         .project-header {
