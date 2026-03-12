@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://1ncarnati0n.github.io/sitemap-index.xml
