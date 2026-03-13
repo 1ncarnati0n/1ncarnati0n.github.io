@@ -1,26 +1,48 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* 
+  다크모드 설정 
+  - HTML에 class="dark"가 있으면 다크모드 스타일이 적용됨
+  - 예: dark:bg-neutral-950 → dark 클래스가 있을 때만 적용
+*/
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 
+  디자인 토큰 — CSS 변수로 색상과 폰트를 정의
+  나중에 Tailwind 클래스나 CSS에서 이 변수들을 가져다 씀
+*/
+@theme {
+  --color-primary: #1a1a1a;
+  --color-secondary: #666666;
+  --color-accent: #2c2c2c;
+  --color-tertiary: #b85c3e;
+
+  --font-header: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Noto Sans KR", system-ui, sans-serif;
+  --font-code: "JetBrains Mono", "Fira Code", monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* 
+  @layer base: 모든 페이지에 기본 적용되는 스타일
+  Tailwind의 유틸리티 클래스보다 낮은 우선순위를 가짐
+*/
+@layer base {
+  html { @apply scroll-smooth; }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    @apply bg-white dark:bg-neutral-950;
+    @apply text-neutral-900 dark:text-neutral-100;
+    font-family: var(--font-body);
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-header);
+    @apply font-bold;
+  }
+
+  code { font-family: var(--font-code); }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-blue-500;
+  }
 }
