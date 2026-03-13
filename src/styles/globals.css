@@ -46,3 +46,15 @@
     @apply outline-2 outline-offset-2 outline-blue-500;
   }
 }
+
+@layer components {
+  /* 이제 어디서든 className="header-logo" 로 사용 가능 */
+  .header-logo {
+    @apply text-xl font-bold tracking-tight;
+  }
+  
+  .header-btn {
+    @apply text-xl font-bold tracking-tight hover:opacity-60 transition-opacity;
+    
+  }
+}

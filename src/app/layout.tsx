@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Space_Grotesk, Noto_Sans_KR, JetBrains_Mono } from 'next/font/google'
 import { Header } from '@/components/layout/Header'
-import './globals.css'
+import '@/styles/globals.css'
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -65,7 +65,7 @@ export default function RootLayout({
           본문으로 건너뛰기
         </a>
         <Header />
-        <main id="main-content" className="min-h-screen">
+        <main id="main-content" className="min-h-screen pt-16">
           {children}
         </main>
       </body>

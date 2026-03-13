@@ -1,0 +1,10 @@
+{
+  "css.validate": false,
+  "css.customData": [],
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "files.associations": {
+  "*.css": "tailwindcss"
+  }
+}
