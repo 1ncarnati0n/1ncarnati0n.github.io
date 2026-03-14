@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: '%s | 1ncarnati0n',
   },
   description:
-    'AI, Software Engineering, Computational Design',
+    'AI & Software Engineering, Computational Design',
 }
 
 export default function RootLayout({
@@ -49,10 +49,15 @@ export default function RootLayout({
                 if (stored) {
                   const { state } = JSON.parse(stored)
                   if (state?.theme === 'dark') document.documentElement.classList.add('dark')
+                  else if (state?.theme === 'light') { /* light: do nothing */ }
                 } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
                   document.documentElement.classList.add('dark')
                 }
-              } catch (e) {}
+              } catch (e) {
+                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                  document.documentElement.classList.add('dark')
+                }
+              }
             `,
           }}
         />

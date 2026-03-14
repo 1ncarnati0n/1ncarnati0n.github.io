@@ -12,11 +12,23 @@
   나중에 Tailwind 클래스나 CSS에서 이 변수들을 가져다 씀
 */
 @theme {
+  /* 
+   * 색상 — 모노톤 기반
+   * 직접 바꿔가며 쓰세요. Tailwind에서 text-primary, bg-muted 등으로 사용 가능
+   */
   --color-primary: #1a1a1a;
   --color-secondary: #666666;
-  --color-accent: #2c2c2c;
-  --color-tertiary: #b85c3e;
+  --color-muted: #999999;
+  --color-border: #e0e0e0;
+  --color-surface: #f5f5f5;
+  --color-highlight: #ffff00;
 
+  /* 
+   * 폰트 — layout.tsx의 next/font 변수와 연결됨
+   * --font-header: Space Grotesk (영문 제목)
+   * --font-body: Noto Sans KR (본문, 한글)
+   * --font-code: JetBrains Mono (코드 블록)
+   */
   --font-header: "Space Grotesk", system-ui, sans-serif;
   --font-body: "Noto Sans KR", system-ui, sans-serif;
   --font-code: "JetBrains Mono", "Fira Code", monospace;
@@ -33,28 +45,115 @@
     @apply bg-white dark:bg-neutral-950;
     @apply text-neutral-900 dark:text-neutral-100;
     font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  /* ─── 타이포그래피 스케일 ─── */
+  h1 {
     font-family: var(--font-header);
-    @apply font-bold;
+    font-size: 2.5rem;
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.75rem;
   }
 
-  code { font-family: var(--font-code); }
+  h2 {
+    font-family: var(--font-header);
+    font-size: 1.75rem;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
 
+  h3 {
+    font-family: var(--font-header);
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.35;
+    margin-bottom: 0.5rem;
+  }
+
+  h4, h5, h6 {
+    font-family: var(--font-header);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-family: var(--font-body);
+    margin-bottom: 1rem;
+    color: var(--color-secondary);
+  }
+
+  small {
+    font-size: 0.8rem;
+    color: var(--color-muted);
+  }
+
+  code, pre {
+    font-family: var(--font-code);
+    font-size: 0.875rem;
+  }
+
+  /* ─── 링크 ─── */
+  a { @apply transition-opacity duration-200; }
+
+  /* ─── 포커스 (접근성) ─── */
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-blue-500;
+    @apply outline-2 outline-offset-2 outline-neutral-400;
   }
 }
 
+
+/* 
+ * ─── 컴포넌트 클래스 ─── 
+ * 자주 쓰는 조합을 여기에 추가하세요.
+ * 예: .card, .btn, .tag 등
+ */
+
 @layer components {
-  /* 이제 어디서든 className="header-logo" 로 사용 가능 */
   .header-logo {
-    @apply text-xl font-bold tracking-tight;
+    @apply text-2xl font-bold tracking-tight;
   }
   
   .header-btn {
-    @apply text-xl font-bold tracking-tight hover:opacity-60 transition-opacity;
+    @apply text-2xl font-bold tracking-tight hover:opacity-60 transition-opacity;
     
   }
+  .outlined-btn {
+    @apply text-sm;
+  }
+
+  /* ─── Button ─── */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-3xl
+           cursor-pointer font-medium
+           border border-neutral-300 dark:border-neutral-700
+           text-neutral-900 dark:text-neutral-100
+           transition-all duration-300 ease-in-out
+           hover:bg-neutral-900 hover:text-white hover:border-neutral-900
+           dark:hover:bg-neutral-100 dark:hover:text-neutral-900 dark:hover:border-neutral-100
+           disabled:opacity-30 disabled:cursor-not-allowed;
+  }
+  .btn-sm { @apply px-3 py-1 text-xs; }
+  .btn-md { @apply px-5 py-2 text-sm; }
+  .btn-lg { @apply px-7 py-3 text-sm; }
+  
+}
+
+
+/* 
+ * ─── 유틸리티 ─── 
+ * Tailwind에 없는 커스텀 유틸리티
+ */
+@layer utilities {
+  /* 컨테이너 너비 — 직접 수치를 바꿔서 쓰세요 */
+  .container-wide { @apply max-w-6xl mx-auto px-6; }
+  .container-narrow { @apply max-w-3xl mx-auto px-6; }
 }

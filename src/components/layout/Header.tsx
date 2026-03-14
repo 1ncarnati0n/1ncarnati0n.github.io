@@ -8,6 +8,7 @@ const navItems = [
   { href: '/blog', label: 'Blog' },
   { href: '/works', label: 'Works' },
   { href: '/about', label: 'About' },
+  { href: '/design', label: 'Design' },
 ]
 
 export function Header() {
@@ -16,7 +17,7 @@ export function Header() {
   return (
     <>
       {/* 헤더 바: 로고(좌) + menu 버튼(우) */}
-      <header className="fixed top-0 w-full z-50 px-6 h-16 flex items-center justify-between">
+      <header className="fixed top w-full z-50 px-6 h-16 flex items-center justify-between">
         <Link href="/" className="header-logo">
           1ncarnati0n
         </Link>
