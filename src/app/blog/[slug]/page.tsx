@@ -14,8 +14,8 @@ export default async function BlogPostPage({
   const { slug } = await params
   // TODO: Phase 4에서 slug로 마크다운 파일 읽기 → MDX 렌더링
   return (
-    <article className="max-w-3xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold">{slug}</h1>
+    <article className="max-w-3xl mx-auto px-10 py-12">
+      <h1 className="text-xl font-bold">{slug}</h1>
     </article>
   )
 }

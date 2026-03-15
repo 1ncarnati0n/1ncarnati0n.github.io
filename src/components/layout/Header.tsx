@@ -16,43 +16,29 @@ export function Header() {
 
   return (
     <>
-      {/* 헤더 바: 로고(좌) + menu 버튼(우) */}
-      <header className="fixed top w-full z-50 px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="header-logo">
+      {/* ── 헤더 바: 항상 최상단 (z-50) ── */}
+      <header className="fixed top-6 left-0 w-full z-100 px-10 h-16 flex items-center justify-between">
+        <Link
+          href="/"
+          className="logo"
+          onClick={() => setMenuOpen(false)}
+        >
           1ncarnati0n
         </Link>
 
+        {/* Menu ↔ Close 토글 — 같은 버튼, 텍스트만 변경 */}
         <button
-          onClick={() => setMenuOpen(true)}
-          className="header-btn"
+          onClick={() => setMenuOpen(prev => !prev)}
+          className="logo"
         >
-          Menu
+          {menuOpen ? 'Close' : 'Menu'}
         </button>
       </header>
 
-      {/* 풀스크린 오버레이: menuOpen이 true일 때만 표시 */}
+      {/* ── 풀스크린 오버레이: header 아래에 위치 (z-40) ── */}
       {menuOpen && (
-        <div className="fixed inset-0 z-100 flex flex-col bg-white/80 dark:bg-neutral-950/80 backdrop-blur-md">
-          {/* 오버레이 상단: 로고(좌) + close 버튼(우) — 헤더와 같은 위치 */}
-          <div className="px-6 h-16 flex items-center justify-between">
-            <Link
-              href="/"
-              className="header-logo"
-              onClick={() => setMenuOpen(false)}
-            >
-              1ncarnati0n
-            </Link>
-
-            <button
-              onClick={() => setMenuOpen(false)}
-              className="header-btn"
-            >
-              Close
-            </button>
-          </div>
-
-          {/* 메뉴 항목들: 화면 중앙에 크게 */}
-          <nav className="flex-1 flex flex-col items-center justify-center gap-8">
+        <div className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-white/80 dark:bg-neutral-950/80 backdrop-blur-md">
+          <nav className="flex flex-col items-center gap-8">
             {navItems.map(item => (
               <Link
                 key={item.href}

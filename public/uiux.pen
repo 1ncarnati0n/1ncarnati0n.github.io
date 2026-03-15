@@ -1,0 +1,324 @@
+{
+  "version": "2.8",
+  "children": [
+    {
+      "type": "frame",
+      "id": "dpWNU",
+      "x": 0,
+      "y": 0,
+      "name": "1ncarnati0n.github.io - Home",
+      "width": 1440,
+      "fill": "#FFFFFF",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "QhQ1g",
+          "name": "Header",
+          "width": "fill_container",
+          "height": 64,
+          "fill": "#FFFFFF",
+          "padding": [
+            0,
+            24
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "Zrsqk",
+              "name": "logo",
+              "fill": "#1A1A1A",
+              "content": "1ncarnati0n",
+              "fontFamily": "Space Grotesk",
+              "fontSize": 24,
+              "fontWeight": "700",
+              "letterSpacing": -0.5
+            },
+            {
+              "type": "text",
+              "id": "4tzFt",
+              "name": "menuBtn",
+              "fill": "#1A1A1A",
+              "content": "Menu",
+              "fontFamily": "Space Grotesk",
+              "fontSize": 24,
+              "fontWeight": "700",
+              "letterSpacing": -0.5
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "47fG8",
+          "name": "Main Content",
+          "width": "fill_container",
+          "fill": "#FFFFFF",
+          "layout": "vertical",
+          "gap": 80,
+          "padding": [
+            64,
+            208
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "1ojd1",
+              "name": "Hero Section",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Do0t3",
+                  "name": "heroHeading",
+                  "fill": "#1A1A1A",
+                  "content": "hi",
+                  "lineHeight": 1.15,
+                  "fontFamily": "Space Grotesk",
+                  "fontSize": 40,
+                  "fontWeight": "500",
+                  "letterSpacing": -1.2
+                },
+                {
+                  "type": "text",
+                  "id": "J4PLW",
+                  "name": "heroDesc",
+                  "fill": "#666666",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "AI Engineering, Computational Design, BIM, 건설산업 AX, DX 대한 Tech Blog 입니다.",
+                  "lineHeight": 1.7,
+                  "fontFamily": "Noto Sans KR",
+                  "fontSize": 16
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "iswCP",
+              "name": "Card Grid",
+              "width": "fill_container",
+              "gap": 32,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "sTSQt",
+                  "name": "Blog Card",
+                  "width": "fill_container",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#E0E0E0"
+                  },
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": 24,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "oaNn1",
+                      "name": "blogTitle",
+                      "fill": "#1A1A1A",
+                      "content": "Blog",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Space Grotesk",
+                      "fontSize": 20,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "ZppU0",
+                      "name": "blogDesc",
+                      "fill": "#666666",
+                      "content": "Tech Posts",
+                      "lineHeight": 1.7,
+                      "fontFamily": "Noto Sans KR",
+                      "fontSize": 16
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "XTfuR",
+                  "name": "Works Card",
+                  "width": "fill_container",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#E0E0E0"
+                  },
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": 24,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "EsyFV",
+                      "name": "worksTitle",
+                      "fill": "#1A1A1A",
+                      "content": "Works",
+                      "lineHeight": 1.35,
+                      "fontFamily": "Space Grotesk",
+                      "fontSize": 20,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "d79ja",
+                      "name": "worksDesc",
+                      "fill": "#666666",
+                      "content": "Architectural Design",
+                      "lineHeight": 1.7,
+                      "fontFamily": "Noto Sans KR",
+                      "fontSize": 16
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "FqOl3",
+                  "name": "Empty Slot",
+                  "width": "fill_container",
+                  "height": "fit_content(160)",
+                  "layout": "vertical"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "OGCi1",
+      "x": 1540,
+      "y": 0,
+      "name": "Menu Overlay (Open State)",
+      "width": 1440,
+      "height": 900,
+      "fill": "#FFFFFFCC",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "n6c3g",
+          "name": "Menu Header",
+          "width": "fill_container",
+          "height": 64,
+          "padding": [
+            0,
+            24
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "a4Pn9",
+              "name": "menuLogo",
+              "fill": "#1A1A1A",
+              "content": "1ncarnati0n",
+              "fontFamily": "Space Grotesk",
+              "fontSize": 24,
+              "fontWeight": "700",
+              "letterSpacing": -0.5
+            },
+            {
+              "type": "text",
+              "id": "iZcLC",
+              "name": "closeBtn",
+              "fill": "#1A1A1A",
+              "content": "Close",
+              "fontFamily": "Space Grotesk",
+              "fontSize": 24,
+              "fontWeight": "700",
+              "letterSpacing": -0.5
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "3Dntz",
+          "name": "Menu Center",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "cDO8Y",
+              "name": "navBlog",
+              "fill": "#1A1A1A",
+              "content": "Blog",
+              "fontFamily": "Space Grotesk",
+              "fontSize": 24,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "SiuiX",
+              "name": "navWorks",
+              "fill": "#1A1A1A",
+              "content": "Works",
+              "fontFamily": "Space Grotesk",
+              "fontSize": 24,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "Qeg4O",
+              "name": "navAbout",
+              "fill": "#1A1A1A",
+              "content": "About",
+              "fontFamily": "Space Grotesk",
+              "fontSize": 24,
+              "fontWeight": "500"
+            },
+            {
+              "type": "text",
+              "id": "tL03r",
+              "name": "navDesign",
+              "fill": "#1A1A1A",
+              "content": "Design",
+              "fontFamily": "Space Grotesk",
+              "fontSize": 24,
+              "fontWeight": "500"
+            },
+            {
+              "type": "frame",
+              "id": "ladWE",
+              "name": "Dark Mode Toggle",
+              "cornerRadius": 12,
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "#E0E0E0"
+              },
+              "padding": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "6oprs",
+                  "name": "toggleEmoji",
+                  "fill": "#1A1A1A",
+                  "content": "🌙",
+                  "fontFamily": "Inter",
+                  "fontSize": 24,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

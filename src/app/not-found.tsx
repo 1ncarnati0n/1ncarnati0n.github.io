@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Button } from "@/components/ui/Button"
 
 export default function NotFound() {
   return (
@@ -8,12 +8,9 @@ export default function NotFound() {
         <p className="text-neutral-600 dark:text-neutral-400 mb-6">
           찾는 페이지가 없습니다.
         </p>
-        <Link
-          href="/"
-          className="px-6 py-3 bg-neutral-900 dark:bg-neutral-100 text-white dark:text-black rounded-lg hover:opacity-90 transition inline-block"
-        >
+        <Button href="/" size="lg">
           홈으로 돌아가기
-        </Link>
+        </Button>
       </div>
     </div>
   )
