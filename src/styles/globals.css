@@ -11,6 +11,7 @@
   디자인 토큰 — CSS 변수로 색상과 폰트를 정의
   나중에 Tailwind 클래스나 CSS에서 이 변수들을 가져다 씀
 */
+
 @theme {
   /*
    * 색상 — 모노톤 기반
@@ -31,15 +32,15 @@
    */
   --font-title: "Archivo Black", system-ui, sans-serif;
   --font-header: "Courier", system-ui, sans-serif;
-  --font-body: "Courier", "Noto Sans KR", system-ui, sans-serif;
+  --font-body: "Courier", "Noto Sans KR", sans-serif;
   --font-body-serif: "Noto Serif KR", "Georgia", serif;
   --font-code: "JetBrains Mono", monospace;
   --font-code-kr: "Tab0MonoK", monospace;
 }
 
 /*
-  @layer base: 모든 페이지에 기본 적용되는 스타일
-*/
+ * @layer base: 모든 페이지에 기본 적용되는 스타일
+ */
 @layer base {
   html { @apply scroll-smooth; }
 
@@ -112,7 +113,6 @@
     @apply outline-2 outline-offset-2 outline-neutral-400;
   }
 }
-
 
 /*
  * ─── 컴포넌트 클래스 ───

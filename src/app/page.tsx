@@ -15,6 +15,9 @@ export default async function Home() {
           <Button href="/about" size="md">
             About
           </Button>
+          <Button href="/design" size="md">
+            design
+          </Button>
         </div>
       </section>
     </div>

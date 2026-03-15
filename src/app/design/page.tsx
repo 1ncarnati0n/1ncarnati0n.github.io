@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/Button";
 
 export default function DesignPage() {
   return (
-    <div className="max-w-4xl mx-auto px-6 py-20 space-y-20">
+    <div className="max-w-4xl mx-auto space-y-20 top-20">
       {/* 페이지 제목 */}
       <header>
         <h1>Design System</h1>
