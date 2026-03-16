@@ -4,30 +4,30 @@
 
 /** 블로그 포스트 frontmatter */
 export interface BlogFrontmatter {
-	title: string
-	descrition: string
-	date: string        // "2026-03-01" 같은 ISO 날짜 문자열
-	updated?: string    // 수정일 (선택)
-	tags: string[]
-	draft?: boolean     // true면 목록에서 숨김
-	cover?: string      // 커버 이미지 경로
-	series?: string     // 시리즈 이름 (선택)
+  title: string
+  description: string
+  date: string        // "2026-03-01" 같은 ISO 날짜 문자열
+  updated?: string    // 수정일 (선택)
+  tags: string[]
+  draft?: boolean     // true면 목록에서 숨김
+  cover?: string      // 커버 이미지 경로
+  series?: string     // 시리즈 이름 (선택)
 }
 
 /** Works(건축 및 기술 포트폴리오) frontmatter */
-	export interface WorksFrontmatter {
-	title: string
-	descriptionb: string
-	data: string
-	role: string            // "설계 담당" / "PM" 등
-	location?: string       // "서울 강남구"
-	status: 'completed' | 'in-progress' | 'concept'
-	tools: string[]         // ["Revit", "Rhino", "Grasshopper"]
-	cover: string
-	gallery?: string[]      // 이미지 경로 배열
-	category: string        // "residential" / "commercial" 등
-	area?: string           // "연면적 2,500㎡"
-	client?: string
+export interface WorksFrontmatter {
+  title: string
+  description: string
+  date: string
+  role: string            // "설계 담당" / "PM" 등
+  location?: string       // "서울 강남구"
+  status: 'completed' | 'in-progress' | 'concept'
+  tools: string[]         // ["Revit", "Rhino", "Grasshopper"]
+  cover: string
+  gallery?: string[]      // 이미지 경로 배열
+  category: string        // "residential" / "commercial" 등
+  area?: string           // "연면적 2,500㎡"
+  client?: string
 }
 
 // ════════════════════════════════════════
@@ -42,7 +42,7 @@ interface BaseContent {
   date: Date                  // 문자열이 아닌 Date 객체로 변환
   cover?: string
   readingTime: number         // 분 단위
-  content: string             // raw MDX 소스
+  content: string             // raw 마크다운 소스
 }
 
 /** 블로그 포스트 */

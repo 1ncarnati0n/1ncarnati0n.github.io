@@ -11,11 +11,7 @@
   디자인 토큰 — CSS 변수로 색상과 폰트를 정의
   나중에 Tailwind 클래스나 CSS에서 이 변수들을 가져다 씀
 */
-
 @theme {
-  /*
-   * 색상 — 모노톤 기반
-   */
   --color-primary: #1a1a1a;
   --color-secondary: #666666;
   --color-muted: #999999;
@@ -23,27 +19,22 @@
   --color-surface: #f5f5f5;
   --color-highlight: #ffff00;
 
-  /*
-   * 폰트 — layout.tsx의 next/font 변수와 연결
-   *
+  /* 폰트 — layout.tsx의 next/font 변수와 연결
    * font-family에서 브라우저는 글자마다 앞에서부터 매칭:
    * → 영문 'A' → courier 있음 → courier 렌더링
    * → 한글 '가' → courier 없음 → Noto Sans KR로 폴백
    */
-  --font-title: "Archivo Black", system-ui, sans-serif;
-  --font-header: "Courier", system-ui, sans-serif;
-  --font-body: "Courier", "Noto Sans KR", sans-serif;
-  --font-body-serif: "Noto Serif KR", "Georgia", serif;
-  --font-code: "JetBrains Mono", monospace;
-  --font-code-kr: "Tab0MonoK", monospace;
+  --font-title: var(--font-archivoBlack), system-ui, sans-serif;
+  --font-header: var(--font-jetbrainsMono), var(--font-notoSansKR), system-ui, sans-serif;
+  --font-body: var(--font-jetbrainsMono), var(--font-notoSerifKR), system-ui, sans-serif;
+  --font-code: var(--font-jetbrainsMono), var(--font-nanumGothicCoding), monospace;
+  --font-sans: var(--font-notoSansKR), system-ui, sans-serif;
+  --font-serif: var(--font-notoSerifKR), system-ui, serif;
+
 }
 
-/*
- * @layer base: 모든 페이지에 기본 적용되는 스타일
- */
+/* @layer base: 모든 페이지에 기본 적용되는 스타일 */
 @layer base {
-  html { @apply scroll-smooth; }
-
   body {
     @apply bg-white dark:bg-neutral-950;
     @apply text-neutral-900 dark:text-neutral-100;
@@ -55,7 +46,7 @@
 
   /* ─── 타이포그래피 스케일 ─── */
   h1 {
-    font-family: var(--font-header);
+    font-family: var(--font-body);
     font-size: 2.5rem;
     font-weight: 500;
     line-height: 1.15;
@@ -64,7 +55,7 @@
   }
 
   h2 {
-    font-family: var(--font-header);
+    font-family: var(--font-body);
     font-size: 1.75rem;
     font-weight: 500;
     line-height: 1.25;
@@ -73,7 +64,7 @@
   }
 
   h3 {
-    font-family: var(--font-header);
+    font-family: var(--font-body);
     font-size: 1.25rem;
     font-weight: 500;
     line-height: 1.35;
@@ -81,7 +72,7 @@
   }
 
   h4, h5, h6 {
-    font-family: var(--font-header);
+    font-family: var(--font-body);
     font-size: 1rem;
     font-weight: 500;
     line-height: 1.4;
@@ -90,6 +81,8 @@
 
   p {
     font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 500;
     margin-bottom: 1rem;
     color: var(--color-secondary);
   }
@@ -112,6 +105,10 @@
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-neutral-400;
   }
+  ::selection {
+    background-color: var(--color-highlight);  /* @theme에 이미 정의해둔 노란색 */
+    color: var(--color-primary);
+  }
 }
 
 /*
@@ -120,11 +117,10 @@
 @layer components {
   .logo {
     font-family: var(--font-title);
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 900;
-    line-height: 1.15;
+    line-height: 1.4;
     letter-spacing: -0.03em;
-    margin-bottom: 0.75rem;
   }
 
   .btn {
@@ -141,7 +137,27 @@
   .btn-sm { @apply px-3 py-1 text-xs; }
   .btn-md { @apply px-5 py-2 text-sm; }
   .btn-lg { @apply px-7 py-3 text-sm; }
+
+  .menu-item {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 400ms ease var(--stagger, 0ms),
+                transform 400ms ease var(--stagger, 0ms);
+  }
+  .menu-item-open {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
+  .menu {
+    font-family: italic var(--font-header);
+    font-size: 1.6rem;
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.75rem;
+  }
 
 
 /*
@@ -151,3 +167,4 @@
   .container-wide { @apply max-w-6xl mx-auto px-6; }
   .container-narrow { @apply max-w-3xl mx-auto px-6; }
 }
+

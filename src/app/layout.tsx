@@ -6,29 +6,26 @@ import {
   Noto_Sans_KR, 
   Noto_Serif_KR, 
   JetBrains_Mono, 
-  Courier_Prime, 
+  Courier_Prime,
+  Nanum_Gothic_Coding 
 } from 'next/font/google'
-
-// ── 로컬 폰트 ──
-import localFont from 'next/font/local'
 
 import { Header } from '@/components/layout/Header'
 import '@/styles/globals.css'
 
 // ── 1. 제목용 — Archivo Black ──
-// 단일 weight(400) 폰트지만 시각적으로 Black 두께
-// Google Fonts가 weight를 400으로 등록해둔 경우 → weight 생략 가능
+// 단일 weight(400) 폰트지만 시각적으로 Black 두께이므로 weight 400으로 설정
 const archivoBlack = Archivo_Black({
   subsets: ['latin'],
-  weight: '400',                   // Archivo Black은 400 하나만 존재
-  variable: '--font-header',
+  weight: '400',             // Archivo Black은 400 하나만 존재
+  variable: '--font-archivoBlack',
   display: 'swap',
 })
 // ── 2-1. 영어 본문폰트 — Courier_Prime (영문) ──
-const courier = Courier_Prime({
+const courierPrime = Courier_Prime({
   subsets: ['latin'],
   weight: '400',
-  variable: '--font-body',
+  variable: '--font-courierPrime',
   display: 'swap',
 })
 
@@ -36,7 +33,7 @@ const courier = Courier_Prime({
 const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
-  variable: '--font-body',
+  variable: '--font-notoSansKR',
   display: 'swap',
 })
 
@@ -44,28 +41,24 @@ const notoSansKR = Noto_Sans_KR({
 const notoSerifKR = Noto_Serif_KR({
   subsets: ['latin'],
   weight: ['400', '700'],
-  variable: '--font-serif',
+  variable: '--font-notoSerifKR',
   display: 'swap',
 })
 
 // ── 4. 영문 코드용 ──
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  variable: '--font-code',
+  variable: '--font-jetbrainsMono',
   display: 'swap',
 })
 
-// ── 5. 한글 코드용 — 로컬 폰트 ──
-const tab0MonoK = localFont({
-  src: [
-    { path: '../fonts/Tab0MonoK-Regular.woff2', weight: '400', style: 'normal' },
-    { path: '../fonts/Tab0MonoK-Bold.woff2', weight: '700', style: 'normal' },
-    { path: '../fonts/Tab0MonoK-Italic.woff2', weight: '400', style: 'italic' },
-    { path: '../fonts/Tab0MonoK-BoldItalic.woff2', weight: '700', style: 'italic' },
-  ],
-  variable: '--font-code-kr',
+// ── 5. 한글 코드용 ──
+const nanumGothicCoding = Nanum_Gothic_Coding({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-nanumGothicCoding',
   display: 'swap',
-})
+})  
 
 export const metadata: Metadata = {
   title: {
@@ -85,11 +78,11 @@ export default function RootLayout({
       lang="ko"
       className={`
         ${archivoBlack.variable}
-        ${courier.variable}
+        ${courierPrime.variable}
         ${notoSansKR.variable}
         ${notoSerifKR.variable}
         ${jetbrainsMono.variable}
-        ${tab0MonoK.variable}
+        ${nanumGothicCoding.variable}
       `}
       suppressHydrationWarning
     >

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="top-0 px-10 items-center flex flex-col">
+    <div className="px-9 flex-wrap">
       <h1 className="text-2xl font-bold mb-8">About</h1>
       <p className="text-neutral-500">프로필과 이력이 여기에 표시됩니다.</p>
     </div>
