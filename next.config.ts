@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "export",
+  trailingSlash: true,
   // MDX 파일 확장자 인식
   pageExtensions: ['ts', 'tsx', 'md', 'mdx'],
 
