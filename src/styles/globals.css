@@ -24,12 +24,21 @@
    * → 영문 'A' → courier 있음 → courier 렌더링
    * → 한글 '가' → courier 없음 → Noto Sans KR로 폴백
    */
+  /* 
   --font-title: var(--font-archivoBlack), system-ui, sans-serif;
   --font-header: var(--font-jetbrainsMono), var(--font-notoSansKR), system-ui, sans-serif;
   --font-body: var(--font-jetbrainsMono), var(--font-notoSerifKR), system-ui, sans-serif;
   --font-code: var(--font-jetbrainsMono), var(--font-nanumGothicCoding), monospace;
   --font-sans: var(--font-notoSansKR), system-ui, sans-serif;
-  --font-serif: var(--font-notoSerifKR), system-ui, serif;
+  --font-serif: var(--font-notoSerifKR), system-ui, serif; 
+  */
+
+  --font-title: "Archivo Black", system-ui, sans-serif;
+  --font-header: "JetBrains Mono", "Noto Sans KR", system-ui, sans-serif;
+  --font-body: "JetBrains Mono", "Noto Serif KR", system-ui, serif;
+  --font-code: "JetBrains Mono", "Nanum Gothic Coding", monospace;
+  --font-sans: "Noto Sans KR", system-ui, sans-serif;
+  --font-serif: "Noto Serif KR", system-ui, serif;
 
 }
 
@@ -94,7 +103,7 @@
 
   /* 코드: JetBrains Mono(영문) + Tab0MonoK(한글 폴백) */
   code, pre {
-    font-family: var(--font-code), var(--font-code-kr);
+    font-family: var(--font-code);
     font-size: 0.875rem;
   }
 
@@ -152,6 +161,7 @@
 
   .menu {
     font-family: italic var(--font-header);
+    font-style: italic;
     font-size: 1.6rem;
     font-weight: 900;
     line-height: 1.15;

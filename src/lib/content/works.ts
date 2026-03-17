@@ -5,7 +5,14 @@ export type WorkItem = {
   published: boolean
 }
 
-const works: WorkItem[] = []
+const works: WorkItem[] = [
+  {
+    slug: 'hello-world',
+    title: 'Hello World',
+    summary: 'Works section placeholder project.',
+    published: true,
+  },
+]
 
 export async function getWorkSlugs(): Promise<string[]> {
   return works.filter((work) => work.published).map((work) => work.slug)

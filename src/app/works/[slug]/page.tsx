@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 
 export async function generateStaticParams() {
   const slugs = await getWorkSlugs()
-  return slugs.map((slug) => ({ slug }))
+  return slugs.length > 0 ? slugs.map((slug) => ({ slug })) : [{ slug: '__placeholder__' }]
 }
 
 export default async function WorkDetailPage({
@@ -12,6 +12,11 @@ export default async function WorkDetailPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
+
+  if (slug === '__placeholder__') {
+    notFound()
+  }
+
   const work = await getWork(slug)
 
   if (!work) notFound()
