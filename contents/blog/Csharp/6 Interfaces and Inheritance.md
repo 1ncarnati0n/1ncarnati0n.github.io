@@ -1,3 +1,6 @@
+---
+slug: "6-interfaces-and-inheritance"
+---
 
 <br>
 

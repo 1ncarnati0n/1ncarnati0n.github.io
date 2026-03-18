@@ -1,3 +1,6 @@
+---
+slug: "5-classes-and-objects"
+---
 
 <br>
 

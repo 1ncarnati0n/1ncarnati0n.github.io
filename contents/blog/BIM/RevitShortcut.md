@@ -1,8 +1,10 @@
 ---
+slug: "revit-shortcut"
 title: Revit 단축키
 aliases:
   - Revit 의 Default 단축키 목록입니다.
 ---
+
 ### 건축 Architecture
 
 | 빌드     |             |                       |

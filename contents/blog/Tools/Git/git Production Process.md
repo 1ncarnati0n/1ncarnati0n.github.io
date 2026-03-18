@@ -1,3 +1,6 @@
+---
+slug: "git-production-process"
+---
 
 > [!quote]  brench 단계별 git 관리 프로세스
 > **dev**  >>  **staging**  >>  **main** <sup>( Production ) </sup>

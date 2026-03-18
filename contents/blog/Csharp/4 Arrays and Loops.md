@@ -1,3 +1,6 @@
+---
+slug: "4-arrays-and-loops"
+---
 
 <br>
 

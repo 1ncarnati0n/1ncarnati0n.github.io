@@ -1,3 +1,6 @@
+---
+slug: "2-logic-and-conditionals"
+---
 
 <br>
 

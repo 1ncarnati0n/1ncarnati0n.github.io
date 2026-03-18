@@ -1,3 +1,6 @@
+---
+slug: "7-references"
+---
 
 <br>
 

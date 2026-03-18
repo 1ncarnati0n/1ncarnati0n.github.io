@@ -4,14 +4,17 @@
 
 /** 블로그 포스트 frontmatter */
 export interface BlogFrontmatter {
-  title: string
-  description: string
-  date: string        // "2026-03-01" 같은 ISO 날짜 문자열
+  slug: string
+  title?: string
+  description?: string
+  date?: string        // "2026-03-01" 같은 ISO 날짜 문자열
   updated?: string    // 수정일 (선택)
-  tags: string[]
+  tags?: string[] | string
   draft?: boolean     // true면 목록에서 숨김
   cover?: string      // 커버 이미지 경로
   series?: string     // 시리즈 이름 (선택)
+  aliases?: string[] | string
+  cssclasses?: string[] | string
 }
 
 /** Works(건축 및 기술 포트폴리오) frontmatter */
@@ -36,8 +39,9 @@ export interface WorksFrontmatter {
 
 /** 공통 필드 — 블로그와 Works 모두 가지는 것 */
 interface BaseContent {
-  slug: string                // URL용 식별자 (파일명에서 추출)
-  slugParts: string[]         // 중첩 폴더를 포함한 URL 세그먼트
+  slug: string                // URL용 안정 식별자 (frontmatter에서 관리)
+  sourcePathParts: string[]   // 디스크 상의 폴더 구조 (탐색용)
+  sourceFileName: string      // 확장자를 제외한 원본 파일명
   title: string
   description: string
   date: Date                  // 문자열이 아닌 Date 객체로 변환
@@ -53,6 +57,8 @@ export interface BlogPost extends BaseContent {
   draft: boolean
   series?: string
   updated?: Date
+  aliases: string[]
+  cssClasses: string[]
 }
 
 /** Works 프로젝트 */
@@ -97,7 +103,6 @@ export interface BlogTreePostNode {
   type: 'post'
   name: string
   slug: string
-  slugParts: string[]
   title: string
 }
 

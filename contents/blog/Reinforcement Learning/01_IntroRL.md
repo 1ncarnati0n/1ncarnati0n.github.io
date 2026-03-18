@@ -1,10 +1,10 @@
 ---
+slug: "01-intro-rl"
 title: 1. Intro 강화학습
 tags: 
 cssclasses: 
 aliases:
 ---
-
 
 ### 강화학습
 강화학습<sup>Reinforcement Learning</sup> 의 설명

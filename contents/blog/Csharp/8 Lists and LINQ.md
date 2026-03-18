@@ -1,3 +1,6 @@
+---
+slug: "8-lists-and-linq"
+---
 
 <br>
 

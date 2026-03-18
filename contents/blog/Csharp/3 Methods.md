@@ -1,3 +1,6 @@
+---
+slug: "3-methods"
+---
 
 <br>
 

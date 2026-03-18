@@ -1,3 +1,6 @@
+---
+slug: "1-data-types-and-variables"
+---
 
 <br>
 

@@ -2,24 +2,32 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 
 import { BlogSidebar } from '@/components/blog/BlogSidebar'
+import { normalizeBlogReference } from '@/lib/content/blog-slug'
 import { renderMarkdown } from '@/lib/content/mdx'
-import { getAllBlogPosts, getBlogPost, getBlogTree } from '@/lib/content/posts'
+import {
+  getAllBlogPosts,
+  getBlogPostBySlug,
+  getBlogReferenceLookup,
+  getBlogTree,
+} from '@/lib/content/posts'
+
+export const dynamicParams = false
 
 export async function generateStaticParams() {
   const posts = await getAllBlogPosts()
 
   return posts.map((post) => ({
-    slug: post.slugParts,
+    slug: post.slug,
   }))
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string[] }>
+  params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const post = await getBlogPost(slug)
+  const post = await getBlogPostBySlug(slug)
 
   if (!post) {
     return { title: 'Not Found' }
@@ -40,21 +48,51 @@ export async function generateMetadata({
 export default async function BlogPostPage({
   params,
 }: {
-  params: Promise<{ slug: string[] }>
+  params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
 
-  const [post, tree] = await Promise.all([
-    getBlogPost(slug),
+  const [post, tree, references] = await Promise.all([
+    getBlogPostBySlug(slug),
     getBlogTree(),
+    getBlogReferenceLookup(),
   ])
 
   if (!post) notFound()
 
-  const html = await renderMarkdown(post.content)
+  const html = await renderMarkdown(post.content, {
+    resolveWikiLink: (reference) => {
+      const resolved = references.get(normalizeBlogReference(reference))
+
+      if (!resolved) {
+        return null
+      }
+
+      return {
+        href: `/blog/${resolved.slug}`,
+        title: resolved.title,
+        description: resolved.description,
+      }
+    },
+    resolveEmbed: (reference) => {
+      const resolved = references.get(normalizeBlogReference(reference))
+
+      if (!resolved) {
+        return null
+      }
+
+      return {
+        type: 'note',
+        href: `/blog/${resolved.slug}`,
+        title: resolved.title,
+        description: resolved.description,
+      }
+    },
+  })
+  const articleClassName = ['prose-custom', ...post.cssClasses].join(' ').trim()
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-16 xl:flex-row xl:gap-12">
+    <div className="flex w-full flex-col gap-10 px-10 py-16 xl:flex-row xl:gap-12">
       <BlogSidebar tree={tree} activeSlug={post.slug} title="Blog" />
 
       <article className="min-w-0 max-w-3xl flex-1">
@@ -95,7 +133,7 @@ export default async function BlogPostPage({
         />
 
         <div
-          className="prose-custom"
+          className={articleClassName}
           dangerouslySetInnerHTML={{ __html: html }}
         />
       </article>

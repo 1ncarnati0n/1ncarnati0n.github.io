@@ -1,3 +1,7 @@
+---
+slug: "gh에서-ml환경설치"
+---
+
 ### Numpy, Pandas, Scikit-learn
 
 Rhino8을 설치 후 

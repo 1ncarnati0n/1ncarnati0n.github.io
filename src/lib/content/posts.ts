@@ -10,6 +10,10 @@ import type {
   BlogTreeNode,
   BlogTreePostNode,
 } from '@/types/content'
+import {
+  assertValidBlogSlug,
+  normalizeBlogReference,
+} from '@/lib/content/blog-slug'
 
 const BLOG_DIR = path.join(process.cwd(), 'contents', 'blog')
 const MARKDOWN_EXTENSIONS = new Set(['.md', '.mdx'])
@@ -68,52 +72,171 @@ function extractDescription(content: string, fallbackTitle: string) {
   return (withoutTitle || cleaned).slice(0, 180).trim()
 }
 
+function normalizeStringArray(value: unknown): string[] {
+  if (Array.isArray(value)) {
+    return value
+      .filter((item): item is string => typeof item === 'string')
+      .map((item) => item.trim())
+      .filter(Boolean)
+  }
+
+  if (typeof value === 'string') {
+    const normalized = value.trim()
+    return normalized ? [normalized] : []
+  }
+
+  return []
+}
+
+function normalizeCssClassArray(value: unknown): string[] {
+  if (Array.isArray(value)) {
+    return value
+      .filter((item): item is string => typeof item === 'string')
+      .flatMap((item) => item.split(/[\s,]+/))
+      .map((item) => item.trim())
+      .filter(Boolean)
+  }
+
+  if (typeof value === 'string') {
+    return value
+      .split(/[\s,]+/)
+      .map((item) => item.trim())
+      .filter(Boolean)
+  }
+
+  return []
+}
+
 async function readBlogPostFromFile(
   filePath: string,
-  slugParts: string[],
+  sourcePathParts: string[],
 ): Promise<BlogPost | null> {
   const raw = await fs.readFile(filePath, 'utf-8')
   const stats = await fs.stat(filePath)
   const { data, content } = matter(raw)
-  const fm = data as BlogFrontmatter
+  const fm = data as Partial<BlogFrontmatter>
 
   if (fm.draft) return null
 
-  const fileName = slugParts[slugParts.length - 1] || 'Untitled'
+  const fileName = sourcePathParts[sourcePathParts.length - 1] || 'Untitled'
+  const slug = typeof fm.slug === 'string'
+    ? assertValidBlogSlug(fm.slug, filePath)
+    : (() => {
+        throw new Error(`Blog post is missing required frontmatter slug: ${filePath}`)
+      })()
   const title = fm.title || extractTitle(content, fileName)
   const description = fm.description || extractDescription(content, title)
   const date = fm.date ? new Date(fm.date) : stats.mtime
+  const tags = normalizeStringArray(fm.tags)
+  const aliases = normalizeStringArray(fm.aliases)
+  const cssClasses = normalizeCssClassArray(fm.cssclasses)
 
   return {
     type: 'blog',
-    slug: slugParts.join('/'),
-    slugParts,
+    slug,
+    sourcePathParts: sourcePathParts.slice(0, -1),
+    sourceFileName: fileName,
     title,
     description,
     date,
-    tags: fm.tags || [],
+    tags,
     draft: fm.draft || false,
     series: fm.series,
     cover: fm.cover,
     updated: fm.updated ? new Date(fm.updated) : undefined,
+    aliases,
+    cssClasses,
     readingTime: Math.ceil(content.split(/\s+/).length / 200),
     content,
   }
 }
 
+type BlogIndex = {
+  posts: BlogPost[]
+  postsBySlug: Map<string, BlogPost>
+  references: Map<string, BlogPost | null>
+  tree: BlogTreeNode[]
+}
+
+function getBlogSourcePath(post: BlogPost) {
+  return path.join(BLOG_DIR, ...post.sourcePathParts, post.sourceFileName)
+}
+
+function addReferenceKey(
+  references: Map<string, BlogPost | null>,
+  rawKey: string,
+  post: BlogPost,
+) {
+  const key = normalizeBlogReference(rawKey)
+
+  if (!key) return
+
+  if (!references.has(key)) {
+    references.set(key, post)
+    return
+  }
+
+  const existing = references.get(key)
+
+  if (!existing) {
+    return
+  }
+
+  if (existing.slug !== post.slug) {
+    references.set(key, null)
+  }
+}
+
+function indexPostReferences(
+  references: Map<string, BlogPost | null>,
+  post: BlogPost,
+) {
+  addReferenceKey(references, post.slug, post)
+  addReferenceKey(references, post.title, post)
+  addReferenceKey(references, post.sourceFileName, post)
+
+  if (post.sourcePathParts.length > 0) {
+    addReferenceKey(
+      references,
+      [...post.sourcePathParts, post.sourceFileName].join('/'),
+      post,
+    )
+  }
+
+  for (const alias of post.aliases) {
+    addReferenceKey(references, alias, post)
+  }
+}
+
+function addPostToIndex(postsBySlug: Map<string, BlogPost>, post: BlogPost, filePath: string) {
+  const existing = postsBySlug.get(post.slug)
+
+  if (existing) {
+    throw new Error(
+      `Duplicate blog slug "${post.slug}" found in ${filePath} and ${path.join(
+        getBlogSourcePath(existing),
+      )}`,
+    )
+  }
+
+  postsBySlug.set(post.slug, post)
+}
+
 const walkBlogDirectory = cache(async function walkBlogDirectory(
   dirPath: string,
   pathParts: string[] = [],
-): Promise<{ posts: BlogPost[]; tree: BlogTreeNode[] }> {
+): Promise<BlogIndex> {
   let entries: Dirent[]
 
   try {
     entries = await fs.readdir(dirPath, { withFileTypes: true })
   } catch {
-    return { posts: [], tree: [] }
+    return { posts: [], postsBySlug: new Map(), references: new Map(), tree: [] }
   }
 
   const posts: BlogPost[] = []
+  const postsBySlug = new Map<string, BlogPost>()
+  const references = new Map<string, BlogPost | null>()
   const tree: BlogTreeNode[] = []
 
   for (const entry of entries.sort((a, b) => a.name.localeCompare(b.name, 'ko'))) {
@@ -124,6 +247,10 @@ const walkBlogDirectory = cache(async function walkBlogDirectory(
       const nested = await walkBlogDirectory(entryPath, nextPathParts)
 
       posts.push(...nested.posts)
+      for (const post of nested.postsBySlug.values()) {
+        addPostToIndex(postsBySlug, post, getBlogSourcePath(post))
+        indexPostReferences(references, post)
+      }
 
       if (nested.tree.length > 0) {
         const folderNode: BlogTreeFolderNode = {
@@ -141,8 +268,8 @@ const walkBlogDirectory = cache(async function walkBlogDirectory(
     if (!entry.isFile() || !isMarkdownFile(entry.name)) continue
 
     const fileName = entry.name.replace(/\.mdx?$/, '')
-    const slugParts = [...pathParts, fileName]
-    const post = await readBlogPostFromFile(entryPath, slugParts)
+    const sourcePathParts = [...pathParts, fileName]
+    const post = await readBlogPostFromFile(entryPath, sourcePathParts)
 
     if (!post) continue
 
@@ -150,16 +277,19 @@ const walkBlogDirectory = cache(async function walkBlogDirectory(
       type: 'post',
       name: fileName,
       slug: post.slug,
-      slugParts: post.slugParts,
       title: post.title,
     }
 
+    addPostToIndex(postsBySlug, post, entryPath)
+    indexPostReferences(references, post)
     posts.push(post)
     tree.push(postNode)
   }
 
   return {
     posts,
+    postsBySlug,
+    references,
     tree: sortTreeNodes(tree),
   }
 })
@@ -174,23 +304,12 @@ export async function getBlogTree(): Promise<BlogTreeNode[]> {
   return tree
 }
 
-export async function getBlogPost(slug: string | string[]): Promise<BlogPost | null> {
-  const normalizedParts = Array.isArray(slug)
-    ? slug
-    : slug.split('/').filter(Boolean)
+export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
+  const { postsBySlug } = await walkBlogDirectory(BLOG_DIR)
+  return postsBySlug.get(slug) ?? null
+}
 
-  if (normalizedParts.length === 0) return null
-
-  const fileBasePath = path.join(BLOG_DIR, ...normalizedParts)
-
-  for (const ext of MARKDOWN_EXTENSIONS) {
-    try {
-      const post = await readBlogPostFromFile(`${fileBasePath}${ext}`, normalizedParts)
-      if (post) return post
-    } catch {
-      continue
-    }
-  }
-
-  return null
+export async function getBlogReferenceLookup(): Promise<Map<string, BlogPost | null>> {
+  const { references } = await walkBlogDirectory(BLOG_DIR)
+  return references
 }

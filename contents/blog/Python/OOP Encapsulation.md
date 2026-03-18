@@ -1,7 +1,9 @@
 ---
+slug: "oop-encapsulation"
 title: "객체지향 1 : 캡슐화"
 tags:
 ---
+
 **파이썬 객체지향 프로그래밍의 캡슐화(Encapsulation)**
 
 ### 1. 캡슐화(Encapsulation)란?

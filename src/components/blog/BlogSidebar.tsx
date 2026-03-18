@@ -8,7 +8,6 @@ type BlogSidebarProps = {
   tree: BlogTreeNode[]
   activeSlug?: string
   title?: string
-  fixed?: boolean
   expandAll?: boolean
 }
 
@@ -51,7 +50,6 @@ export function BlogSidebar({
   tree,
   activeSlug,
   title = 'Blog',
-  fixed = false,
   expandAll = false,
 }: BlogSidebarProps) {
   const initialExpanded = useMemo(() => {
@@ -138,7 +136,7 @@ export function BlogSidebar({
   }
 
   return (
-    <aside className={fixed ? 'blog-sidebar blog-sidebar-fixed' : 'blog-sidebar'}>
+    <aside className="blog-sidebar">
       <div className="blog-sidebar-sticky">
         <div className="blog-sidebar-title-row">
           <h3 className="blog-sidebar-title">{title}</h3>

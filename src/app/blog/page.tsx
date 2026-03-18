@@ -10,10 +10,11 @@ export default async function BlogPage() {
   const topicCount = tree.filter((node) => node.type === 'folder').length
 
   return (
-    <div className="w-full px-7 py-16">
-      <BlogSidebar tree={tree} title="Blog" fixed expandAll />
-      <section className="blog-page-with-fixed-sidebar min-w-0">
-        <div className="mb-12 max-w-3xl">
+    <>
+      <BlogSidebar tree={tree} title="Blog" />
+
+      <section>
+        <div className="mb-12">
           <h2 className="text-2xl font-medium text-[var(--color-foreground)]">
             Blog Summaries
           </h2>
@@ -55,7 +56,7 @@ export default async function BlogPage() {
             >
               <Link href={`/blog/${post.slug}`} className="block group no-underline">
                 <div className="mb-2 text-xs uppercase tracking-[0.16em] text-[var(--color-muted)]">
-                  {post.slugParts.slice(0, -1).join(' / ') || 'Root'}
+                  {post.sourcePathParts.join(' / ') || 'Root'}
                 </div>
                 <h3 className="text-lg font-medium text-[var(--color-foreground)] transition-opacity group-hover:opacity-70">
                   {post.title}
@@ -75,6 +76,6 @@ export default async function BlogPage() {
           ))}
         </div>
       </section>
-    </div>
+    </>
   )
 }
