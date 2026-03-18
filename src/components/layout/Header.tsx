@@ -14,7 +14,6 @@ const navItems = [
 // 경로 → 페이지 타이틀 매핑
 function getPageTitle(pathname: string): string {
   if (pathname === '/') return ''
-  // '/blog/some-post' → 'Blog' (첫 번째 세그먼트만 사용)
   const segment = pathname.split('/')[1]
   const match = navItems.find(item => item.href === `/${segment}`)
   return match?.label ?? ''
@@ -42,6 +41,9 @@ export function Header() {
         <button
           onClick={() => setMenuOpen(prev => !prev)}
           className="logo"
+          aria-expanded={menuOpen}
+          aria-controls="site-menu"
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
         >
           {menuOpen ? 'Close' : 'Menu'}
         </button>
@@ -60,11 +62,19 @@ export function Header() {
         menuOpen일 때만 backdrop-blur 적용 → GPU 연산 절약
         visibility로 전환하여 닫힌 상태에서 렌더링 자체를 건너뜀 */}
       <div
-        className={`fixed inset-0 z-40 flex flex-col items-center justify-center bg-white/80 dark:bg-neutral-950/80 transition-[opacity,visibility] duration-500 ease-in-out ${
-          menuOpen ? 'visible opacity-100 backdrop-blur-md' : 'invisible opacity-0'
-        }`}
+        onClick={() => setMenuOpen(false)}
+        className={
+          `fixed inset-0 z-40 flex flex-col items-center justify-center 
+          bg-white/80 dark:bg-neutral-950/80 
+          transition-[opacity,visibility] duration-500 ease-in-out 
+          ${menuOpen ? 'visible opacity-100 backdrop-blur-md' : 'invisible opacity-0'}`
+        }
       >
-        <nav className="mask-linear-to-neutral-50 flex flex-col items-center gap-8">
+        <nav
+          id="site-menu"
+          onClick={(event) => event.stopPropagation()}
+          className="mask-linear-to-neutral-50 flex flex-col items-center gap-8"
+        >
           {navItems.map((item, i) => (
             <Link
               key={item.href}
@@ -84,12 +94,12 @@ export function Header() {
           </div>
           <div>
             <p className='text-center'>
-              Architectural Design <br/>
-              Computational Design <br/>
-              AI Engineering <br/>
+              Architectural Design <br />
+              Computational Design <br />
+              AI Engineering <br />
               Software Development
             </p>
-            <Link href={'https://github.com/1ncarnati0n'}> 
+            <Link href={'https://github.com/1ncarnati0n'} onClick={() => setMenuOpen(false)}>
               <p className='text-center'>gitHub link</p>
             </Link>
           </div>

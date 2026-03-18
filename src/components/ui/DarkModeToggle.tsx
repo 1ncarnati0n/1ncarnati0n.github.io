@@ -18,8 +18,8 @@ export function DarkModeToggle() {
       className="p-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
       aria-label={`${theme === 'light' ? '다크' : '라이트'} 모드로 전환`}
     >
-      {theme === 'light' 
-        ? <Moon size={20} strokeWidth={1.5} /> 
+      {theme === 'light'
+        ? <Moon size={20} strokeWidth={1.5} />
         : <Sun size={20} strokeWidth={1.5} />
       }
     </button>

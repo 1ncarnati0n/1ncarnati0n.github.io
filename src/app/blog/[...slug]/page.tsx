@@ -54,7 +54,7 @@ export default async function BlogPostPage({
   const html = await renderMarkdown(post.content)
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl gap-12 px-6 py-16">
+    <div className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-16 xl:flex-row xl:gap-12">
       <BlogSidebar tree={tree} activeSlug={post.slug} title="Blog" />
 
       <article className="min-w-0 max-w-3xl flex-1">

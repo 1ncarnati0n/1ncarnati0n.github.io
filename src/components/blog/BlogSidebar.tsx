@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import type { BlogTreeNode } from '@/types/content'
 
@@ -8,6 +8,8 @@ type BlogSidebarProps = {
   tree: BlogTreeNode[]
   activeSlug?: string
   title?: string
+  fixed?: boolean
+  expandAll?: boolean
 }
 
 function collectExpandedFolders(nodes: BlogTreeNode[], activeSlug?: string): string[] {
@@ -31,17 +33,50 @@ function collectExpandedFolders(nodes: BlogTreeNode[], activeSlug?: string): str
   return [...expanded]
 }
 
+function collectAllFolders(nodes: BlogTreeNode[]): string[] {
+  const folders: string[] = []
+
+  function walk(node: BlogTreeNode) {
+    if (node.type === 'folder') {
+      folders.push(node.pathParts.join('/'))
+      node.children.forEach(walk)
+    }
+  }
+
+  nodes.forEach(walk)
+  return folders
+}
+
 export function BlogSidebar({
   tree,
   activeSlug,
   title = 'Blog',
+  fixed = false,
+  expandAll = false,
 }: BlogSidebarProps) {
-  const initialExpanded = useMemo(
-    () => collectExpandedFolders(tree, activeSlug),
-    [tree, activeSlug],
-  )
+  const initialExpanded = useMemo(() => {
+    if (expandAll) {
+      return collectAllFolders(tree)
+    }
+
+    return collectExpandedFolders(tree, activeSlug)
+  }, [tree, activeSlug, expandAll])
 
   const [expandedFolders, setExpandedFolders] = useState<string[]>(initialExpanded)
+
+  useEffect(() => {
+    if (!activeSlug) {
+      return
+    }
+
+    setExpandedFolders((prev) => {
+      const next = new Set(prev)
+      for (const folder of initialExpanded) {
+        next.add(folder)
+      }
+      return [...next]
+    })
+  }, [activeSlug, initialExpanded])
 
   function toggleFolder(pathKey: string) {
     setExpandedFolders((prev) =>
@@ -62,6 +97,9 @@ export function BlogSidebar({
             type="button"
             onClick={() => toggleFolder(pathKey)}
             className="blog-sidebar-folder-button"
+            style={{ paddingLeft: `${depth * 0.9 + 0.75}rem` }}
+            aria-expanded={isOpen}
+            aria-controls={`blog-folder-${pathKey}`}
           >
             <span
               className="blog-sidebar-folder-icon"
@@ -75,8 +113,8 @@ export function BlogSidebar({
           </button>
 
           {isOpen && (
-            <ul className="blog-sidebar-children">
-              {node.children.map((child) => renderNode(child))}
+            <ul id={`blog-folder-${pathKey}`} className="blog-sidebar-children">
+              {node.children.map((child) => renderNode(child, depth + 1))}
             </ul>
           )}
         </li>
@@ -91,6 +129,7 @@ export function BlogSidebar({
           href={`/blog/${node.slug}`}
           className="blog-sidebar-post-link"
           data-active={isActive}
+          style={{ paddingLeft: `${depth * 0.9 + 0.75}rem` }}
         >
           {node.title}
         </Link>
@@ -99,7 +138,7 @@ export function BlogSidebar({
   }
 
   return (
-    <aside className="blog-sidebar">
+    <aside className={fixed ? 'blog-sidebar blog-sidebar-fixed' : 'blog-sidebar'}>
       <div className="blog-sidebar-sticky">
         <div className="blog-sidebar-title-row">
           <h3 className="blog-sidebar-title">{title}</h3>

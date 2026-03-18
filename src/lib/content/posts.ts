@@ -1,6 +1,7 @@
 import fs from 'fs/promises'
 import type { Dirent } from 'node:fs'
 import path from 'path'
+import { cache } from 'react'
 import matter from 'gray-matter'
 import type {
   BlogFrontmatter,
@@ -10,8 +11,13 @@ import type {
   BlogTreePostNode,
 } from '@/types/content'
 
-const BLOG_DIR = path.join(process.cwd(), 'src', 'contents', 'blog')
+const BLOG_DIR = path.join(process.cwd(), 'contents', 'blog')
 const MARKDOWN_EXTENSIONS = new Set(['.md', '.mdx'])
+const CODE_BLOCK_PATTERN = /```[\s\S]*?```/g
+const INLINE_CODE_PATTERN = /`([^`]+)`/g
+const IMAGE_PATTERN = /!\[([^\]]*)\]\([^)]+\)/g
+const LINK_PATTERN = /\[([^\]]+)\]\([^)]+\)/g
+const HEADING_PATTERN = /^#\s+(.+)$/m
 
 function isMarkdownFile(entry: string) {
   return MARKDOWN_EXTENSIONS.has(path.extname(entry).toLowerCase())
@@ -27,24 +33,64 @@ function sortTreeNodes(nodes: BlogTreeNode[]) {
   })
 }
 
+function cleanMarkdownText(source: string) {
+  return source
+    .replace(CODE_BLOCK_PATTERN, ' ')
+    .replace(IMAGE_PATTERN, '$1')
+    .replace(LINK_PATTERN, '$1')
+    .replace(INLINE_CODE_PATTERN, '$1')
+    .replace(/^>\s?/gm, '')
+    .replace(/^#{1,6}\s+/gm, '')
+    .replace(/^[-*+]\s+/gm, '')
+    .replace(/^\d+\.\s+/gm, '')
+    .replace(/\|/g, ' ')
+    .replace(/\*\*|__|\*|_/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function extractTitle(content: string, fallbackName: string) {
+  const headingMatch = content.match(HEADING_PATTERN)
+  return headingMatch?.[1]?.trim() || fallbackName
+}
+
+function extractDescription(content: string, fallbackTitle: string) {
+  const cleaned = cleanMarkdownText(content)
+
+  if (!cleaned) {
+    return fallbackTitle
+  }
+
+  const withoutTitle = cleaned.startsWith(fallbackTitle)
+    ? cleaned.slice(fallbackTitle.length).trim()
+    : cleaned
+
+  return (withoutTitle || cleaned).slice(0, 180).trim()
+}
+
 async function readBlogPostFromFile(
   filePath: string,
   slugParts: string[],
 ): Promise<BlogPost | null> {
   const raw = await fs.readFile(filePath, 'utf-8')
+  const stats = await fs.stat(filePath)
   const { data, content } = matter(raw)
   const fm = data as BlogFrontmatter
 
-  if (!fm.title || !fm.date) return null
   if (fm.draft) return null
+
+  const fileName = slugParts[slugParts.length - 1] || 'Untitled'
+  const title = fm.title || extractTitle(content, fileName)
+  const description = fm.description || extractDescription(content, title)
+  const date = fm.date ? new Date(fm.date) : stats.mtime
 
   return {
     type: 'blog',
     slug: slugParts.join('/'),
     slugParts,
-    title: fm.title,
-    description: fm.description || '',
-    date: new Date(fm.date),
+    title,
+    description,
+    date,
     tags: fm.tags || [],
     draft: fm.draft || false,
     series: fm.series,
@@ -55,7 +101,7 @@ async function readBlogPostFromFile(
   }
 }
 
-async function walkBlogDirectory(
+const walkBlogDirectory = cache(async function walkBlogDirectory(
   dirPath: string,
   pathParts: string[] = [],
 ): Promise<{ posts: BlogPost[]; tree: BlogTreeNode[] }> {
@@ -116,7 +162,7 @@ async function walkBlogDirectory(
     posts,
     tree: sortTreeNodes(tree),
   }
-}
+})
 
 export async function getAllBlogPosts(): Promise<BlogPost[]> {
   const { posts } = await walkBlogDirectory(BLOG_DIR)
