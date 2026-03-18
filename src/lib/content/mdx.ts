@@ -37,7 +37,11 @@ export async function renderMarkdown(source: string): Promise<string> {
       behavior: 'wrap',           // 제목 텍스트 전체를 <a>로 감쌈
     })
     .use(rehypePrettyCode, {
-      theme: 'github-dark-dimmed', // shiki 테마 (코드 블록 색상)
+      theme: {
+        dark: 'one-dark-pro', 
+        light: 'one-light',
+      }
+      // shiki 테마 (코드 블록 색상)
       // 다른 테마 옵션: 'one-dark-pro', 'vitesse-dark', 'nord' 등
       // 전체 목록: https://shiki.style/themes
     })

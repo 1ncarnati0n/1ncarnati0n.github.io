@@ -37,6 +37,7 @@ export interface WorksFrontmatter {
 /** 공통 필드 — 블로그와 Works 모두 가지는 것 */
 interface BaseContent {
   slug: string                // URL용 식별자 (파일명에서 추출)
+  slugParts: string[]         // 중첩 폴더를 포함한 URL 세그먼트
   title: string
   description: string
   date: Date                  // 문자열이 아닌 Date 객체로 변환
@@ -91,3 +92,20 @@ export interface SearchItem {
   content: string             // 플레인텍스트
   description: string
 }
+
+export interface BlogTreePostNode {
+  type: 'post'
+  name: string
+  slug: string
+  slugParts: string[]
+  title: string
+}
+
+export interface BlogTreeFolderNode {
+  type: 'folder'
+  name: string
+  pathParts: string[]
+  children: BlogTreeNode[]
+}
+
+export type BlogTreeNode = BlogTreeFolderNode | BlogTreePostNode
