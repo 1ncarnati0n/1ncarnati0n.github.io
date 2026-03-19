@@ -2,10 +2,10 @@ import { Button } from "@/components/ui/Button";
 
 export default async function Home() {
   return (
-    <div className="flex gap-7 items-center flex-wrap flex-col">
+    <>
       {/* ─── 네비게이션 버튼 (실제 링크) ─── */}
       <section>
-        <div className="flex gap-4 items-center flex-wrap">
+        <div className="flex gap-4 items-center justify-center">
           <Button href="/blog" size="sm">
             Blog
           </Button>
@@ -20,6 +20,11 @@ export default async function Home() {
           </Button>
         </div>
       </section>
-    </div>
+      <article className="mt-12 text-center">
+        <p className="text-lg text-gray-600">
+          AI & Software Engineering, Computational Design
+        </p>
+      </article>
+    </>
   );
 }

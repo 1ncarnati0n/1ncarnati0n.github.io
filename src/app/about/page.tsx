@@ -7,9 +7,8 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="pagelayout">
-      <h1>About</h1>
-      <p>프로필과 이력이 여기에 표시됩니다.</p>
+    <div className="mt-4">
+      <p className="font-sans">프로필과 이력이 여기에 표시됩니다.</p>
     </div>
   );
 }

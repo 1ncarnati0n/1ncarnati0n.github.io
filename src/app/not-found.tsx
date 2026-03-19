@@ -2,10 +2,10 @@ import { Button } from "@/components/ui/Button"
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-6xl font-bold mb-4">404</h1>
-        <p className="text-neutral-600 dark:text-neutral-400 mb-6">
+    <div className="flex-wrap items-center justify-center">
+      <div className="flex-wrap text-center border border-b-black rounded-lg p-10 min-h-lg max-w-lg mx-auto mt-30 ">
+        <h1 className="font-sans text-6xl font-bold">404</h1>
+        <p>
           찾는 페이지가 없습니다.
         </p>
         <Button href="/" size="lg">

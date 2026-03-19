@@ -134,10 +134,6 @@ html.dark {
     letter-spacing: -0.03em;
   }
 
-  .pagelayout {
-    @apply flex-wrap mt-16 px-10 
-  }
-
   .btn {
     @apply
       inline-flex items-center justify-center rounded-3xl

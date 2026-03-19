@@ -22,8 +22,8 @@ export default async function WorkDetailPage({
   if (!work) notFound()
 
   return (
-    <article className="max-w-5xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold">{work.title}</h1>
+    <article className="max-w-5xl mx-auto">
+      <h1 className="font-bold">{work.title}</h1>
       <p>{work.summary}</p>
     </article>
   )
