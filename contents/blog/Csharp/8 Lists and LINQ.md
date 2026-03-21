@@ -1,6 +1,8 @@
 ---
-slug: "8-lists-and-linq"
+title: Lists and LINQ
+slug: lists-and-linq
 ---
+
 
 <br>
 

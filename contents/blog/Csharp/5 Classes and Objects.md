@@ -1,6 +1,8 @@
 ---
-slug: "5-classes-and-objects"
+title: Classes and Objects
+slug: classes-and-objects
 ---
+
 
 <br>
 

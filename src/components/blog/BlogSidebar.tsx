@@ -1,12 +1,12 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import type { BlogTreeNode } from '@/types/content'
 
 type BlogSidebarProps = {
   tree: BlogTreeNode[]
-  activeSlug?: string
   title?: string
   expandAll?: boolean
 }
@@ -48,10 +48,12 @@ function collectAllFolders(nodes: BlogTreeNode[]): string[] {
 
 export function BlogSidebar({
   tree,
-  activeSlug,
-  title = 'Blog',
   expandAll = false,
 }: BlogSidebarProps) {
+  const pathname = usePathname()
+  const activeSlug = pathname.startsWith('/blog/')
+    ? pathname.replace('/blog/', '').replace(/\/$/, '')
+    : undefined
   const initialExpanded = useMemo(() => {
     if (expandAll) {
       return collectAllFolders(tree)
@@ -125,10 +127,7 @@ export function BlogSidebar({
       <li key={node.slug}>
         <Link
           href={`/blog/${node.slug}`}
-          className="blog-sidebar-post-link"
-          data-active={isActive}
-          style={{ paddingLeft: `${depth * 0.9 + 0.75}rem` }}
-        >
+          data-active={isActive}>
           {node.title}
         </Link>
       </li>
@@ -136,17 +135,10 @@ export function BlogSidebar({
   }
 
   return (
-    <aside className="blog-sidebar">
-      <div className="blog-sidebar-sticky">
-        <div className="blog-sidebar-title-row">
-          <h3 className="blog-sidebar-title">{title}</h3>
-          <span className="blog-sidebar-title-icon">⌄</span>
-        </div>
-
-        <ul className="blog-sidebar-list">
-          {tree.map((node) => renderNode(node))}
-        </ul>
-      </div>
+    <aside className="fixed justify-center left-0 h-full w-64 overflow-y-auto">
+      <ul>
+        {tree.map((node) => renderNode(node))}
+      </ul>
     </aside>
   )
 }

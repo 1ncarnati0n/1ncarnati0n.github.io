@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Header } from '@/components/layout/Header'
 import '@/globals.css'
 
-
 export const metadata: Metadata = {
   title: {
     default: '1ncarnati0n',
@@ -19,26 +18,35 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning >
       <head>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"
+          crossOrigin="anonymous"
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;500;700&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;700&display=swap"
+          rel="stylesheet"
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              try {
-                const stored = localStorage.getItem('theme-storage')
-                if (stored) {
-                  const { state } = JSON.parse(stored)
-                  if (state?.theme === 'dark') document.documentElement.classList.add('dark')
-                  else if (state?.theme === 'light') { /* light: do nothing */ }
-                } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            try {
+              const stored = localStorage.getItem('theme-storage')
+              if (stored) {
+                const { state } = JSON.parse(stored)
+                if (state?.theme === 'dark') {
                   document.documentElement.classList.add('dark')
                 }
-              } catch (e) {
+              } else {
+                // 저장된 값이 없으면 시스템 설정 따름
                 if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
                   document.documentElement.classList.add('dark')
                 }
               }
-            `,
+            } catch (e) {}
+          `,
           }}
         />
       </head>

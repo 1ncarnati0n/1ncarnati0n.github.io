@@ -1,10 +1,9 @@
 ---
-slug: "02-mdp"
 title: 2. 마르코프 결정 프로세스
+slug: 02-mdp
 aliases:
   - MDP
 ---
-
 ## 2.1 마르코프 프로세스
 
 **강화학습**은 =="순차적 의사결정 문제"를 푸는 "방법론".== <br>"순차적 의사결정<sup>Sequential decision making</sup> 문제"는 결국 **MDP**<sup>Markov Decision Process</sup> 라는 개념을 통해서 정확하게 표현할 수 있다.

@@ -1,5 +1,6 @@
 ---
-slug: "0-hello-world"
+title: Hello World
+slug: hello-world
 ---
 
 ### "C#"

@@ -1,5 +1,6 @@
 ---
-slug: "gh에서-ml환경설치"
+title: Gh에서 ML환경설치
+slug: gh-ml
 ---
 
 ### Numpy, Pandas, Scikit-learn

@@ -1,6 +1,8 @@
 ---
-slug: "6-interfaces-and-inheritance"
+title: Interfaces and Inheritance
+slug: interfaces-and-inheritance
 ---
+
 
 <br>
 

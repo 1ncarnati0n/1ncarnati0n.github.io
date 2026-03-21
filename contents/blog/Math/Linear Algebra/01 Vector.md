@@ -1,5 +1,6 @@
 ---
-slug: "01-vector"
+title: Vector
+slug: vector
 ---
 
 # 벡터는 무엇인가?

@@ -1,6 +1,8 @@
 ---
-slug: "machine-learning-with-gh"
+title: Machine Learning with gh
+slug: machine-learning-with-gh
 ---
+
 
 <br>
 

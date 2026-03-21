@@ -1,4 +1,4 @@
-import { create } from 'zustand'          // Zustand 핵심 함수
+import { create } from 'zustand'
 import { persist } from 'zustand/middleware' // localStorage 자동 저장
 
 // 타입 정의: theme 값은 'light' 또는 'dark'만 가능
@@ -14,14 +14,28 @@ interface ThemeStore {
 export const useThemeStore = create<ThemeStore>()(
   persist(
     (set) => ({
-      theme: 'light',           // 초기값
+      theme: 'light',
 
-      // 현재 light면 dark로, dark면 light로 전환
       toggleTheme: () =>
         set((state) => ({
           theme: state.theme === 'light' ? 'dark' : 'light',
         })),
+
+      // 클라이언트 마운트 후 localStorage에서 로드
+      initializeTheme: () => {
+        if (typeof window !== 'undefined') {
+          try {
+            const stored = localStorage.getItem('theme-storage')
+            if (stored) {
+              const { state } = JSON.parse(stored)
+              set({ theme: state?.theme || 'light' })
+            }
+          } catch (e) {
+            console.error('Theme initialization failed:', e)
+          }
+        }
+      }
     }),
-    { name: 'theme-storage' }   // localStorage에 저장될 키 이름
+    { name: 'theme-storage' }
   )
 )

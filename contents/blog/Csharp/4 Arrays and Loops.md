@@ -1,6 +1,8 @@
 ---
-slug: "4-arrays-and-loops"
+title: Arrays and Loops
+slug: arrays-and-loops
 ---
+
 
 <br>
 

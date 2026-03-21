@@ -1,14 +1,14 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 
-import { BlogSidebar } from '@/components/blog/BlogSidebar'
+import { BlogArticle } from '@/components/blog/BlogArticle'
+
 import { normalizeBlogReference } from '@/lib/content/blog-slug'
 import { renderMarkdown } from '@/lib/content/mdx'
 import {
   getAllBlogPosts,
   getBlogPostBySlug,
   getBlogReferenceLookup,
-  getBlogTree,
 } from '@/lib/content/posts'
 
 export const dynamicParams = false
@@ -52,9 +52,8 @@ export default async function BlogPostPage({
 }) {
   const { slug } = await params
 
-  const [post, tree, references] = await Promise.all([
+  const [post, references] = await Promise.all([
     getBlogPostBySlug(slug),
-    getBlogTree(),
     getBlogReferenceLookup(),
   ])
 
@@ -89,54 +88,16 @@ export default async function BlogPostPage({
       }
     },
   })
-  const articleClassName = ['prose-custom', ...post.cssClasses].join(' ').trim()
-
   return (
-    <div className="flex w-full flex-col gap-10 px-10 py-16 xl:flex-row xl:gap-12">
-      <BlogSidebar tree={tree} activeSlug={post.slug} title="Blog" />
-
-      <article className="min-w-0 max-w-3xl flex-1">
-        <header className="mb-10">
-          <h1 className="mb-3 text-2xl md:text-3xl font-medium">
-            {post.title}
-          </h1>
-
-          <div className="flex items-center gap-3 text-sm">
-            <time dateTime={post.date.toISOString()}>
-              {post.date.toLocaleDateString('ko-KR')}
-            </time>
-            <span>·</span>
-            <span>{post.readingTime}분 읽기</span>
-          </div>
-
-          {post.tags.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full px-2 py-0.5 text-xs"
-                  style={{
-                    backgroundColor: 'var(--color-surface)',
-                    color: 'var(--color-secondary)',
-                  }}
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
-        </header>
-
-        <hr
-          className="mb-10"
-          style={{ borderColor: 'var(--color-border)' }}
-        />
-
-        <div
-          className={articleClassName}
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
-      </article>
+    <div className="flex flex-col items-center">
+      <BlogArticle
+        title={post.title}
+        date={post.date}
+        readingTime={post.readingTime}
+        tags={post.tags}
+        cssClasses={post.cssClasses}
+        html={html}
+      />
     </div>
   )
 }

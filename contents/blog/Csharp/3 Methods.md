@@ -1,6 +1,8 @@
 ---
-slug: "3-methods"
+title: Methods
+slug: methods
 ---
+
 
 <br>
 

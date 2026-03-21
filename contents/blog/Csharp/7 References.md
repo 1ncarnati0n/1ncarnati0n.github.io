@@ -1,6 +1,8 @@
 ---
-slug: "7-references"
+title: References
+slug: references
 ---
+
 
 <br>
 

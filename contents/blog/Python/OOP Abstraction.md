@@ -1,9 +1,8 @@
 ---
-slug: "oop-abstraction"
 title: "객체지향 2 : 추상화"
+slug: oop-abstraction
 tags:
 ---
-
 **파이썬 객체지향 프로그래밍의 추상화(Abstraction)**
 
 ### 1. 추상화(Abstraction)란?

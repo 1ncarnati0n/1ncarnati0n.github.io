@@ -1,6 +1,8 @@
 ---
-slug: "2-logic-and-conditionals"
+title: Logic and Conditionals
+slug: logic-and-conditionals
 ---
+
 
 <br>
 
