@@ -18,7 +18,7 @@ export function BlogArticle({
   const articleClassName = ['prose-custom', ...cssClasses].join(' ').trim()
 
   return (
-    <article className="flex-wrap flex-col items-center max-w-4xl">
+    <article className="flex-wrap flex-col items-center max-w-3xl">
       <header className="mb-10">
         <h1 className="font-header mb-3 text-2xl md:text-3xl font-medium">
           {title}

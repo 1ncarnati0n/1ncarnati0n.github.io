@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 
 import { BlogArticle } from '@/components/blog/BlogArticle'
+import { RightPanel } from '@/components/blog/RightPanel'
+import { TableOfContents } from '@/components/blog/TableOfContents'
 
 import { normalizeBlogReference } from '@/lib/content/blog-slug'
 import { renderMarkdown } from '@/lib/content/mdx'
@@ -88,16 +90,25 @@ export default async function BlogPostPage({
       }
     },
   })
+
   return (
-    <div className="flex flex-col items-center">
-      <BlogArticle
-        title={post.title}
-        date={post.date}
-        readingTime={post.readingTime}
-        tags={post.tags}
-        cssClasses={post.cssClasses}
-        html={html}
-      />
-    </div>
+    <>
+      {/* 본문 */}
+      <div className="flex justify-center">
+        <BlogArticle
+          title={post.title}
+          date={post.date}
+          readingTime={post.readingTime}
+          tags={post.tags}
+          cssClasses={post.cssClasses}
+          html={html}
+        />
+      </div>
+
+      {/* 우측: Graph + TOC */}
+      <RightPanel>
+        <TableOfContents headings={post.headings} />
+      </RightPanel>
+    </>
   )
 }

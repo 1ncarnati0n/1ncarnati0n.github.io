@@ -5,7 +5,7 @@ import '@/globals.css'
 export const metadata: Metadata = {
   title: {
     default: '1ncarnati0n',
-    template: '%s | 1ncarnati0n',
+    template: '%s | TechBlog and Portfolio',
   },
   description: 'AI & Software Engineering, Computational Design',
 }
@@ -27,6 +27,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;500;700&family=Nanum+Gothic+Coding&family=Noto+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500;700&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://cdn.jsdelivr.net/gh/joungkyun/font-d2coding/d2coding.css"
           rel="stylesheet"
         />
         <script

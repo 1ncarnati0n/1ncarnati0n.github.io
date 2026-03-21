@@ -15,10 +15,10 @@
 
   --font-title: "Archivo Black", sans-serif;
   --font-header: "Noto Sans KR", sans-serif;
-  --font-body: "JetBrains Mono", "Noto Serif KR";
-  --font-code: "JetBrains Mono", "Nanum Gothic Coding", monospace;
-  --font-sans: "Noto Sans KR", sans-serif;
-  --font-serif: "Noto Serif KR", serif;
+  --font-body-serif: "JetBrains Mono", "Noto Serif KR";
+  --font-body-sans: "JetBrains Mono", "Noto Sans KR", sans-serif;
+  --font-mono: "JetBrains Mono", 'Nanum Gothic Coding', monospace;
+  --font-code: "JetBrains Mono", "D2Coding", monospace;
 
   /* 색상 — Tailwind의 색상 팔레트에서 주요 색상을 변수로 정의
    * 나중에 CSS에서 var(--color-primary) 이런 식으로 사용 가능
@@ -50,7 +50,7 @@ html.dark {
 @layer base {
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-body);
+    font-family: var(--font-body-serif);
     font-size: 16px;
     line-height: 1.8;
     -webkit-font-smoothing: antialiased;
@@ -58,7 +58,7 @@ html.dark {
 
   /* ─── 타이포그래피 스케일 ─── */
   h1 {
-    font-family: var(--font-body);
+    font-family: var(--font-header);
     font-size: 1.6rem;
     font-weight: 500;
     line-height: 1.15;
@@ -67,7 +67,7 @@ html.dark {
   }
 
   h2 {
-    font-family: var(--font-body);
+    font-family: var(--font-header);
     font-size: 1.3rem;
     font-weight: 500;
     line-height: 1.25;
@@ -76,7 +76,7 @@ html.dark {
   }
 
   h3 {
-    font-family: var(--font-body);
+    font-family: var(--font-header);
     font-size: 1.2rem;
     font-weight: 500;
     line-height: 1.35;
@@ -84,7 +84,7 @@ html.dark {
   }
 
   h4, h5, h6 {
-    font-family: var(--font-body);
+    font-family: var(--font-body-sans);
     font-size: 1rem;
     font-weight: 500;
     line-height: 1.4;
@@ -92,7 +92,7 @@ html.dark {
   }
 
   p {
-    font-family: var(--font-body);
+    font-family: var(--font-body-serif);
     font-size: 1rem;
     font-weight: 500;
     margin-bottom: 1rem;
@@ -174,7 +174,7 @@ html.dark {
   .prose-custom {
     max-width: 100%;
     color: var(--color-primary);
-    font-family: var(--font-body);
+    font-family: var(--font-body-serif);
     line-height: 1.9;
     word-break: keep-all;
   }

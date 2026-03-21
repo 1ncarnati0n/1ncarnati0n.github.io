@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getAllBlogPosts, getBlogTree } from '@/lib/content/posts'
+import { RightPanel } from '@/components/blog/RightPanel'
 
 export default async function BlogPage() {
   const [tree, posts] = await Promise.all([
@@ -10,7 +11,8 @@ export default async function BlogPage() {
 
   return (
     <>
-      <section>
+      {/* 본문: 포스트 목록 */}
+      <section className="min-w-0">
         <div className="mb-12">
           <h2 className="text-xl font-medium">
             Blog Summaries
@@ -18,7 +20,7 @@ export default async function BlogPage() {
           <p className="mt-3">
             왼쪽에서는 `contents/blog` 트리 구조 그대로 글을 탐색하고,
             오른쪽에서는 각 문서의 핵심 요약을 빠르게 훑어볼 수 있습니다.
-        </p>
+          </p>
           <div className="mt-4 flex flex-wrap gap-2 text-sm">
             <span
               className="rounded-full px-3 py-1"
@@ -74,9 +76,8 @@ export default async function BlogPage() {
         </div>
       </section>
 
-      <div>
-        <p>graph</p>
-      </div>
+      {/* 우측: Graph만 */}
+      <RightPanel />
     </>
   )
 }

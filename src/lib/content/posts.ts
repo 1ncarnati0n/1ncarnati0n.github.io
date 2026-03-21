@@ -3,12 +3,14 @@ import type { Dirent } from 'node:fs'
 import path from 'path'
 import { cache } from 'react'
 import matter from 'gray-matter'
+import GithubSlugger from 'github-slugger'
 import type {
   BlogFrontmatter,
   BlogPost,
   BlogTreeFolderNode,
   BlogTreeNode,
   BlogTreePostNode,
+  Heading,
 } from '@/types/content'
 import {
   assertValidBlogSlug,
@@ -22,6 +24,7 @@ const INLINE_CODE_PATTERN = /`([^`]+)`/g
 const IMAGE_PATTERN = /!\[([^\]]*)\]\([^)]+\)/g
 const LINK_PATTERN = /\[([^\]]+)\]\([^)]+\)/g
 const HEADING_PATTERN = /^#\s+(.+)$/m
+const ALL_HEADINGS_PATTERN = /^(#{2,4})\s+(.+)$/gm
 
 function isMarkdownFile(entry: string) {
   return MARKDOWN_EXTENSIONS.has(path.extname(entry).toLowerCase())
@@ -51,6 +54,25 @@ function cleanMarkdownText(source: string) {
     .replace(/\*\*|__|\*|_/g, '')
     .replace(/\s+/g, ' ')
     .trim()
+}
+
+function extractHeadings(content: string): Heading[] {
+  // 코드 블록 내부의 heading을 제외하고 추출
+  const cleaned = content.replace(CODE_BLOCK_PATTERN, '')
+  const slugger = new GithubSlugger()
+  const headings: Heading[] = []
+  let match
+
+  while ((match = ALL_HEADINGS_PATTERN.exec(cleaned)) !== null) {
+    const text = match[2].trim()
+    headings.push({
+      level: match[1].length as Heading['level'],
+      text,
+      slug: slugger.slug(text),
+    })
+  }
+
+  return headings
 }
 
 function extractTitle(content: string, fallbackName: string) {
@@ -122,8 +144,8 @@ async function readBlogPostFromFile(
   const slug = typeof fm.slug === 'string'
     ? assertValidBlogSlug(fm.slug, filePath)
     : (() => {
-        throw new Error(`Blog post is missing required frontmatter slug: ${filePath}`)
-      })()
+      throw new Error(`Blog post is missing required frontmatter slug: ${filePath}`)
+    })()
   const title = fm.title || extractTitle(content, fileName)
   const description = fm.description || extractDescription(content, title)
   const date = fm.date ? new Date(fm.date) : stats.mtime
@@ -148,6 +170,7 @@ async function readBlogPostFromFile(
     cssClasses,
     readingTime: Math.ceil(content.split(/\s+/).length / 200),
     content,
+    headings: extractHeadings(content),
   }
 }
 

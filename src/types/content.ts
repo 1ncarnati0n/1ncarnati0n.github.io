@@ -59,6 +59,7 @@ export interface BlogPost extends BaseContent {
   updated?: Date
   aliases: string[]
   cssClasses: string[]
+  headings: Heading[]         // TOC용 제목 목록 (빌드 타임 추출)
 }
 
 /** Works 프로젝트 */
