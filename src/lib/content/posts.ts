@@ -1,7 +1,6 @@
 import fs from 'fs/promises'
 import type { Dirent } from 'node:fs'
 import path from 'path'
-import { cache } from 'react'
 import matter from 'gray-matter'
 import GithubSlugger from 'github-slugger'
 import type {
@@ -11,11 +10,11 @@ import type {
   BlogTreeNode,
   BlogTreePostNode,
   Heading,
-} from '@/types/content'
+} from '$lib/types/content'
 import {
   assertValidBlogSlug,
   normalizeBlogReference,
-} from '@/lib/content/blog-slug'
+} from '$lib/content/blog-slug'
 
 const BLOG_DIR = path.join(process.cwd(), 'contents', 'blog')
 const MARKDOWN_EXTENSIONS = new Set(['.md', '.mdx'])
@@ -245,10 +244,13 @@ function addPostToIndex(postsBySlug: Map<string, BlogPost>, post: BlogPost, file
   postsBySlug.set(post.slug, post)
 }
 
-const walkBlogDirectory = cache(async function walkBlogDirectory(
+let _cachedIndex: BlogIndex | null = null
+
+async function walkBlogDirectory(
   dirPath: string,
   pathParts: string[] = [],
 ): Promise<BlogIndex> {
+  if (pathParts.length === 0 && _cachedIndex) return _cachedIndex
   let entries: Dirent[]
 
   try {
@@ -309,13 +311,16 @@ const walkBlogDirectory = cache(async function walkBlogDirectory(
     tree.push(postNode)
   }
 
-  return {
+  const result = {
     posts,
     postsBySlug,
     references,
     tree: sortTreeNodes(tree),
   }
-})
+
+  if (pathParts.length === 0) _cachedIndex = result
+  return result
+}
 
 export async function getAllBlogPosts(): Promise<BlogPost[]> {
   const { posts } = await walkBlogDirectory(BLOG_DIR)
