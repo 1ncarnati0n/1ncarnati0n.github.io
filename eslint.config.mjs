@@ -1,21 +1,20 @@
-import { defineConfig, globalIgnores } from "eslint/config";
-import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
+import js from '@eslint/js';
+import svelte from 'eslint-plugin-svelte';
+import ts from 'typescript-eslint';
 
-export default defineConfig([
-  ...nextCoreWebVitals,
-  globalIgnores([
-    ".next/**",
-    "dist/**",
-    "node_modules/**",
-    "out/**",
-    "public/search-index.json",
-  ]),
-  {
-    rules: {
-      "@next/next/no-html-link-for-pages": "off",
-      "@next/next/no-page-custom-font": "off",
-      "react-hooks/set-state-in-effect": "warn",
-      "prefer-const": "warn",
-    },
-  },
-]);
+export default ts.config(
+	js.configs.recommended,
+	...ts.configs.recommended,
+	...svelte.configs.recommended,
+	{
+		files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
+		languageOptions: {
+			parserOptions: {
+				parser: ts.parser,
+			},
+		},
+	},
+	{
+		ignores: ['.svelte-kit/**', 'out/**', 'build/**'],
+	}
+);

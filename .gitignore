@@ -1,30 +1,38 @@
-# Next.js
-.next/
-out/
-node_modules/
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
-# OS
+# testing
+/coverage
+
+# sveltekit
+/.svelte-kit/
+/out/
+
+# production
+/build
+
+# misc
 .DS_Store
-Thumbs.db
+*.pem
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
-# Obsidian
-.obsidian/workspace.json
-.obsidian/workspace-mobile.json
-.obsidian/plugins/
-.obsidian/themes/
-.obsidian/hotkeys.json
-.trash/
+# env files
+.env*
 
-# Env
-.env
-.env.*
+# vercel
+.vercel
 
-# Legacy Astro
-dist/
-.astro/
+# typescript
+*.tsbuildinfo
