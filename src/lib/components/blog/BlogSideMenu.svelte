@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { resolve } from '$app/paths';
+	import { SvelteSet } from 'svelte/reactivity';
 	import type { BlogTreeNode, BlogTreeFolderNode } from '$lib/types/content';
 
 	interface Props {
@@ -20,8 +22,8 @@
 		return node.pathParts.join('/');
 	}
 
-	function collectAutoExpanded(nodes: BlogTreeNode[], slug?: string): Set<string> {
-		const expanded = new Set<string>();
+	function collectAutoExpanded(nodes: BlogTreeNode[], slug?: string): SvelteSet<string> {
+		const expanded = new SvelteSet<string>();
 		function walk(node: BlogTreeNode): boolean {
 			if (node.type === 'post') return node.slug === slug;
 			const hasActiveChild = node.children.some(walk);
@@ -32,8 +34,8 @@
 		return expanded;
 	}
 
-	function collectAllFolders(nodes: BlogTreeNode[]): Set<string> {
-		const folders = new Set<string>();
+	function collectAllFolders(nodes: BlogTreeNode[]): SvelteSet<string> {
+		const folders = new SvelteSet<string>();
 		function walk(node: BlogTreeNode) {
 			if (node.type === 'folder') {
 				folders.add(folderKey(node));
@@ -50,20 +52,20 @@
 	);
 
 	// 사용자 수동 토글
-	let userToggled = $state<Set<string>>(new Set());
+	let userToggled = new SvelteSet<string>();
 	let prevSlug = $state<string | undefined>(undefined);
 
 	// activeSlug가 바뀌면 수동 토글 초기화
 	$effect(() => {
 		if (prevSlug !== activeSlug) {
 			prevSlug = activeSlug;
-			userToggled = new Set();
+			userToggled.clear();
 		}
 	});
 
 	// 최종 확장 상태 = 자동 확장 XOR 사용자 토글
 	let expandedFolders = $derived.by(() => {
-		const result = new Set(autoExpanded);
+		const result = new SvelteSet(autoExpanded);
 		for (const key of userToggled) {
 			if (result.has(key)) result.delete(key);
 			else result.add(key);
@@ -72,10 +74,8 @@
 	});
 
 	function toggleFolder(pathKey: string) {
-		const next = new Set(userToggled);
-		if (next.has(pathKey)) next.delete(pathKey);
-		else next.add(pathKey);
-		userToggled = next;
+		if (userToggled.has(pathKey)) userToggled.delete(pathKey);
+		else userToggled.add(pathKey);
 	}
 </script>
 
@@ -111,7 +111,7 @@
 						style:left="{(depth + 1) * 0.8 + 0.3}rem"
 						aria-hidden="true"
 					></span>
-					{#each node.children as child}
+					{#each node.children as child (child.type === 'folder' ? folderKey(child) : child.slug)}
 						{@render renderNode(child, depth + 1)}
 					{/each}
 				</ul>
@@ -121,7 +121,7 @@
 		{@const isActive = node.slug === activeSlug}
 		<li>
 			<a
-				href="/blog/{node.slug}"
+				href={resolve('/blog/[slug]', { slug: node.slug })}
 				class="block py-1 text-sm truncate transition-colors hover:opacity-70"
 				style:padding-left="{depth * 0.9 + 0.75}rem"
 				style:color={isActive ? 'var(--color-primary)' : 'var(--color-secondary)'}
@@ -135,7 +135,7 @@
 
 <nav class="fixed pt-1">
 	<ul>
-		{#each tree as node}
+		{#each tree as node (node.type === 'folder' ? folderKey(node) : node.slug)}
 			{@render renderNode(node, 0)}
 		{/each}
 	</ul>

@@ -1,5 +1,5 @@
-import { getAllBlogPosts } from './posts'
-import { normalizeBlogReference } from './blog-slug'
+import { getAllBlogPosts, getBlogPostBySlug, getBlogReferenceLookup } from './posts'
+import { resolveLinkedSlugs } from './references'
 
 export type GraphNode = {
   id: string
@@ -18,61 +18,74 @@ export type GraphData = {
   links: GraphLink[]
 }
 
-const WIKILINK_PATTERN = /\[\[([^[\]|]+)(?:\|[^\]]+)?\]\]/g
+export type Backlink = {
+  slug: string
+  title: string
+  description: string
+}
 
-/** 모든 블로그 포스트에서 위키링크 관계를 추출하여 그래프 데이터 생성 */
-export async function getBlogGraphData(): Promise<GraphData> {
-  const posts = await getAllBlogPosts()
-
-  // slug → post 매핑
-  const slugMap = new Map<string, { title: string; slug: string }>()
-  // reference → slug 매핑 (위키링크 해석용)
-  const refMap = new Map<string, string>()
-
-  for (const post of posts) {
-    slugMap.set(post.slug, { title: post.title, slug: post.slug })
-    refMap.set(normalizeBlogReference(post.sourceFileName), post.slug)
-    refMap.set(normalizeBlogReference(post.title), post.slug)
-  }
-
-  // 각 포스트의 콘텐츠에서 위키링크 추출
+async function getGraphLinks() {
+  const [posts, references] = await Promise.all([getAllBlogPosts(), getBlogReferenceLookup()])
   const links: GraphLink[] = []
-  const linkCounts = new Map<string, number>()
+  const linkCounts = new Map(posts.map((post) => [post.slug, 0]))
 
   for (const post of posts) {
-    linkCounts.set(post.slug, 0)
+    for (const targetSlug of resolveLinkedSlugs(post, references)) {
+      const key = `${post.slug}::${targetSlug}`
+      if (links.some((link) => `${link.source}::${link.target}` === key)) continue
 
-    let match
-    WIKILINK_PATTERN.lastIndex = 0
-
-    while ((match = WIKILINK_PATTERN.exec(post.content)) !== null) {
-      const ref = normalizeBlogReference(match[1].trim())
-      const targetSlug = refMap.get(ref)
-
-      if (targetSlug && targetSlug !== post.slug) {
-        links.push({ source: post.slug, target: targetSlug })
-        linkCounts.set(post.slug, (linkCounts.get(post.slug) ?? 0) + 1)
-        linkCounts.set(targetSlug, (linkCounts.get(targetSlug) ?? 0) + 1)
-      }
+      links.push({ source: post.slug, target: targetSlug })
+      linkCounts.set(post.slug, (linkCounts.get(post.slug) ?? 0) + 1)
+      linkCounts.set(targetSlug, (linkCounts.get(targetSlug) ?? 0) + 1)
     }
   }
 
-  // 중복 링크 제거
-  const uniqueLinks = Array.from(
-    new Map(
-      links.map((l) => {
-        const key = [l.source, l.target].sort().join('::')
-        return [key, l]
-      }),
-    ).values(),
-  )
+  return { posts, links, linkCounts }
+}
 
-  const nodes: GraphNode[] = posts.map((post) => ({
-    id: post.slug,
-    title: post.title,
-    slug: post.slug,
-    linkCount: linkCounts.get(post.slug) ?? 0,
-  }))
+export async function getBlogGraphData(): Promise<GraphData> {
+  const { posts, links, linkCounts } = await getGraphLinks()
 
-  return { nodes, links: uniqueLinks }
+  return {
+    nodes: posts.map((post) => ({
+      id: post.slug,
+      title: post.title,
+      slug: post.slug,
+      linkCount: linkCounts.get(post.slug) ?? 0,
+    })),
+    links,
+  }
+}
+
+export async function getLocalBlogGraphData(slug: string): Promise<GraphData> {
+  const graph = await getBlogGraphData()
+  const localSlugs = new Set([slug])
+
+  for (const link of graph.links) {
+    if (link.source === slug) localSlugs.add(link.target)
+    if (link.target === slug) localSlugs.add(link.source)
+  }
+
+  return {
+    nodes: graph.nodes.filter((node) => localSlugs.has(node.slug)),
+    links: graph.links.filter((link) => localSlugs.has(link.source) && localSlugs.has(link.target)),
+  }
+}
+
+export async function getBacklinks(slug: string): Promise<Backlink[]> {
+  const [targetPost, posts, references] = await Promise.all([
+    getBlogPostBySlug(slug),
+    getAllBlogPosts(),
+    getBlogReferenceLookup(),
+  ])
+
+  if (!targetPost) return []
+
+  return posts
+    .filter((post) => post.slug !== slug && resolveLinkedSlugs(post, references).includes(slug))
+    .map((post) => ({
+      slug: post.slug,
+      title: post.title,
+      description: post.description,
+    }))
 }

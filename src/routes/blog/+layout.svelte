@@ -1,8 +1,9 @@
 <script lang="ts">
 	import BlogSideMenu from '$lib/components/blog/BlogSideMenu.svelte';
+	import type { Snippet } from 'svelte';
 	import type { LayoutData } from './$types';
 
-	let { data, children }: { data: LayoutData; children: any } = $props();
+	let { data, children }: { data: LayoutData; children: Snippet } = $props();
 </script>
 
 <div class="grid grid-cols-1 lg:grid-cols-[200px_1fr] xl:grid-cols-[250px_1fr_200px] gap-12">

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import RightPanel from '$lib/components/blog/RightPanel.svelte';
 	import type { PageData } from './$types';
 	import type { LayoutData } from './$types';
@@ -39,13 +40,13 @@
 	</div>
 
 	<div class="space-y-8">
-		{#each data.posts as post}
+		{#each data.posts as post (post.slug)}
 			<article
 				class="rounded-2xl border px-5 py-5 transition-colors"
 				style:border-color="var(--color-border)"
 				style:background-color="var(--color-surface)"
 			>
-				<a href="/blog/{post.slug}" class="block group no-underline">
+				<a href={resolve('/blog/[slug]', { slug: post.slug })} class="block group no-underline">
 					<div class="mb-2 text-xs uppercase tracking-[0.16em]">
 						{post.sourcePathParts.join(' / ') || 'Root'}
 					</div>
@@ -62,6 +63,28 @@
 						<span>·</span>
 						<span>{post.readingTime}분 읽기</span>
 					</div>
+					{#if post.tags.length > 0 || post.series}
+						<div class="mt-4 flex flex-wrap gap-2 text-xs">
+							{#if post.series}
+								<span
+									class="rounded-full px-2 py-0.5"
+									style:background-color="var(--color-background)"
+									style:color="var(--color-secondary)"
+								>
+									Series: {post.series}
+								</span>
+							{/if}
+							{#each post.tags as tag (tag)}
+								<span
+									class="rounded-full px-2 py-0.5"
+									style:background-color="var(--color-background)"
+									style:color="var(--color-secondary)"
+								>
+									#{tag}
+								</span>
+							{/each}
+						</div>
+					{/if}
 				</a>
 			</article>
 		{/each}

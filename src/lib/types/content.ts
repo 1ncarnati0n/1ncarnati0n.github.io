@@ -10,6 +10,7 @@ export interface BlogFrontmatter {
   date?: string        // "2026-03-01" 같은 ISO 날짜 문자열
   updated?: string    // 수정일 (선택)
   tags?: string[] | string
+  category?: string
   draft?: boolean     // true면 목록에서 숨김
   cover?: string      // 커버 이미지 경로
   series?: string     // 시리즈 이름 (선택)
@@ -19,6 +20,7 @@ export interface BlogFrontmatter {
 
 /** Works(건축 및 기술 포트폴리오) frontmatter */
 export interface WorksFrontmatter {
+  slug?: string
   title: string
   description: string
   date: string
@@ -55,6 +57,7 @@ export interface BlogPost extends BaseContent {
   type: 'blog'                // 어떤 콘텐츠인지 구분하는 태그
   tags: string[]
   draft: boolean
+  category?: string
   series?: string
   updated?: Date
   aliases: string[]
@@ -98,6 +101,24 @@ export interface SearchItem {
   tags: string[]              // blog는 tags, works는 tools
   content: string             // 플레인텍스트
   description: string
+}
+
+export interface SearchDocument {
+  slug: string
+  title: string
+  description: string
+  tags: string[]
+  category?: string
+  series?: string
+  date: string
+  headings: string[]
+  body: string
+}
+
+export interface PostGroup {
+  name: string
+  count: number
+  posts: BlogPost[]
 }
 
 export interface BlogTreePostNode {

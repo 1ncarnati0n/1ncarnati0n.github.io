@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { onMount } from 'svelte';
 	import type { GraphData } from '$lib/content/graph';
 
@@ -82,7 +83,7 @@
 				.attr('stroke-width', 1)
 				.attr('cursor', 'pointer')
 				.on('click', (_event, d) => {
-					goto(`/blog/${d.slug}`);
+					goto(resolve('/blog/[slug]', { slug: d.slug }));
 				});
 
 			node.append('title').text((d) => d.title);

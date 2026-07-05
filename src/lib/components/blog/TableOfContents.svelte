@@ -48,7 +48,7 @@
 			On this page
 		</p>
 		<ul class="space-y-1.5">
-			{#each headings as h}
+			{#each headings as h (h.slug)}
 				{@const isActive = h.slug === activeId}
 				{@const indent = (h.level - minLevel) * 0.75}
 				<li>

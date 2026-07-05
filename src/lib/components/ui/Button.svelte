@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import type { Snippet } from 'svelte';
 
 	interface Props {
@@ -26,11 +27,12 @@
 
 {#if href}
 	{#if external}
+		<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 		<a {href} target="_blank" rel="noopener noreferrer" class={classes}>
 			{@render children()}
 		</a>
 	{:else}
-		<a {href} class={classes}>
+		<a href={resolve(href as '/')} class={classes}>
 			{@render children()}
 		</a>
 	{/if}

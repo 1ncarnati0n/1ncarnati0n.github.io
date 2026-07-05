@@ -42,7 +42,7 @@ export async function renderMarkdown(
       allowDangerousHtml: true,   // 마크다운에 직접 쓴 HTML 태그 허용
     })
     // ── rehype 단계: HTML 처리 ──
-    .use(rehypeKatex)             // 5. 수식 AST → KaTeX HTML 렌더링
+    .use(rehypeKatex, { strict: false }) // 5. 수식 AST → KaTeX HTML 렌더링
     .use(rehypeRaw)               // 6. raw HTML 문자열을 AST 노드로 변환
     .use(rehypeSlug)              // 5. 제목 태그에 id 속성 추가 (TOC용)
     .use(rehypeAutolinkHeadings, {

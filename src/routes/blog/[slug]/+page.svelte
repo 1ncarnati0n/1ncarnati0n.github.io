@@ -9,8 +9,22 @@
 </script>
 
 <svelte:head>
-	<title>{data.post.title} | 1ncarnati0n</title>
-	<meta name="description" content={data.post.description} />
+	<title>{data.meta.title}</title>
+	<meta name="description" content={data.meta.description} />
+	<link rel="canonical" href={data.meta.url} />
+	<meta property="og:title" content={data.post.title} />
+	<meta property="og:description" content={data.meta.description} />
+	<meta property="og:type" content="article" />
+	<meta property="og:url" content={data.meta.url} />
+	{#if data.meta.image}
+		<meta property="og:image" content={data.meta.image} />
+	{/if}
+	<meta name="twitter:card" content={data.meta.image ? 'summary_large_image' : 'summary'} />
+	<meta name="twitter:title" content={data.post.title} />
+	<meta name="twitter:description" content={data.meta.description} />
+	{#if data.meta.image}
+		<meta name="twitter:image" content={data.meta.image} />
+	{/if}
 </svelte:head>
 
 <!-- 본문 -->
@@ -26,7 +40,7 @@
 </div>
 
 <!-- 우측: Graph + TOC -->
-<RightPanel graphData={data.graphData}>
+<RightPanel graphData={data.graphData} backlinks={data.backlinks}>
 	{#snippet extra()}
 		<TableOfContents headings={data.post.headings} />
 	{/snippet}

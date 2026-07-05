@@ -29,7 +29,7 @@
 
 		{#if tags.length > 0}
 			<div class="mt-3 flex flex-wrap gap-2">
-				{#each tags as tag}
+				{#each tags as tag (tag)}
 					<span
 						class="rounded-full px-2 py-0.5 text-xs"
 						style:background-color="var(--color-surface)"
@@ -45,6 +45,7 @@
 	<hr class="mb-10" />
 
 	<div class={articleClassName}>
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html html}
 	</div>
 </article>

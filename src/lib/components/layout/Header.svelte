@@ -1,29 +1,37 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { page } from '$app/stores';
 	import DarkModeToggle from '$lib/components/ui/DarkModeToggle.svelte';
 
 	const navItems = [
-		{ href: '/blog', label: 'Tech Blog' },
-		{ href: '/works', label: 'Works' },
-		{ href: '/about', label: 'About' },
-	];
+		{ route: '/blog', label: 'Tech Blog' },
+		{ route: '/search', label: 'Search' },
+		{ route: '/works', label: 'Works' },
+		{ route: '/about', label: 'About' },
+	] as const;
 
-	function getPageTitle(pathname: string): string {
-		if (pathname === '/') return '';
+	function getActiveNavItem(pathname: string) {
+		if (pathname === '/') return undefined;
 		const segment = pathname.split('/')[1];
-		const match = navItems.find((item) => item.href === `/${segment}`);
-		return match?.label ?? '';
+		return navItems.find((item) => item.route === `/${segment}`);
+	}
+
+	function refreshActiveRoute() {
+		if (!activeNavItem) return;
+		goto(resolve(activeNavItem.route), { invalidateAll: true });
 	}
 
 	let menuOpen = $state(false);
 	let pathname = $derived($page.url.pathname);
-	let pageTitle = $derived(getPageTitle(pathname));
+	let activeNavItem = $derived(getActiveNavItem(pathname));
+	let pageTitle = $derived(activeNavItem?.label ?? '');
 </script>
 
 <!-- 헤더 바: 항상 최상단 -->
 <header class="fixed top-8 w-full z-100 px-9 flex items-center justify-between">
 	<!-- 좌: 로고 -->
-	<a href="/" class="logo" onclick={() => (menuOpen = false)}>
+	<a href={resolve('/')} class="logo" onclick={() => (menuOpen = false)}>
 		1ncarnati0n
 	</a>
 
@@ -42,12 +50,17 @@
 <header
 	class="fixed top-5 left-0 w-full z-90 px-6 h-16 flex items-center justify-center pointer-events-none"
 >
-	<span
-		class="logo transition-opacity duration-500 ease-in-out"
-		style:opacity={menuOpen ? 0 : 1}
-	>
-		{pageTitle}
-	</span>
+	{#if pageTitle}
+		<button
+			type="button"
+			class="logo pointer-events-auto transition-opacity duration-500 ease-in-out cursor-pointer hover:opacity-60"
+			style:opacity={menuOpen ? 0 : 1}
+			onclick={refreshActiveRoute}
+			aria-label="{pageTitle} 새로 불러오기"
+		>
+			{pageTitle}
+		</button>
+	{/if}
 </header>
 
 <!-- 풀스크린 오버레이 -->
@@ -65,9 +78,9 @@
 		onclick={(e) => e.stopPropagation()}
 		class="mask-linear-to-neutral-50 flex flex-col items-center gap-8"
 	>
-		{#each navItems as item, i}
+		{#each navItems as item, i (item.route)}
 			<a
-				href={item.href}
+				href={resolve(item.route)}
 				onclick={() => (menuOpen = false)}
 				class="text-2xl font-bold hover:opacity-30 menu-item {menuOpen ? 'menu-item-open' : ''}"
 				style:--stagger="{i * 80}ms"

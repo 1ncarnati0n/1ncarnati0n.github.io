@@ -1,13 +1,18 @@
 import { error } from '@sveltejs/kit';
 import { normalizeBlogReference } from '$lib/content/blog-slug';
+import { applyRenderedHeadingIds } from '$lib/content/frontmatter';
+import { getBacklinks, getLocalBlogGraphData } from '$lib/content/graph';
 import { renderMarkdown } from '$lib/content/mdx';
 import { getAllBlogPosts, getBlogPostBySlug, getBlogReferenceLookup } from '$lib/content/posts';
+import { absoluteUrl, SITE_TITLE } from '$lib/content/site';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {
-	const [post, references] = await Promise.all([
+	const [post, references, graphData, backlinks] = await Promise.all([
 		getBlogPostBySlug(params.slug),
 		getBlogReferenceLookup(),
+		getLocalBlogGraphData(params.slug),
+		getBacklinks(params.slug),
 	]);
 
 	if (!post) error(404, 'Post not found');
@@ -17,7 +22,7 @@ export const load: PageServerLoad = async ({ params }) => {
 			const resolved = references.get(normalizeBlogReference(reference));
 			if (!resolved) return null;
 			return {
-				href: `/blog/${resolved.slug}`,
+				href: `/blog/${resolved.slug}/`,
 				title: resolved.title,
 				description: resolved.description,
 			};
@@ -27,23 +32,37 @@ export const load: PageServerLoad = async ({ params }) => {
 			if (!resolved) return null;
 			return {
 				type: 'note',
-				href: `/blog/${resolved.slug}`,
+				href: `/blog/${resolved.slug}/`,
 				title: resolved.title,
 				description: resolved.description,
 			};
 		},
 	});
+	const url = absoluteUrl(`/blog/${post.slug}/`);
 
 	return {
 		post: {
+			slug: post.slug,
 			title: post.title,
+			description: post.description,
 			date: post.date.toISOString(),
+			updated: post.updated?.toISOString(),
 			readingTime: post.readingTime,
 			tags: post.tags,
+			category: post.category,
+			series: post.series,
+			cover: post.cover,
 			cssClasses: post.cssClasses,
-			description: post.description,
-			headings: post.headings,
+			headings: applyRenderedHeadingIds(post.headings, html),
 		},
+		meta: {
+			title: `${post.title} | ${SITE_TITLE}`,
+			description: post.description,
+			url,
+			image: post.cover ? absoluteUrl(post.cover) : undefined,
+		},
+		graphData,
+		backlinks,
 		html,
 	};
 };

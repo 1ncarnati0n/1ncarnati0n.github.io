@@ -9,6 +9,14 @@ export default ts.config(
 	{
 		files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
 		languageOptions: {
+			globals: {
+				document: 'readonly',
+				fetch: 'readonly',
+				HTMLElement: 'readonly',
+				IntersectionObserver: 'readonly',
+				SVGCircleElement: 'readonly',
+				SVGSVGElement: 'readonly',
+			},
 			parserOptions: {
 				parser: ts.parser,
 			},
