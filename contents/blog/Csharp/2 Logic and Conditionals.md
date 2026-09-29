@@ -1,6 +1,7 @@
 ---
 title: Logic and Conditionals
 slug: logic-and-conditionals
+date: "2024-06-02"
 ---
 
 

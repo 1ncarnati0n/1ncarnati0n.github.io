@@ -1,6 +1,7 @@
 ---
 title: Interfaces and Inheritance
 slug: interfaces-and-inheritance
+date: "2024-06-02"
 ---
 
 

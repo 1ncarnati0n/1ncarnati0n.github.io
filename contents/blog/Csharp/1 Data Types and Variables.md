@@ -1,6 +1,7 @@
 ---
 title: Data Types and Variables
 slug: data-types-and-variables
+date: "2024-06-02"
 ---
 
 

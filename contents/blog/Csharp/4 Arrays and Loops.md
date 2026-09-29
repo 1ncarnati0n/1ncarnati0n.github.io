@@ -1,6 +1,7 @@
 ---
 title: Arrays and Loops
 slug: arrays-and-loops
+date: "2024-06-02"
 ---
 
 

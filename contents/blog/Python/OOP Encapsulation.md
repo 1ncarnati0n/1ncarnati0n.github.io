@@ -1,6 +1,7 @@
 ---
 title: "객체지향 1 : 캡슐화"
 slug: oop-encapsulation
+date: "2025-02-20"
 tags:
 ---
 **파이썬 객체지향 프로그래밍의 캡슐화(Encapsulation)**

@@ -1,6 +1,7 @@
 ---
 title: Hello World
 slug: hello-world
+date: "2024-06-02"
 ---
 
 ### "C#"

@@ -1,6 +1,7 @@
 ---
 title: "객체지향 3 : 상속"
 slug: oop-inheritance
+date: "2025-03-21"
 tags:
 ---
 **파이썬 객체지향 프로그래밍 상속**<sup>Inheritance</sup>

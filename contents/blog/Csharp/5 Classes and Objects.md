@@ -1,6 +1,7 @@
 ---
 title: Classes and Objects
 slug: classes-and-objects
+date: "2024-06-02"
 ---
 
 

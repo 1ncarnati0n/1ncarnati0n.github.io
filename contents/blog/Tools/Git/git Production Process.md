@@ -1,6 +1,7 @@
 ---
 title: git Production Process
 slug: git-production-process
+date: "2025-11-20"
 ---
 
 

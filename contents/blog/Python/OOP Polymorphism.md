@@ -1,6 +1,7 @@
 ---
 title: "객체지향 4 : 다형성"
 slug: oop-polymorphism
+date: "2025-03-21"
 tags:
 ---
 **파이썬 객체지향 프로그래밍의 다형성** <sup>Polymorphism</sup>

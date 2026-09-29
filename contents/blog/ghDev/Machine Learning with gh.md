@@ -1,6 +1,7 @@
 ---
 title: Machine Learning with gh
 slug: machine-learning-with-gh
+date: "2024-05-11"
 ---
 
 

@@ -1,6 +1,7 @@
 ---
 title: 2. 마르코프 결정 프로세스
 slug: 02-mdp
+date: "2025-01-21"
 aliases:
   - MDP
 ---

@@ -1,6 +1,7 @@
 ---
 title: Lists and LINQ
 slug: lists-and-linq
+date: "2024-06-02"
 ---
 
 

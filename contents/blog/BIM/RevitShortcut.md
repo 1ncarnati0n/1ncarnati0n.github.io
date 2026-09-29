@@ -1,6 +1,7 @@
 ---
 title: Revit 단축키
 slug: revitshortcut
+date: "2024-05-07"
 aliases:
   - Revit 의 Default 단축키 목록입니다.
 ---

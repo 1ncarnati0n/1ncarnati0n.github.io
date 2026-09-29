@@ -1,6 +1,7 @@
 ---
 title: References
 slug: references
+date: "2024-06-02"
 ---
 
 

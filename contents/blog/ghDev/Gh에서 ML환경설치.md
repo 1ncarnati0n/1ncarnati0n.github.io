@@ -1,6 +1,7 @@
 ---
 title: Gh에서 ML환경설치
 slug: gh-ml
+date: "2024-11-19"
 ---
 
 ### Numpy, Pandas, Scikit-learn

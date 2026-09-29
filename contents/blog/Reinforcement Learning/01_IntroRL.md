@@ -1,6 +1,7 @@
 ---
 title: 1. Intro 강화학습
 slug: 01-introrl
+date: "2024-11-25"
 tags: 
 cssclasses: 
 aliases:

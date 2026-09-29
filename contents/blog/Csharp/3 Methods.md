@@ -1,6 +1,7 @@
 ---
 title: Methods
 slug: methods
+date: "2024-06-02"
 ---
 
 
