@@ -19,9 +19,11 @@
 				<a href={resolve('/blog/[slug]', { slug: post.slug })} class="block hover:opacity-70">
 					<h2 class="text-lg">{post.title}</h2>
 					<p>{post.description}</p>
-					<time class="text-xs" datetime={post.date}>
-						{new Date(post.date).toLocaleDateString('ko-KR')}
-					</time>
+					{#if post.date}
+						<time class="text-xs" datetime={post.date}>
+							{new Date(post.date).toLocaleDateString('ko-KR')}
+						</time>
+					{/if}
 				</a>
 			</article>
 		{/each}

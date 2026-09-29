@@ -81,9 +81,11 @@
 					<h2 class="text-lg">{result.title}</h2>
 					<p>{result.description}</p>
 					<div class="mt-3 flex flex-wrap items-center gap-2 text-xs">
-						<time datetime={result.date}>
-							{new Date(result.date).toLocaleDateString('ko-KR')}
-						</time>
+						{#if result.date}
+							<time datetime={result.date}>
+								{new Date(result.date).toLocaleDateString('ko-KR')}
+							</time>
+						{/if}
 						{#each result.tags as tag (tag)}
 							<span
 								class="rounded-full px-2 py-0.5"

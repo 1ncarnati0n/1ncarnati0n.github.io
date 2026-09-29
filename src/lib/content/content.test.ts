@@ -1,7 +1,15 @@
+import fs from 'node:fs/promises'
+import os from 'node:os'
+import path from 'node:path'
 import { describe, expect, it } from 'vitest'
 
 import type { BlogPost } from '$lib/types/content'
-import { applyRenderedHeadingIds, extractHeadings } from './frontmatter'
+import {
+  applyRenderedHeadingIds,
+  cleanMarkdownText,
+  extractHeadings,
+  normalizeBlogPost,
+} from './frontmatter'
 import { getWikiLinkReferences, resolveLinkedSlugs } from './references'
 import { createSearchDocument } from './search'
 import { groupPostsBySeries, groupPostsByTag } from './posts'
@@ -58,6 +66,57 @@ describe('content helpers', () => {
 
     expect(getWikiLinkReferences(source.content)).toEqual(['Alias'])
     expect(resolveLinkedSlugs(source, references)).toEqual(['target'])
+  })
+
+  it('strips Obsidian syntax and table rules from generated text', () => {
+    const source = [
+      '> [!quote] 제목',
+      '==강조== [[Note#Part|라벨]] [[Plain]] ![[img.png|300]]',
+      '',
+      '|a|b|',
+      '|---|---|',
+      '|1|2|',
+      '',
+      '---',
+      '끝',
+    ].join('\n')
+
+    expect(cleanMarkdownText(source)).toBe('제목 강조 라벨 Plain a b 1 2 끝')
+  })
+
+  it('sorts dated posts newest first, then undated posts in source order', () => {
+    const posts = [
+      post({ slug: 'undated-a', tags: ['t'], date: undefined }),
+      post({ slug: 'old', tags: ['t'], date: new Date('2026-01-01') }),
+      post({ slug: 'undated-b', tags: ['t'], date: undefined }),
+      post({ slug: 'new', tags: ['t'], date: new Date('2026-02-01') }),
+    ]
+
+    expect(groupPostsByTag(posts)[0].posts.map((item) => item.slug)).toEqual([
+      'new',
+      'old',
+      'undated-a',
+      'undated-b',
+    ])
+  })
+
+  it('never invents a date: frontmatter only, no file mtime fallback', async () => {
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'blog-date-'))
+    const file = path.join(dir, 'a.md')
+
+    try {
+      await fs.writeFile(file, '---\nslug: "a"\n---\n# A\n')
+      expect((await normalizeBlogPost(file, ['a']))?.date).toBeUndefined()
+
+      await fs.writeFile(file, '---\nslug: "a"\ndate: "2026-07-05"\n---\n# A\n')
+      expect((await normalizeBlogPost(file, ['a']))?.date?.toISOString()).toBe(
+        '2026-07-05T00:00:00.000Z',
+      )
+    } finally {
+      await fs.rm(dir, { recursive: true })
+    }
+
+    expect(createSearchDocument(post({ date: undefined })).date).toBeUndefined()
   })
 
   it('creates search documents and escapes XML', () => {

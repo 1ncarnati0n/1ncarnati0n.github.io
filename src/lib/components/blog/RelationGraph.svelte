@@ -26,13 +26,15 @@
 	let svgElement: SVGSVGElement;
 
 	onMount(() => {
-		if (!svgElement || data.nodes.length === 0) return;
+		// ponytail: 패널이 `hidden xl:block`이라 크기가 0이면 d3(~280kB)를 받지 않는다.
+		// 창을 넓혀 xl을 넘겨도 다음 이동/새로고침 전까진 안 그려진다 — 필요하면 ResizeObserver로 교체.
+		if (!svgElement || data.nodes.length === 0 || !svgElement.clientWidth) return;
 
 		let cleanup: (() => void) | undefined;
 
 		import('d3').then((d3) => {
-			const width = svgElement.clientWidth || 200;
-			const height = svgElement.clientHeight || 200;
+			const width = svgElement.clientWidth;
+			const height = svgElement.clientHeight;
 
 			d3.select(svgElement).selectAll('*').remove();
 

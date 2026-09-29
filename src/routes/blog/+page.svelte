@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import RightPanel from '$lib/components/blog/RightPanel.svelte';
+	import { SITE_DESCRIPTION } from '$lib/content/site';
 	import type { PageData } from './$types';
 	import type { LayoutData } from './$types';
 
@@ -11,6 +12,7 @@
 
 <svelte:head>
 	<title>Blog | 1ncarnati0n</title>
+	<meta name="description" content={SITE_DESCRIPTION} />
 </svelte:head>
 
 <!-- 본문: 포스트 목록 -->
@@ -57,10 +59,12 @@
 						{post.description || '요약이 없는 문서입니다.'}
 					</p>
 					<div class="mt-4 flex flex-wrap items-center gap-3 text-xs">
-						<time datetime={post.date}>
-							{new Date(post.date).toLocaleDateString('ko-KR')}
-						</time>
-						<span>·</span>
+						{#if post.date}
+							<time datetime={post.date}>
+								{new Date(post.date).toLocaleDateString('ko-KR')}
+							</time>
+							<span>·</span>
+						{/if}
 						<span>{post.readingTime}분 읽기</span>
 					</div>
 					{#if post.tags.length > 0 || post.series}

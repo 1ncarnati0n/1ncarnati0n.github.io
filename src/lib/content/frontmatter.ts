@@ -15,18 +15,30 @@ const INLINE_CODE_PATTERN = /`([^`]+)`/g
 const IMAGE_PATTERN = /!\[([^\]]*)\]\([^)]+\)/g
 const LINK_PATTERN = /\[([^\]]+)\]\([^)]+\)/g
 const HTML_TAG_PATTERN = /<[^>]+>/g
+const OBSIDIAN_EMBED_PATTERN = /!\[\[[^\]]*\]\]/g
+// [[target|label]] 및 이 사이트의 외부 링크 문법 [[label]](url)
+const OBSIDIAN_WIKILINK_PATTERN = /\[\[([^\]|]+)(?:\|([^\]]+))?\]\](?:\([^)\s]*\))?/g
+const HIGHLIGHT_PATTERN = /==([^=\n]+)==/g
+const CALLOUT_MARKER_PATTERN = /^\[![^\]]+\][+-]?[ \t]*/gm
+// 표 구분선(|---|---|)과 수평선(---)
+const TABLE_RULE_PATTERN = /^[ \t|:-]{3,}\r?$/gm
 const HEADING_PATTERN = /^#\s+(.+)$/m
 const ALL_HEADINGS_PATTERN = /^(#{2,4})\s+(.+)$/gm
 
 export function cleanMarkdownText(source: string) {
   return source
     .replace(CODE_BLOCK_PATTERN, ' ')
+    .replace(OBSIDIAN_EMBED_PATTERN, ' ')
+    .replace(OBSIDIAN_WIKILINK_PATTERN, (_match, target: string, label?: string) => label ?? target)
+    .replace(HIGHLIGHT_PATTERN, '$1')
     .replace(IMAGE_PATTERN, '$1')
     .replace(LINK_PATTERN, '$1')
     .replace(INLINE_CODE_PATTERN, '$1')
     .replace(HTML_TAG_PATTERN, ' ')
     .replace(/^>\s?/gm, '')
+    .replace(CALLOUT_MARKER_PATTERN, '')
     .replace(/^#{1,6}\s+/gm, '')
+    .replace(TABLE_RULE_PATTERN, ' ')
     .replace(/^[-*+]\s+/gm, '')
     .replace(/^\d+\.\s+/gm, '')
     .replace(/\|/g, ' ')
@@ -133,7 +145,6 @@ export async function normalizeBlogPost(
   sourcePathParts: string[],
 ): Promise<BlogPost | null> {
   const raw = await fs.readFile(filePath, 'utf-8')
-  const stats = await fs.stat(filePath)
   const { data, content } = matter(raw)
   const fm = data as Partial<BlogFrontmatter>
 
@@ -154,7 +165,7 @@ export async function normalizeBlogPost(
     sourceFileName: fileName,
     title,
     description: fm.description || extractDescription(content, title),
-    date: fm.date ? new Date(fm.date) : stats.mtime,
+    date: fm.date ? new Date(fm.date) : undefined,
     tags: normalizeStringArray(fm.tags),
     draft: fm.draft || false,
     category: normalizeString(fm.category),
@@ -174,7 +185,6 @@ export async function normalizeWorkProject(
   sourcePathParts: string[],
 ): Promise<WorksProject | null> {
   const raw = await fs.readFile(filePath, 'utf-8')
-  const stats = await fs.stat(filePath)
   const { data, content } = matter(raw)
   const fm = data as Partial<WorksFrontmatter> & { draft?: boolean }
 
@@ -193,7 +203,7 @@ export async function normalizeWorkProject(
     sourceFileName: fileName,
     title,
     description: fm.description || extractDescription(content, title),
-    date: fm.date ? new Date(fm.date) : stats.mtime,
+    date: fm.date ? new Date(fm.date) : undefined,
     cover: normalizeString(fm.cover),
     readingTime: Math.ceil(content.split(/\s+/).length / 200),
     content,

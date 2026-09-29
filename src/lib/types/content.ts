@@ -46,7 +46,7 @@ interface BaseContent {
   sourceFileName: string      // 확장자를 제외한 원본 파일명
   title: string
   description: string
-  date: Date                  // 문자열이 아닌 Date 객체로 변환
+  date?: Date                 // frontmatter date만 사용. 없으면 undefined (파일 mtime은 checkout/배포마다 바뀌어 쓰지 않음)
   cover?: string
   readingTime: number         // 분 단위
   content: string             // raw 마크다운 소스
@@ -78,9 +78,6 @@ export interface WorksProject extends BaseContent {
   client?: string
 }
 
-/** 유니온 타입 — 두 타입을 하나로 묶어 공통 처리 가능 */
-export type AnyContent = BlogPost | WorksProject
-
 // ════════════════════════════════════════
 // UI / 유틸리티 타입
 // ════════════════════════════════════════
@@ -92,17 +89,6 @@ export interface Heading {
   slug: string                // #anchor-link용
 }
 
-/** 검색 인덱스 항목 */
-export interface SearchItem {
-  id: string
-  type: 'blog' | 'works'
-  title: string
-  slug: string
-  tags: string[]              // blog는 tags, works는 tools
-  content: string             // 플레인텍스트
-  description: string
-}
-
 export interface SearchDocument {
   slug: string
   title: string
@@ -110,7 +96,7 @@ export interface SearchDocument {
   tags: string[]
   category?: string
   series?: string
-  date: string
+  date?: string
   headings: string[]
   body: string
 }

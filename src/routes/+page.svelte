@@ -1,6 +1,11 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/Button.svelte';
+	import { SITE_DESCRIPTION } from '$lib/content/site';
 </script>
+
+<svelte:head>
+	<meta name="description" content={SITE_DESCRIPTION} />
+</svelte:head>
 
 <!-- 네비게이션 버튼 -->
 <section>
@@ -13,5 +18,5 @@
 </section>
 
 <article class="mt-12 text-center">
-	<p>AI & Software Engineering, Computational Design</p>
+	<p>{SITE_DESCRIPTION}</p>
 </article>

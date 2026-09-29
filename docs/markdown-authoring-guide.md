@@ -28,7 +28,7 @@ cssclasses: []
 
 - `title`: 목록, 상세, RSS, Open Graph에 사용.
 - `description`: 목록, SEO, RSS에 사용.
-- `date`: 최초 작성일.
+- `date`: 최초 작성일. 없으면 화면·RSS·sitemap에 날짜를 표시하지 않고, 날짜가 있는 글 뒤에 소스 폴더 순서로 나열된다 (파일 수정 시각은 쓰지 않는다).
 - `tags`: `/tags/` 탐색과 search weight에 사용.
 
 ## Slug

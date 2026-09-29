@@ -10,7 +10,7 @@ export function createSearchDocument(post: BlogPost): SearchDocument {
     tags: post.tags,
     category: post.category,
     series: post.series,
-    date: post.date.toISOString(),
+    date: post.date?.toISOString(),
     headings: post.headings.map((heading) => heading.text),
     body: cleanMarkdownText(post.content),
   }

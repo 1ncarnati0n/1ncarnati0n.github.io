@@ -14,7 +14,7 @@ export const load: PageServerLoad = async ({ params }) => {
 			slug: post.slug,
 			title: post.title,
 			description: post.description,
-			date: post.date.toISOString(),
+			date: post.date?.toISOString(),
 			tags: post.tags,
 		})),
 	};

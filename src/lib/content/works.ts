@@ -14,7 +14,7 @@ async function getWorksIndex() {
     if (work) works.push(work)
   }
 
-  cachedWorks = works.sort((a, b) => b.date.getTime() - a.date.getTime())
+  cachedWorks = works.sort((a, b) => (b.date?.getTime() ?? 0) - (a.date?.getTime() ?? 0))
   return cachedWorks
 }
 

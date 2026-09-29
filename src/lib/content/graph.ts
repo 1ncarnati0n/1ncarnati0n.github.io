@@ -31,9 +31,6 @@ async function getGraphLinks() {
 
   for (const post of posts) {
     for (const targetSlug of resolveLinkedSlugs(post, references)) {
-      const key = `${post.slug}::${targetSlug}`
-      if (links.some((link) => `${link.source}::${link.target}` === key)) continue
-
       links.push({ source: post.slug, target: targetSlug })
       linkCounts.set(post.slug, (linkCounts.get(post.slug) ?? 0) + 1)
       linkCounts.set(targetSlug, (linkCounts.get(targetSlug) ?? 0) + 1)

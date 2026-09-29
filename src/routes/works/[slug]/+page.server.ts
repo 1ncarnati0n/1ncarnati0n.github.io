@@ -13,7 +13,6 @@ export const load: PageServerLoad = async ({ params }) => {
 		work: {
 			title: work.title,
 			description: work.description,
-			date: work.date.toISOString(),
 			status: work.status,
 			tools: work.tools,
 			category: work.category,

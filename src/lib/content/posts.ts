@@ -54,8 +54,9 @@ async function getBlogIndex(): Promise<BlogIndex> {
   return cachedIndex
 }
 
+// 날짜 있는 글은 최신순으로 앞에, 날짜 없는 글은 뒤에서 소스 트리 순서를 유지한다 (Array#sort는 stable)
 function sortPosts(posts: BlogPost[]) {
-  return [...posts].sort((a, b) => b.date.getTime() - a.date.getTime())
+  return [...posts].sort((a, b) => (b.date?.getTime() ?? 0) - (a.date?.getTime() ?? 0))
 }
 
 export function groupPostsByTag(posts: BlogPost[]): PostGroup[] {

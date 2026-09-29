@@ -28,6 +28,12 @@
 	let pageTitle = $derived(activeNavItem?.label ?? '');
 </script>
 
+<svelte:window
+	onkeydown={(e) => {
+		if (e.key === 'Escape') menuOpen = false;
+	}}
+/>
+
 <!-- 헤더 바: 항상 최상단 -->
 <header class="fixed top-8 w-full z-100 px-9 flex items-center justify-between">
 	<!-- 좌: 로고 -->

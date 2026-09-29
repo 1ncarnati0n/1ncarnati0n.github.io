@@ -7,7 +7,6 @@ export const load: PageServerLoad = async () => {
 			slug: work.slug,
 			title: work.title,
 			description: work.description,
-			date: work.date.toISOString(),
 			status: work.status,
 			tools: work.tools,
 			category: work.category,

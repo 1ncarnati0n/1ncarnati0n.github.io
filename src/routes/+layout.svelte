@@ -7,7 +7,6 @@
 
 <svelte:head>
 	<title>1ncarnati0n</title>
-	<meta name="description" content="AI & Software Engineering, Computational Design" />
 </svelte:head>
 
 <a

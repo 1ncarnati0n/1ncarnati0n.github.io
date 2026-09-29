@@ -14,7 +14,7 @@ export async function GET() {
 				`<link>${xmlEscape(url)}</link>`,
 				`<guid>${xmlEscape(url)}</guid>`,
 				`<description>${xmlEscape(post.description)}</description>`,
-				`<pubDate>${post.date.toUTCString()}</pubDate>`,
+				post.date ? `<pubDate>${post.date.toUTCString()}</pubDate>` : '',
 				'</item>',
 			].join('');
 		})

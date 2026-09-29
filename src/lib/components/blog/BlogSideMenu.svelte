@@ -133,7 +133,7 @@
 	{/if}
 {/snippet}
 
-<nav class="fixed pt-1">
+<nav class="sticky top-24 max-h-[calc(100dvh-8rem)] overflow-y-auto pt-1">
 	<ul>
 		{#each tree as node (node.type === 'folder' ? folderKey(node) : node.slug)}
 			{@render renderNode(node, 0)}

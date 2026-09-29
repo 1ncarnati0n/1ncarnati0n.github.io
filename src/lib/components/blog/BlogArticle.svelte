@@ -1,7 +1,7 @@
 <script lang="ts">
 	interface Props {
 		title: string;
-		date: Date;
+		date?: Date;
 		readingTime: number;
 		tags: string[];
 		cssClasses: string[];
@@ -20,10 +20,12 @@
 		</h1>
 
 		<div class="gap-3 text-sm">
-			<time datetime={date.toISOString()}>
-				{date.toLocaleDateString('ko-KR')}
-			</time>
-			<span>·</span>
+			{#if date}
+				<time datetime={date.toISOString()}>
+					{date.toLocaleDateString('ko-KR')}
+				</time>
+				<span>·</span>
+			{/if}
 			<span>{readingTime}분 읽기</span>
 		</div>
 
