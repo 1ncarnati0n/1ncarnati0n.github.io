@@ -579,6 +579,7 @@ print(transformed_mesh)
 이 예제에서는 3D 변환과 메시 조작에 연산자 오버로딩을 사용합니다. `GeometryTransform` 클래스는 `*` 연산자를 오버로드하여 변환 합성을 구현하고, `Mesh` 클래스는 `+` 연산자로 메시 병합, `*` 연산자로 변환 적용을 구현합니다.
 
 <br>
+
 ### 6. 추상 기본 클래스를 통한 다형성
 
 파이썬에서는 `abc` 모듈의 `ABC`(Abstract Base Class)와 `abstractmethod` 데코레이터를 사용하여 인터페이스를 정의하고 다형성을 강화할 수 있습니다.
