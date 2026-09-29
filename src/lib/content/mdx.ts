@@ -20,17 +20,59 @@ import rehypeSlug from 'rehype-slug'         // <h2>제목</h2> → <h2 id="제�
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'  // 제목에 앵커 링크 추가
 import rehypePrettyCode from 'rehype-pretty-code'  // shiki 기반 코드 하이라이팅
 import rehypeStringify from 'rehype-stringify'     // HAST → HTML 문자열
+import { visit } from 'unist-util-visit'     // AST 노드를 순회
+import type { Heading } from '$lib/types/content'
 import {
   remarkObsidian,
   type ObsidianRenderOptions,
 } from './obsidian'
 
+type HastNode = {
+  type: string
+  value?: string
+  tagName?: string
+  properties?: Record<string, unknown>
+  children?: HastNode[]
+}
+
+// 수식은 MathML + 화면용 HTML 두 벌로 렌더되므로 화면용(katex-html)만 제목 텍스트로 쓴다
+function headingText(node: HastNode): string {
+  if (node.type === 'text') return node.value ?? ''
+
+  const classNames = node.properties?.className
+  if (Array.isArray(classNames) && classNames.includes('katex-mathml')) return ''
+
+  return (node.children ?? []).map(headingText).join('')
+}
+
+// 목차는 렌더된 결과(rehype-slug가 붙인 id)에서 뽑는다. 마크다운 소스를 정규식으로 다시 훑으면
+// 렌더러와 어긋나 목차가 틀리거나 slug가 중복되고, 중복 key 하나로 Svelte가 페이지 전체를 지운다.
+// (예: `<br>` 바로 아래 `### 제목`은 raw HTML 블록에 먹혀 제목이 아닌데 정규식은 제목으로 센다)
+function rehypeCollectHeadings(headings: Heading[]) {
+  return (tree: HastNode) => {
+    visit(tree, 'element', (node: HastNode) => {
+      const level = /^h([2-4])$/.exec(node.tagName ?? '')?.[1]
+      const slug = node.properties?.id
+      if (!level || typeof slug !== 'string' || !slug) return
+
+      headings.push({
+        level: Number(level) as Heading['level'],
+        text: headingText(node).replace(/\s+/g, ' ').trim(),
+        slug,
+      })
+    })
+  }
+}
+
+export type RenderedMarkdown = { html: string; headings: Heading[] }
+
 // async 함수는 항상 Promise를 반환
-// 마크다운 문자열을 받아서 HTML 문자열을 반환
-export async function renderMarkdown(
+// 마크다운 문자열을 받아서 HTML 문자열과 목차용 제목(h2~h4) 목록을 반환
+export async function renderMarkdownWithHeadings(
   source: string,
   options: ObsidianRenderOptions = {},
-): Promise<string> {
+): Promise<RenderedMarkdown> {
+  const headings: Heading[] = []
   const result = await unified()
     // ── remark 단계: 마크다운 처리 ──
     .use(remarkParse)             // 1. 마크다운 텍스트를 AST로 파싱
@@ -48,6 +90,7 @@ export async function renderMarkdown(
     .use(rehypeAutolinkHeadings, {
       behavior: 'wrap',           // 제목 텍스트 전체를 <a>로 감쌈
     })
+    .use(rehypeCollectHeadings, headings) // 렌더된 h2~h4를 목차용으로 수집
     .use(rehypePrettyCode, {
       theme: {
         dark: 'one-dark-pro',
@@ -61,5 +104,13 @@ export async function renderMarkdown(
     .process(source)
   // .process()가 반환하는 VFile 객체에서 문자열 추출
 
-  return String(result)
+  return { html: String(result), headings }
+}
+
+// HTML만 필요한 곳(works, 테스트)용
+export async function renderMarkdown(
+  source: string,
+  options: ObsidianRenderOptions = {},
+): Promise<string> {
+  return (await renderMarkdownWithHeadings(source, options)).html
 }

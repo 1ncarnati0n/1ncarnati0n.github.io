@@ -4,12 +4,8 @@ import path from 'node:path'
 import { describe, expect, it } from 'vitest'
 
 import type { BlogPost } from '$lib/types/content'
-import {
-  applyRenderedHeadingIds,
-  cleanMarkdownText,
-  extractHeadings,
-  normalizeBlogPost,
-} from './frontmatter'
+import { cleanMarkdownText, normalizeBlogPost } from './frontmatter'
+import { renderMarkdownWithHeadings } from './mdx'
 import { getWikiLinkReferences, resolveLinkedSlugs } from './references'
 import { createSearchDocument } from './search'
 import { groupPostsBySeries, groupPostsByTag } from './posts'
@@ -36,14 +32,31 @@ function post(overrides: Partial<BlogPost>): BlogPost {
 }
 
 describe('content helpers', () => {
-  it('syncs TOC slugs with rendered heading ids', () => {
-    const headings = extractHeadings('## 배열 <sup>Arrays</sup>')
-    const synced = applyRenderedHeadingIds(
-      headings,
-      '<h2 id="배열-arrays">배열 <sup>Arrays</sup></h2>',
-    )
+  it('builds the TOC from rendered headings, so it cannot drift from the page', async () => {
+    // `<br>` 바로 아래 줄은 raw HTML 블록에 먹혀 제목이 아니다. 소스를 정규식으로 훑던 예전 목차는
+    // 이걸 제목으로 세어 slug가 어긋나고 중복되어, Svelte가 페이지 전체를 지웠다.
+    const source = [
+      '## 개요',
+      '',
+      '<br>',
+      '### 삼켜진 제목',
+      '',
+      '## 개요',
+      '',
+      '### 배열 <sup>Arrays</sup>',
+      '',
+      '### $\\gamma$ 는 왜 필요한가?',
+    ].join('\n')
 
-    expect(synced[0].slug).toBe('배열-arrays')
+    const { headings } = await renderMarkdownWithHeadings(source)
+
+    expect(headings.map(({ level, slug, text }) => [level, slug, text])).toEqual([
+      [2, '개요', '개요'],
+      [2, '개요-1', '개요'],
+      [3, '배열-arrays', '배열 Arrays'],
+      [3, expect.any(String), 'γ 는 왜 필요한가?'],
+    ])
+    expect(new Set(headings.map((heading) => heading.slug)).size).toBe(headings.length)
   })
 
   it('groups posts by tag and series', () => {

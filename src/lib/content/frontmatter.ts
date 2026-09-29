@@ -77,23 +77,6 @@ export function extractHeadings(content: string): Heading[] {
   return headings
 }
 
-export function applyRenderedHeadingIds(headings: Heading[], html: string): Heading[] {
-  const ids = [...html.matchAll(/<h([2-4])\s+id="([^"]+)"/g)].map((match) => ({
-    level: Number(match[1]),
-    slug: match[2],
-  }))
-
-  if (ids.length === 0) return headings
-
-  let cursor = 0
-  return headings.map((heading) => {
-    const id = ids.slice(cursor).find((candidate) => candidate.level === heading.level)
-    if (!id) return heading
-    cursor = ids.indexOf(id) + 1
-    return { ...heading, slug: id.slug }
-  })
-}
-
 export function extractTitle(content: string, fallbackName: string) {
   const headingMatch = content.match(HEADING_PATTERN)
   return headingMatch?.[1]?.trim() || fallbackName

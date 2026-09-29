@@ -1,8 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { normalizeBlogReference } from '$lib/content/blog-slug';
-import { applyRenderedHeadingIds } from '$lib/content/frontmatter';
 import { getBacklinks, getLocalBlogGraphData } from '$lib/content/graph';
-import { renderMarkdown } from '$lib/content/mdx';
+import { renderMarkdownWithHeadings } from '$lib/content/mdx';
 import { getAllBlogPosts, getBlogPostBySlug, getBlogReferenceLookup } from '$lib/content/posts';
 import { absoluteUrl, SITE_TITLE } from '$lib/content/site';
 import type { PageServerLoad } from './$types';
@@ -17,7 +16,7 @@ export const load: PageServerLoad = async ({ params }) => {
 
 	if (!post) error(404, 'Post not found');
 
-	const html = await renderMarkdown(post.content, {
+	const { html, headings } = await renderMarkdownWithHeadings(post.content, {
 		resolveWikiLink: (reference) => {
 			const resolved = references.get(normalizeBlogReference(reference));
 			if (!resolved) return null;
@@ -53,7 +52,7 @@ export const load: PageServerLoad = async ({ params }) => {
 			series: post.series,
 			cover: post.cover,
 			cssClasses: post.cssClasses,
-			headings: applyRenderedHeadingIds(post.headings, html),
+			headings,
 		},
 		meta: {
 			title: `${post.title} | ${SITE_TITLE}`,
