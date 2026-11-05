@@ -16,6 +16,8 @@ export const load: PageServerLoad = async ({ params }) => {
 			status: work.status,
 			tools: work.tools,
 			category: work.category,
+			cover: work.cover,
+			gallery: work.gallery,
 		},
 		html: await renderMarkdown(work.content),
 	};

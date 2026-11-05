@@ -52,6 +52,9 @@
 				)
 				.force('charge', d3.forceManyBody().strength(-60))
 				.force('center', d3.forceCenter(width / 2, height / 2))
+				// 연결 없는 노드가 charge에 밀려 프레임 밖으로 나가지 않도록 중심으로 당긴다
+				.force('x', d3.forceX(width / 2).strength(0.3))
+				.force('y', d3.forceY(height / 2).strength(0.3))
 				.force('collision', d3.forceCollide().radius(12));
 
 			const g = d3.select(svgElement).append('g');

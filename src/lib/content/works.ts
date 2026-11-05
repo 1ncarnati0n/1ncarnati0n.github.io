@@ -4,6 +4,11 @@ import { normalizeWorkProject } from './frontmatter'
 
 let cachedWorks: WorksProject[] | null = null
 
+// 로컬 편집기가 저장한 뒤 호출 — dev 서버 재시작 없이 /works/에 반영
+export function resetWorksCache() {
+  cachedWorks = null
+}
+
 async function getWorksIndex() {
   if (cachedWorks) return cachedWorks
 
