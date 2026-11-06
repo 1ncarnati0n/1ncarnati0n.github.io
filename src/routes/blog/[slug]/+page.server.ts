@@ -48,6 +48,7 @@ export const load: PageServerLoad = async ({ params }) => {
 			updated: post.updated?.toISOString(),
 			readingTime: post.readingTime,
 			tags: post.tags,
+			sourcePathParts: post.sourcePathParts,
 			category: post.category,
 			series: post.series,
 			cover: post.cover,

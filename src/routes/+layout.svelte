@@ -1,6 +1,10 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import Header from '$lib/components/layout/Header.svelte';
 	import '../app.css';
+
+	// 블로그는 Quartz 그리드가 자체 여백을 가진다
+	let isBlog = $derived($page.url.pathname.startsWith('/blog') && !$page.error);
 
 	let { children } = $props();
 </script>
@@ -18,6 +22,6 @@
 
 <Header />
 
-<main id="main-content" class="min-h-screen px-10 py-18">
+<main id="main-content" class="min-h-screen {isBlog ? '' : 'px-10 py-18'}">
 	{@render children()}
 </main>

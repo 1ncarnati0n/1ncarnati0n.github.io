@@ -26,8 +26,8 @@
 	let svgElement: SVGSVGElement;
 
 	onMount(() => {
-		// ponytail: 패널이 `hidden xl:block`이라 크기가 0이면 d3(~280kB)를 받지 않는다.
-		// 창을 넓혀 xl을 넘겨도 다음 이동/새로고침 전까진 안 그려진다 — 필요하면 ResizeObserver로 교체.
+		// ponytail: 그래프가 숨겨져 크기가 0이면 d3(~280kB)를 받지 않는다.
+		// 나중에 보이게 돼도 다음 이동/새로고침 전까진 안 그려진다 — 필요하면 ResizeObserver로 교체.
 		if (!svgElement || data.nodes.length === 0 || !svgElement.clientWidth) return;
 
 		let cleanup: (() => void) | undefined;
@@ -141,17 +141,7 @@
 	});
 </script>
 
-<div>
-	<p
-		class="text-xs font-medium uppercase tracking-widest mb-3"
-		style:color="var(--color-secondary)"
-	>
-		Graph
-	</p>
-	<svg
-		bind:this={svgElement}
-		class="w-full aspect-square rounded-xl border"
-		style:border-color="var(--color-border)"
-		style:background-color="var(--color-surface)"
-	></svg>
+<div class="qz-graph">
+	<h3>Graph View</h3>
+	<svg bind:this={svgElement}></svg>
 </div>

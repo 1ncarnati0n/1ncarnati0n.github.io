@@ -27,22 +27,20 @@
 	{/if}
 </svelte:head>
 
-<!-- 본문 -->
-<div class="flex justify-center">
-	<BlogArticle
-		title={data.post.title}
-		date={data.post.date ? new Date(data.post.date) : undefined}
-		readingTime={data.post.readingTime}
-		tags={data.post.tags}
-		cssClasses={data.post.cssClasses}
-		html={data.html}
-	/>
-</div>
+<BlogArticle
+	title={data.post.title}
+	date={data.post.date ? new Date(data.post.date) : undefined}
+	readingTime={data.post.readingTime}
+	tags={data.post.tags}
+	pathParts={data.post.sourcePathParts}
+	cssClasses={data.post.cssClasses}
+	html={data.html}
+/>
 
 <!-- 우측: Graph + TOC. 글→글 이동은 같은 route라 컴포넌트가 재사용되어 onMount가 다시 안 돈다. slug로 key를 걸어 새로 마운트 -->
 {#key data.post.slug}
 	<RightPanel graphData={data.graphData} backlinks={data.backlinks}>
-		{#snippet extra()}
+		{#snippet toc()}
 			<TableOfContents headings={data.post.headings} />
 		{/snippet}
 	</RightPanel>

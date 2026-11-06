@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { resolve } from '$app/paths';
 	import { SvelteSet } from 'svelte/reactivity';
+	import ChevronDown from 'lucide-svelte/icons/chevron-down';
 	import type { BlogTreeNode, BlogTreeFolderNode } from '$lib/types/content';
 
 	interface Props {
@@ -73,70 +74,66 @@
 		return result;
 	});
 
+	let collapsed = $state(false);
+
 	function toggleFolder(pathKey: string) {
 		if (userToggled.has(pathKey)) userToggled.delete(pathKey);
 		else userToggled.add(pathKey);
 	}
 </script>
 
-{#snippet renderNode(node: BlogTreeNode, depth: number)}
+{#snippet renderNode(node: BlogTreeNode)}
 	{#if node.type === 'folder'}
 		{@const key = folderKey(node)}
 		{@const isOpen = expandedFolders.has(key)}
-		<li class="font-sans">
+		<li>
 			<button
 				type="button"
+				class="qz-folder"
 				onclick={() => toggleFolder(key)}
-				class="flex items-center gap-1.5 w-full text-left py-1.5 text-sm
-					transition-colors hover:caret-amber-200 cursor-pointer"
-				style:padding-left="{depth * 0.9 + 0.75}rem"
 				aria-expanded={isOpen}
 				aria-controls="folder-{key}"
 			>
-				<span
-					class="inline-block text-[0.6rem] transition-transform duration-200 text-secondary"
-					style:transform={isOpen ? 'rotate(90deg)' : 'rotate(0deg)'}
-				>
-					▶
-				</span>
-				<span class="font-medium" style:color="var(--color-primary)">
-					{node.name}
-				</span>
+				<svg width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<polyline points="6 9 12 15 18 9"></polyline>
+				</svg>
+				{node.name}
 			</button>
-
 			{#if isOpen}
-				<ul id="folder-{key}" class="relative">
-					<span
-						class="absolute top-0 bottom-2 w-px bg-border"
-						style:left="{(depth + 1) * 0.8 + 0.3}rem"
-						aria-hidden="true"
-					></span>
+				<ul id="folder-{key}">
 					{#each node.children as child (child.type === 'folder' ? folderKey(child) : child.slug)}
-						{@render renderNode(child, depth + 1)}
+						{@render renderNode(child)}
 					{/each}
 				</ul>
 			{/if}
 		</li>
 	{:else}
-		{@const isActive = node.slug === activeSlug}
 		<li>
-			<a
-				href={resolve('/blog/[slug]', { slug: node.slug })}
-				class="block py-1 text-sm truncate transition-colors hover:opacity-70"
-				style:padding-left="{depth * 0.9 + 0.75}rem"
-				style:color={isActive ? 'var(--color-primary)' : 'var(--color-secondary)'}
-				style:font-weight={isActive ? 600 : 400}
-			>
+			<a href={resolve('/blog/[slug]', { slug: node.slug })} class:active={node.slug === activeSlug}>
 				{node.title}
 			</a>
 		</li>
 	{/if}
 {/snippet}
 
-<nav class="sticky top-24 max-h-[calc(100dvh-8rem)] overflow-y-auto pt-1">
-	<ul>
-		{#each tree as node (node.type === 'folder' ? folderKey(node) : node.slug)}
-			{@render renderNode(node, 0)}
-		{/each}
-	</ul>
+<nav class="qz-explorer" aria-label="Explorer">
+	<button
+		type="button"
+		class="qz-panel-header"
+		class:collapsed
+		aria-expanded={!collapsed}
+		onclick={() => (collapsed = !collapsed)}
+	>
+		<h2>Blog</h2>
+		<ChevronDown class="qz-fold" size={21} strokeWidth={2} />
+	</button>
+	{#if !collapsed}
+		<div class="qz-explorer-content">
+			<ul>
+				{#each tree as node (node.type === 'folder' ? folderKey(node) : node.slug)}
+					{@render renderNode(node)}
+				{/each}
+			</ul>
+		</div>
+	{/if}
 </nav>
