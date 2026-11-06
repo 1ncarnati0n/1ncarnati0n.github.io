@@ -92,10 +92,12 @@ export async function renderMarkdownWithHeadings(
     })
     .use(rehypeCollectHeadings, headings) // 렌더된 h2~h4를 목차용으로 수집
     .use(rehypePrettyCode, {
+      // 원본 TechBlog(Quartz)와 동일: github 테마, 배경은 CSS가 담당
       theme: {
-        dark: 'one-dark-pro',
-        light: 'one-light',
-      }
+        dark: 'github-dark',
+        light: 'github-light',
+      },
+      keepBackground: false,
       // shiki 테마 (코드 블록 색상)
       // 다른 테마 옵션: 'one-dark-pro', 'vitesse-dark', 'nord' 등
       // 전체 목록: https://shiki.style/themes

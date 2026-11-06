@@ -6,12 +6,11 @@
 	let { data, children }: { data: LayoutData; children: Snippet } = $props();
 </script>
 
-<div class="grid grid-cols-1 lg:grid-cols-[200px_1fr] xl:grid-cols-[250px_1fr_200px] gap-12">
-	<!-- 좌측: 트리 사이드메뉴 -->
-	<aside class="hidden lg:block">
+<div class="qz">
+	<aside class="qz-sidebar qz-left">
 		<BlogSideMenu tree={data.tree} />
 	</aside>
 
-	<!-- 중앙 + 우측: 각 page가 RightPanel로 구성 -->
+	<!-- 중앙(.qz-center) + 우측(RightPanel)은 각 page가 구성 -->
 	{@render children()}
 </div>

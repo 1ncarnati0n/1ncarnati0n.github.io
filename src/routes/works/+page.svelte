@@ -24,6 +24,9 @@
 					style:background-color="var(--color-surface)"
 				>
 					<a href={resolve('/works/[slug]', { slug: work.slug })} class="block hover:opacity-70">
+						{#if work.cover}
+							<img src={work.cover} alt="" loading="lazy" class="mb-4 aspect-video w-full rounded object-cover" />
+						{/if}
 						<h2>{work.title}</h2>
 						<p>{work.description}</p>
 						<div class="mt-3 flex flex-wrap gap-2 text-xs">

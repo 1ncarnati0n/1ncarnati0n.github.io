@@ -1,13 +1,11 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import RightPanel from '$lib/components/blog/RightPanel.svelte';
-	import { SITE_DESCRIPTION } from '$lib/content/site';
+	import { formatQuartzDate, SITE_DESCRIPTION } from '$lib/content/site';
 	import type { PageData } from './$types';
 	import type { LayoutData } from './$types';
 
 	let { data }: { data: PageData & LayoutData } = $props();
-
-	let topicCount = $derived(data.tree.filter((node) => node.type === 'folder').length);
 </script>
 
 <svelte:head>
@@ -15,85 +13,34 @@
 	<meta name="description" content={SITE_DESCRIPTION} />
 </svelte:head>
 
-<!-- 본문: 포스트 목록 -->
-<section class="min-w-0">
-	<div class="mb-12">
-		<h2 class="text-xl font-medium">Blog Summaries</h2>
-		<p class="mt-3">
-			왼쪽에서는 `contents/blog` 트리 구조 그대로 글을 탐색하고,
-			오른쪽에서는 각 문서의 핵심 요약을 빠르게 훑어볼 수 있습니다.
-		</p>
-		<div class="mt-4 flex flex-wrap gap-2 text-sm">
-			<span
-				class="rounded-full px-3 py-1"
-				style:background-color="var(--color-surface)"
-				style:color="var(--color-secondary)"
-			>
-				{topicCount} topics
-			</span>
-			<span
-				class="rounded-full px-3 py-1"
-				style:background-color="var(--color-surface)"
-				style:color="var(--color-secondary)"
-			>
-				{data.posts.length} posts
-			</span>
-		</div>
-	</div>
+<!-- 본문: Quartz 폴더 페이지와 같은 목록 -->
+<div class="qz-center">
+	<nav class="qz-breadcrumbs" aria-label="breadcrumbs">
+		<div><span>Home</span></div>
+	</nav>
+	<h1 class="qz-title">Blog</h1>
+	<p>{data.posts.length} items under this folder.</p>
 
-	<div class="space-y-8">
+	<ul class="qz-list">
 		{#each data.posts as post (post.slug)}
-			<article
-				class="rounded-2xl border px-5 py-5 transition-colors"
-				style:border-color="var(--color-border)"
-				style:background-color="var(--color-surface)"
-			>
-				<a href={resolve('/blog/[slug]', { slug: post.slug })} class="block group no-underline">
-					<div class="mb-2 text-xs uppercase tracking-[0.16em]">
-						{post.sourcePathParts.join(' / ') || 'Root'}
-					</div>
-					<h3 class="text-lg font-medium transition-opacity group-hover:opacity-70">
-						{post.title}
-					</h3>
-					<p class="mt-2 text-sm">
-						{post.description || '요약이 없는 문서입니다.'}
-					</p>
-					<div class="mt-4 flex flex-wrap items-center gap-3 text-xs">
+			<li>
+				<div class="qz-section">
+					<p class="qz-section-meta">
 						{#if post.date}
-							<time datetime={post.date}>
-								{new Date(post.date).toLocaleDateString('ko-KR')}
-							</time>
-							<span>·</span>
+							<time datetime={post.date}>{formatQuartzDate(post.date)}</time>
 						{/if}
-						<span>{post.readingTime}분 읽기</span>
-					</div>
-					{#if post.tags.length > 0 || post.series}
-						<div class="mt-4 flex flex-wrap gap-2 text-xs">
-							{#if post.series}
-								<span
-									class="rounded-full px-2 py-0.5"
-									style:background-color="var(--color-background)"
-									style:color="var(--color-secondary)"
-								>
-									Series: {post.series}
-								</span>
-							{/if}
-							{#each post.tags as tag (tag)}
-								<span
-									class="rounded-full px-2 py-0.5"
-									style:background-color="var(--color-background)"
-									style:color="var(--color-secondary)"
-								>
-									#{tag}
-								</span>
-							{/each}
-						</div>
-					{/if}
-				</a>
-			</article>
+					</p>
+					<h3><a href={resolve('/blog/[slug]', { slug: post.slug })}>{post.title}</a></h3>
+					<ul class="qz-tags">
+						{#each post.tags as tag (tag)}
+							<li><a href={resolve('/tags/[tag]', { tag })}>{tag}</a></li>
+						{/each}
+					</ul>
+				</div>
+			</li>
 		{/each}
-	</div>
-</section>
+	</ul>
+</div>
 
 <!-- 우측: Graph만 -->
 <RightPanel graphData={data.graphData} />

@@ -14,3 +14,13 @@ export function xmlEscape(value: string) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;')
 }
+
+// Quartz 표기: "Apr 01, 2026". UTC로 고정해 SSR/브라우저 결과가 같도록
+export function formatQuartzDate(date: Date | string): string {
+	return new Date(date).toLocaleDateString('en-US', {
+		year: 'numeric',
+		month: 'short',
+		day: '2-digit',
+		timeZone: 'UTC',
+	});
+}

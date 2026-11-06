@@ -7,44 +7,28 @@
 	interface Props {
 		graphData: GraphData;
 		backlinks?: Backlink[];
-		extra?: Snippet;
+		toc?: Snippet;
 	}
 
-	let { graphData, backlinks = [], extra }: Props = $props();
+	let { graphData, backlinks = [], toc }: Props = $props();
 </script>
 
-<aside class="hidden xl:block">
-	<div class="sticky top-24 space-y-6">
-		<RelationGraph data={graphData} />
-		{#if backlinks.length > 0}
-			<div>
-				<p
-					class="text-xs font-medium uppercase tracking-widest mb-3"
-					style:color="var(--color-secondary)"
-				>
-					Backlinks
-				</p>
-				<ul class="space-y-3">
-					{#each backlinks as backlink (backlink.slug)}
-						<li>
-							<a
-								href={resolve('/blog/[slug]', { slug: backlink.slug })}
-								class="block text-xs hover:opacity-70"
-							>
-								<span class="block font-medium" style:color="var(--color-primary)">
-									{backlink.title}
-								</span>
-								<span class="line-clamp-2" style:color="var(--color-secondary)">
-									{backlink.description}
-								</span>
-							</a>
-						</li>
-					{/each}
-				</ul>
-			</div>
-		{/if}
-		{#if extra}
-			{@render extra()}
-		{/if}
-	</div>
+<!-- Quartz 우측 사이드바 순서: TOC → Backlinks. 그래프는 원본에 없지만 유지 -->
+<aside class="qz-sidebar qz-right">
+	{#if toc}
+		{@render toc()}
+	{/if}
+	{#if backlinks.length > 0}
+		<div class="qz-backlinks">
+			<h3>Backlinks</h3>
+			<ul>
+				{#each backlinks as backlink (backlink.slug)}
+					<li>
+						<a href={resolve('/blog/[slug]', { slug: backlink.slug })}>{backlink.title}</a>
+					</li>
+				{/each}
+			</ul>
+		</div>
+	{/if}
+	<RelationGraph data={graphData} />
 </aside>

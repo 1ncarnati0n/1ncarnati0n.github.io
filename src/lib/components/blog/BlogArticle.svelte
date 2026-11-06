@@ -1,53 +1,50 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
+	import { formatQuartzDate } from '$lib/content/site';
+
 	interface Props {
 		title: string;
 		date?: Date;
 		readingTime: number;
 		tags: string[];
+		pathParts: string[];
 		cssClasses: string[];
 		html: string;
 	}
 
-	let { title, date, readingTime, tags, cssClasses, html }: Props = $props();
+	let { title, date, readingTime, tags, pathParts, cssClasses, html }: Props = $props();
 
-	let articleClassName = $derived(['prose-custom', ...cssClasses].join(' ').trim());
+	let articleClassName = $derived(['qz-article', ...cssClasses].join(' ').trim());
 </script>
 
-<article class="flex-wrap flex-col items-center max-w-3xl">
-	<header class="mb-10">
-		<h1 class="font-header mb-3 text-2xl md:text-3xl font-medium">
-			{title}
-		</h1>
+<div class="qz-center">
+	<nav class="qz-breadcrumbs" aria-label="breadcrumbs">
+		<div><a href={resolve('/blog')}>Home</a><span class="qz-sep">❯</span></div>
+		{#each pathParts as part, i (i)}
+			<div><span>{part}</span><span class="qz-sep">❯</span></div>
+		{/each}
+		<div><span>{title}</span></div>
+	</nav>
 
-		<div class="gap-3 text-sm">
-			{#if date}
-				<time datetime={date.toISOString()}>
-					{date.toLocaleDateString('ko-KR')}
-				</time>
-				<span>·</span>
-			{/if}
-			<span>{readingTime}분 읽기</span>
-		</div>
+	<h1 class="qz-title">{title}</h1>
 
-		{#if tags.length > 0}
-			<div class="mt-3 flex flex-wrap gap-2">
-				{#each tags as tag (tag)}
-					<span
-						class="rounded-full px-2 py-0.5 text-xs"
-						style:background-color="var(--color-surface)"
-						style:color="var(--color-secondary)"
-					>
-						{tag}
-					</span>
-				{/each}
-			</div>
+	<p class="qz-meta">
+		{#if date}
+			<time datetime={date.toISOString()}>{formatQuartzDate(date)}</time>
 		{/if}
-	</header>
+		<span>{readingTime} min read</span>
+	</p>
 
-	<hr class="mb-10" />
+	{#if tags.length > 0}
+		<ul class="qz-tags">
+			{#each tags as tag (tag)}
+				<li><a href={resolve('/tags/[tag]', { tag })}>{tag}</a></li>
+			{/each}
+		</ul>
+	{/if}
 
-	<div class={articleClassName}>
+	<article class={articleClassName}>
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html html}
-	</div>
-</article>
+	</article>
+</div>

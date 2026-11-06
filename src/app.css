@@ -22,7 +22,7 @@
   /* 색상 — Tailwind의 색상 팔레트에서 주요 색상을 변수로 정의
    * 나중에 CSS에서 var(--color-primary) 이런 식으로 사용 가능
    */
-  --color-background: #fbf9f5;
+  --color-background: #f1eee6; /* TechBlog(Quartz) 배경 */
   --color-foreground: #171717;
   --color-primary: #1a1a1a;
   --color-secondary: #666666;
@@ -34,7 +34,7 @@
 }
 
 html.dark {
-  --color-background: #262624;
+  --color-background: #292929;
   --color-foreground: #fbf9f5;
   --color-primary: #fbf9f5;
   --color-secondary: #c9c5bb;
@@ -369,7 +369,7 @@ html.dark {
   html.dark .prose-custom pre[data-theme*=" "],
   html.dark .prose-custom pre[data-theme*=" "] span {
     color: var(--shiki-dark);
-    background-color: var(--shiki-dark-bg);
+    background-color: var(--shiki-dark-bg, var(--color-surface));
   }
 
   .prose-custom :not(pre) > code {
@@ -421,5 +421,617 @@ html.dark {
   }
   .container-narrow {
     @apply max-w-3xl mx-auto px-6;
+  }
+}
+
+/*
+ * ─── Blog: Quartz(TechBlog) 스타일 이식 ───
+ * 원본: github.com/1ncarnati0n/TechBlog (quartz/styles/base.scss 등)
+ * 블로그 레이아웃 루트의 .qz 가 있을 때만 적용된다. 팔레트는 quartz.config.ts 값 그대로.
+ */
+html:has(.qz) {
+  --light: #f1eee6;
+  --lightgray: #ffffff;
+  --gray: #aaaaaa;
+  --darkgray: #222222;
+  --dark: #111111;
+  --secondary: #000000;
+  --tertiary: #e5b8a9;
+  --highlight: #cbcadb;
+  --textHighlight: #eacfc1;
+  --headerFont: "Noto Sans KR", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --bodyFont: "Noto Serif KR", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, serif;
+  --codeFont: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+
+  /* 사이트 공통 토큰도 같은 팔레트로 (헤더·그래프가 따라오도록) */
+  --color-background: var(--light);
+  --color-foreground: var(--darkgray);
+  --color-primary: var(--dark);
+  --color-secondary: var(--darkgray);
+  --color-muted: var(--gray);
+  --color-border: var(--gray);
+  --color-surface: var(--lightgray);
+}
+
+html.dark:has(.qz) {
+  --light: #292929;
+  --lightgray: #000000;
+  --gray: #646464;
+  --darkgray: #d4d4d4;
+  --dark: #ffffff;
+  --secondary: #ffffff;
+  --tertiary: #e5b8a9;
+  --highlight: #cbcadb;
+  --textHighlight: #e5b8a96a;
+}
+
+@layer components {
+  .qz {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr) 320px;
+    grid-template-areas: "left center right";
+    column-gap: 5px;
+    max-width: 1500px;
+    margin: 0 auto;
+    font-family: var(--bodyFont);
+    font-size: 16px;
+    line-height: normal;
+    color: var(--darkgray);
+  }
+
+  .qz ::selection {
+    background: color-mix(in srgb, var(--tertiary) 60%, rgba(255, 255, 255, 0));
+    color: var(--darkgray);
+  }
+
+  .qz-sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 6rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .qz-left { grid-area: left; z-index: 1; }
+  .qz-right { grid-area: right; }
+
+  .qz-center {
+    grid-area: center;
+    min-width: 0;
+    margin-top: 6rem;
+    padding-bottom: 4rem;
+  }
+
+  /* tablet: 오른쪽 패널이 본문 아래로, 목차 숨김 */
+  @media (max-width: 1200px) {
+    .qz {
+      grid-template-columns: 320px minmax(0, 1fr);
+      grid-template-areas: "left center" "left right";
+      padding: 0 1rem;
+    }
+    .qz-right {
+      position: initial;
+      height: auto;
+      padding: 0 0 4rem;
+    }
+    .qz-right .qz-toc { display: none; }
+  }
+
+  /* mobile: 한 열. ponytail: 원본의 모바일 explorer 드로어는 생략, 사이트 Menu로 이동 */
+  @media (max-width: 800px) {
+    .qz {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: "center" "right";
+    }
+    .qz-left { display: none; }
+  }
+
+  .qz-center p,
+  .qz-center li {
+    font-family: var(--bodyFont);
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--darkgray);
+    line-height: 1.6rem;
+    overflow-wrap: anywhere;
+  }
+  .qz-center p {
+    margin: 1rem 0;
+  }
+
+  .qz :is(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--headerFont);
+    color: var(--dark);
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: normal;
+  }
+
+  /* ─── 브레드크럼 / 제목 / 메타 ─── */
+  .qz-breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    /* 원본은 0.75rem이지만 부모 margin과 겹쳐(collapse) 사라진다 */
+    margin-top: 0;
+  }
+  .qz-breadcrumbs > div {
+    display: flex;
+    align-items: center;
+  }
+  .qz-breadcrumbs a,
+  .qz-breadcrumbs span {
+    color: var(--secondary);
+    font-weight: 600;
+  }
+  .qz-breadcrumbs a:hover {
+    color: var(--dark);
+    text-decoration: underline;
+  }
+  .qz-breadcrumbs .qz-sep {
+    margin-left: 0.5rem;
+    font-weight: 400;
+  }
+
+  .qz-title {
+    font-size: 1.75rem;
+    margin: 2rem 0 0;
+  }
+
+  .qz-center .qz-meta {
+    margin: 0 0 1em;
+    font-size: 0.85rem;
+    line-height: 1.6rem;
+    color: var(--gray);
+  }
+  .qz-meta > *:not(:last-child) {
+    margin-right: 12px;
+  }
+  .qz-meta > *:not(:last-child)::after {
+    content: ",";
+  }
+
+  .qz-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 1rem 0;
+    padding: 0;
+    list-style: none;
+  }
+  .qz-tags a {
+    padding: 0.2rem 0.4rem;
+    margin: 0 0.1rem;
+    border-radius: 8px;
+    background-color: var(--highlight);
+    color: var(--secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.4rem;
+  }
+  .qz-tags a::before {
+    content: "#";
+  }
+
+  /* ─── 본문 (base.scss) ─── */
+  .qz-article strong {
+    font-weight: 900;
+    color: var(--dark);
+  }
+  .qz-article a {
+    font-weight: 600;
+    color: var(--secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .qz-article a:hover {
+    color: var(--dark);
+    text-decoration: underline;
+  }
+  .qz-article :is(h1, h2, h3, h4, h5, h6) > a {
+    color: inherit;
+    font-weight: inherit;
+    background: transparent;
+  }
+  .qz-article :is(h1, h2, h3, h4, h5, h6) > a:hover {
+    text-decoration: none;
+  }
+  .qz-article h1 { font-size: 1.75rem; margin: 2.25rem 0 1rem; }
+  .qz-article h2 { font-size: 1.4rem; margin: 1.9rem 0 1rem; }
+  .qz-article h3 { font-size: 1.12rem; margin: 1.62rem 0 1rem; }
+  .qz-article :is(h4, h5, h6) { font-size: 1rem; margin: 1.5rem 0 1rem; }
+
+  .qz-article ul,
+  .qz-article ol {
+    margin: 1rem 0;
+    padding-left: 40px;
+  }
+  .qz-article ul { list-style: disc; }
+  .qz-article ol { list-style: decimal; }
+  .qz-article li ul { list-style: circle; }
+  .qz-article li ul,
+  .qz-article li ol,
+  .qz-article li > * {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .qz-article li:has(> input[type="checkbox"]) {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  .qz-article li:has(> input[type="checkbox"]:checked) {
+    text-decoration: line-through;
+    text-decoration-color: var(--gray);
+    color: var(--gray);
+  }
+
+  .qz-article .obsidian-wikilink {
+    background-color: var(--highlight);
+    padding: 0 0.1rem;
+    border-radius: 5px;
+    line-height: 1.4rem;
+    text-decoration: none;
+  }
+  .qz-article .obsidian-wikilink-external::after {
+    content: " ↗";
+    font-size: 0.9em;
+  }
+  .qz-article .obsidian-wikilink-unresolved,
+  .qz-article .obsidian-embed-unresolved {
+    color: var(--secondary);
+    opacity: 0.5;
+  }
+  .qz-article .obsidian-highlight {
+    background-color: var(--textHighlight);
+    padding: 0 0.1rem;
+    border-radius: 5px;
+  }
+
+  .qz-article blockquote {
+    margin: 1rem 0;
+    border-left: 3px solid var(--secondary);
+    padding-left: 1rem;
+  }
+
+  .qz-article hr {
+    width: 100%;
+    margin: 2rem auto;
+    height: 1px;
+    border: none;
+    background-color: var(--gray);
+  }
+
+  .qz-article img,
+  .qz-article .obsidian-embed-image {
+    max-width: 100%;
+    border-radius: 9px;
+    margin: 1rem 0;
+  }
+
+  .qz-article figure[data-rehype-pretty-code-figure] {
+    margin: 0;
+    position: relative;
+    line-height: 1.6rem;
+  }
+  .qz-article pre {
+    font-family: var(--codeFont);
+    font-size: 1rem;
+    padding: 0;
+    margin: 1rem 0;
+    border-radius: 9px;
+    overflow-x: auto;
+    border: 1px solid var(--gray);
+    background-color: rgba(209, 209, 209, 0.09);
+  }
+  .qz-article pre > code {
+    font-size: 0.85rem;
+    counter-reset: line;
+    counter-increment: line 0;
+    display: grid;
+    padding: 0.5rem 0;
+    overflow-x: auto;
+    background: transparent;
+    color: var(--shiki-light);
+  }
+  .qz-article pre > code span {
+    color: var(--shiki-light);
+  }
+  html.dark .qz-article pre > code,
+  html.dark .qz-article pre > code span {
+    color: var(--shiki-dark);
+  }
+  .qz-article pre > code > [data-line] {
+    padding: 0 0.25rem;
+    box-sizing: border-box;
+    border-left: 3px solid transparent;
+  }
+  .qz-article pre > code > [data-line][data-highlighted-line] {
+    background-color: var(--highlight);
+    border-left: 3px solid var(--secondary);
+  }
+  .qz-article pre > code > [data-line]::before {
+    content: counter(line);
+    counter-increment: line;
+    width: 1rem;
+    margin-right: 1rem;
+    display: inline-block;
+    text-align: right;
+    color: rgba(115, 138, 148, 0.6);
+  }
+  .qz-article pre > code[data-line-numbers-max-digits="2"] > [data-line]::before { width: 2rem; }
+  .qz-article pre > code[data-line-numbers-max-digits="3"] > [data-line]::before { width: 3rem; }
+  .qz-article :not(pre) > code {
+    font-size: 0.9em;
+    color: var(--dark);
+    font-family: var(--codeFont);
+    border-radius: 5px;
+    padding: 0.1rem 0.2rem;
+    background: var(--lightgray);
+  }
+
+  .qz-article table {
+    margin: 1rem;
+    border-collapse: collapse;
+  }
+  .qz-article th {
+    text-align: left;
+    padding: 0.4rem 0.7rem;
+    border-bottom: 1px solid var(--dark);
+    line-height: 2rem;
+  }
+  .qz-article td {
+    font-family: var(--codeFont);
+    padding: 0.2rem 0.7rem;
+    min-width: 75px;
+    line-height: 2rem;
+  }
+  .qz-article tr {
+    font-family: var(--codeFont);
+    color: var(--darkgray);
+    border-bottom: 1px solid var(--gray);
+  }
+  .qz-article tr:last-child {
+    border-bottom: none;
+  }
+
+  /* callouts.scss (아이콘 제외) */
+  .qz-article .obsidian-callout {
+    --color: #448aff;
+    --border: #448aff44;
+    --bg: var(--lightgray);
+    margin: 1rem 0;
+    border: 1px solid var(--border);
+    background-color: var(--bg);
+    border-radius: 5px;
+    padding: 0 1rem;
+  }
+  .qz-article .obsidian-callout-title {
+    display: flex;
+    gap: 5px;
+    padding: 1rem 0;
+    color: var(--color);
+    font-weight: 600;
+  }
+  .qz-article .obsidian-callout-title + * { margin-top: 0; }
+  .qz-article .obsidian-callout[data-callout="abstract"] { --color: #00b0ff; --border: #00b0ff44; --bg: #00b0ff10; }
+  .qz-article .obsidian-callout:is([data-callout="info"], [data-callout="todo"]) { --color: #00b8d4; --border: #00b8d444; --bg: #00b8d410; }
+  .qz-article .obsidian-callout[data-callout="tip"] { --color: #00bfa5; --border: #00bfa544; --bg: #00bfa510; }
+  .qz-article .obsidian-callout[data-callout="success"] { --color: #09ad7a; --border: #09ad7144; --bg: #09ad7110; }
+  .qz-article .obsidian-callout[data-callout="question"] { --color: #dba642; --border: #dba64244; --bg: #dba64210; }
+  .qz-article .obsidian-callout[data-callout="warning"] { --color: #db8942; --border: #db894244; --bg: #db894210; }
+  .qz-article .obsidian-callout:is([data-callout="failure"], [data-callout="danger"], [data-callout="bug"]) { --color: #db4242; --border: #db424244; --bg: #db424210; }
+  .qz-article .obsidian-callout[data-callout="example"] { --color: #7a43b5; --border: #7a43b544; --bg: #7a43b510; }
+  .qz-article .obsidian-callout[data-callout="quote"] { --color: var(--gray); --border: var(--darkgray); }
+
+  .qz-article .obsidian-embed-card {
+    margin: 1rem 0;
+    padding: 0 1rem;
+    border: 1px solid var(--lightgray);
+    border-radius: 5px;
+  }
+  .qz-article .obsidian-embed-card-link {
+    display: inline-block;
+    margin-top: 1rem;
+    font-family: var(--headerFont);
+  }
+
+  /* ─── 사이드 패널 공통: Explorer / TOC / Backlinks / Graph ─── */
+  .qz-panel-header {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: var(--dark);
+    cursor: pointer;
+    text-align: left;
+  }
+  .qz-panel-header > :is(h2, h3) {
+    font-size: 1rem;
+    margin: 0;
+    display: inline-block;
+  }
+  .qz-fold {
+    margin-left: 0.5rem;
+    opacity: 0.8;
+    transition: transform 0.3s ease;
+  }
+  .qz-panel-header.collapsed .qz-fold {
+    transform: rotateZ(-90deg);
+  }
+
+  .qz-explorer {
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+    min-height: 1.2rem;
+    flex: 0 1 auto;
+  }
+  .qz-explorer-content {
+    overflow-y: auto;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+  }
+  .qz-explorer-content ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overscroll-behavior: contain;
+  }
+  .qz-explorer-content li {
+    line-height: 1.6rem;
+  }
+  .qz-explorer-content li > a {
+    font-family: var(--headerFont);
+    font-weight: 400;
+    color: var(--dark);
+    opacity: 0.75;
+  }
+  .qz-explorer-content li > a:hover {
+    text-decoration: underline;
+  }
+  .qz-explorer-content li > a.active {
+    font-weight: 600;
+    opacity: 1;
+    text-decoration: underline;
+  }
+  .qz-explorer-content ul ul {
+    margin-left: 6px;
+    padding-left: 0.8rem;
+    border-left: 1px solid var(--darkgray);
+  }
+  .qz-folder {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    user-select: none;
+    font-family: var(--headerFont);
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.5rem;
+    color: var(--secondary);
+  }
+  .qz-folder:hover {
+    text-decoration: underline;
+  }
+  .qz-folder svg {
+    margin-right: 5px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+  .qz-folder[aria-expanded="false"] svg {
+    transform: rotate(-90deg);
+  }
+  .qz-folder:hover svg {
+    color: var(--gray);
+  }
+
+  .qz-toc {
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+    min-height: 1.4rem;
+    flex: 0 0.5 auto;
+  }
+  .qz-toc ul {
+    list-style: none;
+    margin: 0.5rem 0;
+    padding: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .qz-toc li > a {
+    font-family: var(--headerFont);
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 1.6rem;
+    color: var(--dark);
+    opacity: 0.35;
+    transition: 0.5s ease opacity, 0.3s ease color;
+  }
+  .qz-toc li > a:hover {
+    text-decoration: underline;
+  }
+  .qz-toc li > a.in-view {
+    opacity: 0.75;
+  }
+
+  .qz-backlinks {
+    display: flex;
+    flex-direction: column;
+  }
+  .qz-backlinks > h3 {
+    font-size: 1rem;
+    margin: 0;
+  }
+  .qz-backlinks ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0;
+  }
+  .qz-backlinks a {
+    font-weight: 600;
+    color: var(--secondary);
+    line-height: 1.6rem;
+  }
+  .qz-backlinks a:hover {
+    color: var(--dark);
+    text-decoration: underline;
+  }
+
+  .qz-graph > h3 {
+    font-size: 1rem;
+    margin: 0;
+  }
+  .qz-graph svg {
+    display: block;
+    width: 100%;
+    height: 250px;
+    margin: 0.5em 0;
+    border-radius: 5px;
+    border: 1px solid var(--lightgray);
+  }
+
+  /* ─── 목록 페이지 (listPage.scss) ─── */
+  .qz-list {
+    list-style: none;
+    margin-top: 2em;
+    padding-left: 0;
+  }
+  .qz-list > li {
+    margin-bottom: 1em;
+  }
+  .qz-list .qz-section {
+    display: grid;
+    grid-template-columns: fit-content(8em) 3fr 1fr;
+    align-items: baseline;
+  }
+  .qz-center .qz-section-meta {
+    margin: 0 1em 0 0;
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+  .qz-list .qz-section h3 {
+    margin: 0;
+    font-size: 1.12rem;
+  }
+  .qz-list .qz-section h3 a {
+    color: var(--dark);
+    font-weight: 700;
+  }
+  .qz-list .qz-section h3 a:hover {
+    text-decoration: underline;
+  }
+  .qz-list .qz-tags {
+    margin: 0;
+    justify-content: flex-end;
+  }
+  @media (max-width: 800px) {
+    .qz-list .qz-tags { display: none; }
   }
 }

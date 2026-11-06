@@ -10,6 +10,7 @@ export const load: PageServerLoad = async () => {
 			status: work.status,
 			tools: work.tools,
 			category: work.category,
+			cover: work.cover,
 		})),
 	};
 };
